@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -38,6 +37,7 @@ import StressScanner from "./pages/StressScanner";
 import SelfCompassion from "./pages/SelfCompassion";
 import EnergyBalance from "./pages/EnergyBalance";
 import MindfulEating from "./pages/MindfulEating";
+import AstingSupport from "./pages/AstingSupport";
 
 const queryClient = new QueryClient();
 
@@ -78,6 +78,7 @@ const App = () => (
           <Route path="/sleepanalyzer" element={<SleepAnalyzer />} />
           <Route path="/hydro" element={<HydroReminder />} />
           {/* --- WELL-BEING TOOLS --- */}
+          <Route path="/astingsupport" element={<AstingSupport />} />
           <Route path="/anxietyhelper" element={<AnxietyHelper />} />
           <Route path="/emotionwheel" element={<EmotionWheel />} />
           <Route path="/gratitudegarden" element={<GratitudeGarden />} />

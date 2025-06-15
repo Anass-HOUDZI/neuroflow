@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse, Smile, Flower, Scan, Apple } from "lucide-react";
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse, Smile, Flower, Scan, Apple, Timer } from "lucide-react";
 
 const Index = () => {
   const [isDark, setIsDark] = useState(false);
@@ -234,6 +234,13 @@ const Index = () => {
       path: "/anxietyhelper",
       color: "bg-pink-50 text-pink-500"
     },
+    {
+      title: "AstingSupport",
+      description: "Accompagnement jeûne intermittent : protocoles, timer, suivi symptômes, sécurité",
+      icon: Timer,
+      path: "/astingsupport",
+      color: "bg-indigo-50 text-indigo-700"
+    },
   ];
 
   return (
@@ -337,6 +344,9 @@ const Index = () => {
             </Button>
             <Button asChild variant="outline" size="lg">
               <Link to="/fitnesslog">Journal Fitness</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link to="/astingsupport">Fasting Support</Link>
             </Button>
           </div>
         </div>
