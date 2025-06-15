@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse, Smile, Flower, Scan, Apple, Timer } from "lucide-react";
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse, Smile, Flower, Scan, Apple, Timer, Salad } from "lucide-react";
 
 const Index = () => {
   const [isDark, setIsDark] = useState(false);
@@ -241,6 +241,13 @@ const Index = () => {
       path: "/astingsupport",
       color: "bg-indigo-50 text-indigo-700"
     },
+    {
+      title: "NutrientTracker",
+      description: "Suivi micronutriments, évaluation carences, recommandations personnalisées",
+      icon: Salad,
+      path: "/nutrienttracker",
+      color: "bg-lime-100 text-lime-700"
+    },
   ];
 
   return (
@@ -347,6 +354,9 @@ const Index = () => {
             </Button>
             <Button asChild variant="outline" size="lg">
               <Link to="/astingsupport">Fasting Support</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link to="/nutrienttracker">Track Nutrients</Link>
             </Button>
           </div>
         </div>

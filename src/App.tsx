@@ -38,6 +38,7 @@ import SelfCompassion from "./pages/SelfCompassion";
 import EnergyBalance from "./pages/EnergyBalance";
 import MindfulEating from "./pages/MindfulEating";
 import AstingSupport from "./pages/AstingSupport";
+import NutrientTracker from "./pages/NutrientTracker";
 
 const queryClient = new QueryClient();
 
@@ -86,6 +87,7 @@ const App = () => (
           <Route path="/selfcompassion" element={<SelfCompassion />} />
           <Route path="/energybalance" element={<EnergyBalance />} />
           <Route path="/mindfuleating" element={<MindfulEating />} />
+          <Route path="/nutrienttracker" element={<NutrientTracker />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
