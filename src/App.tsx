@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -32,6 +33,7 @@ import SleepAnalyzer from "./pages/SleepAnalyzer";
 import HydroReminder from "./pages/HydroReminder";
 import AnxietyHelper from "./pages/AnxietyHelper";
 import EmotionWheel from "./pages/EmotionWheel";
+import GratitudeGarden from "./pages/GratitudeGarden";
 
 const queryClient = new QueryClient();
 
@@ -71,9 +73,10 @@ const App = () => (
           <Route path="/fitnesslog" element={<FitnessLog />} />
           <Route path="/sleepanalyzer" element={<SleepAnalyzer />} />
           <Route path="/hydro" element={<HydroReminder />} />
-          {/* --- AJOUT AnxietyHelper --- */}
+          {/* --- WELL-BEING TOOLS --- */}
           <Route path="/anxietyhelper" element={<AnxietyHelper />} />
           <Route path="/emotionwheel" element={<EmotionWheel />} />
+          <Route path="/gratitudegarden" element={<GratitudeGarden />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse, Smile } from "lucide-react";
-// ColorPicker retiré car n’existe pas
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse, Smile, Flower } from "lucide-react";
 
 const Index = () => {
   const [isDark, setIsDark] = useState(false);
@@ -41,6 +40,13 @@ const Index = () => {
       icon: Trello,
       path: "/localboard",
       color: "bg-purple-100 text-purple-600"
+    },
+    {
+      title: "GratitudeGarden",
+      description: "Jardin virtuel de gratitude : neuroplasticité positive quotidienne",
+      icon: Flower,
+      path: "/gratitudegarden",
+      color: "bg-green-100 text-green-600"
     },
     {
       title: "Mood Tracker",
@@ -289,6 +295,9 @@ const Index = () => {
             </Button>
             <Button asChild variant="outline" size="lg">
               <Link to="/localboard">Manage Projects</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link to="/gratitudegarden">Practice Gratitude</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
               <Link to="/mood">Log Mood</Link>
