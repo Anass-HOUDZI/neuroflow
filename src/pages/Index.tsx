@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse, Smile, Flower } from "lucide-react";
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse, Smile, Flower, Scan } from "lucide-react";
 
 const Index = () => {
   const [isDark, setIsDark] = useState(false);
@@ -47,6 +47,13 @@ const Index = () => {
       icon: Flower,
       path: "/gratitudegarden",
       color: "bg-green-100 text-green-600"
+    },
+    {
+      title: "StressScanner",
+      description: "Analyseur stress physiologique : HRV, micro-expressions, biofeedback temps réel",
+      icon: Scan,
+      path: "/stressscanner",
+      color: "bg-blue-100 text-blue-600"
     },
     {
       title: "Mood Tracker",
@@ -298,6 +305,9 @@ const Index = () => {
             </Button>
             <Button asChild variant="outline" size="lg">
               <Link to="/gratitudegarden">Practice Gratitude</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link to="/stressscanner">Analyze Stress</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
               <Link to="/mood">Log Mood</Link>
