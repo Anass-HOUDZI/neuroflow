@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -25,6 +26,7 @@ import DiagramFlow from "./pages/DiagramFlow";
 import LogoMaker from "./pages/LogoMaker";
 import MemeMaker from "./pages/MemeMaker";
 import PatternGen from "./pages/PatternGen";
+import DataViz from "./pages/DataViz";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +59,8 @@ const App = () => (
           <Route path="/logomaker" element={<LogoMaker />} />
           <Route path="/mememaker" element={<MemeMaker />} />
           <Route path="/patterngen" element={<PatternGen />} />
+          {/* ANALYSIS & DATA TOOLS */}
+          <Route path="/dataviz" element={<DataViz />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

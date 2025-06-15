@@ -152,9 +152,17 @@ const Index = () => {
     {
       title: "PatternGen",
       description: "Générateur motifs, tessellations, fractales, export",
-      icon: Palette, // Remplace ColorPicker par Palette
+      icon: Palette,
       path: "/patterngen",
       color: "bg-lime-100 text-lime-600"
+    },
+    // ---- Nouveaux outils ANALYSE & DONNÉES ---- //
+    {
+      title: "DataViz",
+      description: "Visualisateur données, import CSV/JSON, graphiques interactifs",
+      icon: BarChart3,
+      path: "/dataviz",
+      color: "bg-blue-100 text-blue-600"
     },
   ];
 
