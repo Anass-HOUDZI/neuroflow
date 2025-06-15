@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -31,6 +32,7 @@ import MindfulEating from "./pages/MindfulEating";
 import AstingSupport from "./pages/AstingSupport";
 import NutrientTracker from "./pages/NutrientTracker";
 import Footer from "@/components/Footer";
+import ReloadPrompt from "@/components/pwa/ReloadPrompt";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +41,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <ReloadPrompt />
       <BrowserRouter>
         {/* ROUTES PRINCIPALES */}
         <Routes>
