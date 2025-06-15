@@ -53,6 +53,66 @@ export default function StatisticalCharts({ datasets }: StatisticalChartsProps) 
     }
   };
 
+  const renderChart = () => {
+    if (selectedChart === "histogram") {
+      const dataset = datasets.find(d => d.name === selectedDataset1);
+      if (!dataset) return null;
+      const data = createHistogramData(dataset.values);
+      return (
+        <BarChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="bin" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="count" fill="#8884d8" />
+        </BarChart>
+      );
+    }
+
+    if (selectedChart === "line") {
+      const dataset = datasets.find(d => d.name === selectedDataset1);
+      if (!dataset) return null;
+      const data = dataset.values.map((value, index) => ({ index, value }));
+      return (
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="index" />
+          <YAxis />
+          <Tooltip />
+          <Line type="monotone" dataKey="value" stroke="#8884d8" />
+        </LineChart>
+      );
+    }
+
+    if (selectedChart === "scatter" && selectedDataset2) {
+      const dataset1 = datasets.find(d => d.name === selectedDataset1);
+      const dataset2 = datasets.find(d => d.name === selectedDataset2);
+      if (!dataset1 || !dataset2) return null;
+      const data = createScatterData(dataset1, dataset2);
+      return (
+        <ScatterChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="number" dataKey="x" name={selectedDataset1} />
+          <YAxis type="number" dataKey="y" name={selectedDataset2} />
+          <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+          <Scatter dataKey="y" fill="#8884d8" />
+        </ScatterChart>
+      );
+    }
+
+    if (selectedChart === "boxplot") {
+      return (
+        <div className="flex items-center justify-center h-full">
+          <p className="text-gray-500">
+            Boîte à moustaches - Fonctionnalité à venir dans la prochaine version
+          </p>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   if (datasets.length === 0) {
     return (
       <Card>
@@ -144,59 +204,7 @@ export default function StatisticalCharts({ datasets }: StatisticalChartsProps) 
           <CardContent>
             <div className="h-96 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                {selectedChart === "histogram" && (() => {
-                  const dataset = datasets.find(d => d.name === selectedDataset1);
-                  if (!dataset) return null;
-                  const data = createHistogramData(dataset.values);
-                  return (
-                    <BarChart data={data}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="bin" />
-                      <YAxis />
-                      <Tooltip />
-                      <Bar dataKey="count" fill="#8884d8" />
-                    </BarChart>
-                  );
-                })()}
-
-                {selectedChart === "line" && (() => {
-                  const dataset = datasets.find(d => d.name === selectedDataset1);
-                  if (!dataset) return null;
-                  const data = dataset.values.map((value, index) => ({ index, value }));
-                  return (
-                    <LineChart data={data}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="index" />
-                      <YAxis />
-                      <Tooltip />
-                      <Line type="monotone" dataKey="value" stroke="#8884d8" />
-                    </LineChart>
-                  );
-                })()}
-
-                {selectedChart === "scatter" && selectedDataset2 && (() => {
-                  const dataset1 = datasets.find(d => d.name === selectedDataset1);
-                  const dataset2 = datasets.find(d => d.name === selectedDataset2);
-                  if (!dataset1 || !dataset2) return null;
-                  const data = createScatterData(dataset1, dataset2);
-                  return (
-                    <ScatterChart data={data}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis type="number" dataKey="x" name={selectedDataset1} />
-                      <YAxis type="number" dataKey="y" name={selectedDataset2} />
-                      <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                      <Scatter dataKey="y" fill="#8884d8" />
-                    </ScatterChart>
-                  );
-                })()}
-
-                {selectedChart === "boxplot" && (
-                  <div className="flex items-center justify-center h-full">
-                    <p className="text-gray-500">
-                      Boîte à moustaches - Fonctionnalité à venir dans la prochaine version
-                    </p>
-                  </div>
-                )}
+                {renderChart()}
               </ResponsiveContainer>
             </div>
           </CardContent>
