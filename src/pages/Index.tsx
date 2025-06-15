@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind } from "lucide-react";
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello } from "lucide-react";
 
 const Index = () => {
   const [isDark, setIsDark] = useState(false);
@@ -34,6 +34,13 @@ const Index = () => {
       icon: Wind,
       path: "/mindfulbreath",
       color: "bg-sky-100 text-sky-600"
+    },
+    {
+      title: "LocalBoard",
+      description: "Kanban hors-ligne pour la gestion de projet",
+      icon: Trello,
+      path: "/localboard",
+      color: "bg-purple-100 text-purple-600"
     },
     {
       title: "Mood Tracker",
@@ -156,6 +163,9 @@ const Index = () => {
             </Button>
             <Button asChild variant="outline" size="lg">
               <Link to="/mindfulbreath">Breathe</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link to="/localboard">Manage Projects</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
               <Link to="/mood">Log Mood</Link>

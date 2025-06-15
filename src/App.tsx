@@ -15,6 +15,7 @@ import CalendarPage from "./pages/Calendar";
 import ZenPad from "./pages/ZenPad";
 import HabitGrid from "./pages/HabitGrid";
 import MindfulBreath from "./pages/MindfulBreath";
+import LocalBoard from "./pages/LocalBoard";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/zenpad" element={<ZenPad />} />
           <Route path="/habitgrid" element={<HabitGrid />} />
           <Route path="/mindfulbreath" element={<MindfulBreath />} />
+          <Route path="/localboard" element={<LocalBoard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
