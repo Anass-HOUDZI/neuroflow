@@ -48,7 +48,7 @@ const features = [
     icon: Trello,
     path: "/localboard",
     category: "Productivité",
-    color: "from-purple-600 via-indigo-400 to-pink-200"
+    color: "from-cyan-400 via-teal-300 to-emerald-200"
   },
   {
     title: "MindfulEating",
@@ -136,7 +136,7 @@ const features = [
     icon: Smile,
     path: "/emotionwheel",
     category: "Bien-être & Mental",
-    color: "from-yellow-100 to-yellow-700"
+    color: "from-fuchsia-300 via-rose-200 to-violet-200"
   },
   // ---- Nouveaux outils ANALYSE & DONNÉES ---- //
   {
@@ -145,7 +145,7 @@ const features = [
     icon: BarChart3,
     path: "/dataviz",
     category: "Données & Analyse",
-    color: "from-blue-100 to-blue-50"
+    color: "from-indigo-200 via-sky-200 to-blue-100"
   },
   {
     title: "StatsPro",
@@ -194,7 +194,7 @@ const features = [
     icon: Timer,
     path: "/astingsupport",
     category: "Bien-être & Mental",
-    color: "from-indigo-50 to-indigo-700"
+    color: "from-orange-200 via-pink-200 to-pink-100"
   },
   {
     title: "NutrientTracker",
@@ -241,4 +241,3 @@ export default function Index() {
   );
 }
 // ! Fichier refactoré. Reprendre la composition en sous-composants pour la maintenabilité !
-
