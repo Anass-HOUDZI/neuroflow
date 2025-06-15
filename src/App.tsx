@@ -39,6 +39,7 @@ import EnergyBalance from "./pages/EnergyBalance";
 import MindfulEating from "./pages/MindfulEating";
 import AstingSupport from "./pages/AstingSupport";
 import NutrientTracker from "./pages/NutrientTracker";
+import Footer from "@/components/Footer";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        {/* ROUTES PRINCIPALES */}
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/mood" element={<MoodTracker />} />
@@ -91,6 +93,8 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      {/* Le footer global, toujours visible */}
+      <Footer />
     </TooltipProvider>
   </QueryClientProvider>
 );
