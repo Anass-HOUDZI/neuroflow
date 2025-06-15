@@ -41,7 +41,6 @@ export const HabitList = ({ habits, onDeleteHabit, onToggleActive }: HabitListPr
               <Switch
                 checked={habit.isActive}
                 onCheckedChange={() => onToggleActive(habit.id)}
-                size="sm"
               />
               <Button
                 variant="ghost"
