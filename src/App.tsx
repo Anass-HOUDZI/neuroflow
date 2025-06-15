@@ -27,6 +27,7 @@ import MemeMaker from "./pages/MemeMaker";
 import PatternGen from "./pages/PatternGen";
 import DataViz from "./pages/DataViz";
 import StatsPro from "./pages/StatsPro";
+import FitnessLog from "./pages/FitnessLog";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +64,7 @@ const App = () => (
           <Route path="/dataviz" element={<DataViz />} />
           <Route path="/statspro" element={<StatsPro />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/fitnesslog" element={<FitnessLog />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

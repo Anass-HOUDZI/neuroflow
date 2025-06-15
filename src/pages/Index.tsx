@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator } from "lucide-react";
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell } from "lucide-react";
 // ColorPicker retiré car n’existe pas
 
 const Index = () => {
@@ -170,6 +170,13 @@ const Index = () => {
       path: "/statspro",
       color: "bg-emerald-100 text-emerald-600"
     },
+    {
+      title: "FitnessLog",
+      description: "Journal d'entraînement simple : séances, durée, notes",
+      icon: Dumbbell,
+      path: "/fitnesslog",
+      color: "bg-lime-100 text-lime-600"
+    },
   ];
 
   return (
@@ -258,6 +265,9 @@ const Index = () => {
             </Button>
             <Button asChild variant="outline" size="lg">
               <Link to="/meditation">Start Meditation</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link to="/fitnesslog">Journal Fitness</Link>
             </Button>
           </div>
         </div>
