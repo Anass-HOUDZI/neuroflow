@@ -1,10 +1,11 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Camera, Heart, Brain, Activity, TrendingUp, Play, Pause, Info, Wind } from "lucide-react";
+import { Camera, Heart, Brain, Activity, TrendingUp, Play, Pause, Info, Wind, Scan } from "lucide-react";
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbPage, BreadcrumbLink } from "@/components/ui/breadcrumb";
 import { useNavigate } from "react-router-dom";
 
