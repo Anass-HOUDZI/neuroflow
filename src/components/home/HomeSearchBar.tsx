@@ -8,7 +8,7 @@ interface HomeSearchBarProps {
 
 export default function HomeSearchBar({ search, setSearch }: HomeSearchBarProps) {
   return (
-    <div className="flex justify-center mb-2 animate-fade-in">
+    <div className="flex justify-center mb-6 animate-fade-in">
       <Input
         type="text"
         placeholder="🔍 Rechercher un outil, une catégorie…"
@@ -19,4 +19,3 @@ export default function HomeSearchBar({ search, setSearch }: HomeSearchBarProps)
     </div>
   );
 }
-
