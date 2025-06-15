@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -54,6 +55,13 @@ const Index = () => {
       icon: Scan,
       path: "/stressscanner",
       color: "bg-blue-100 text-blue-600"
+    },
+    {
+      title: "SelfCompassion",
+      description: "Auto-compassion basée Kristin Neff : techniques, lettres, méditations bienveillantes",
+      icon: Heart,
+      path: "/selfcompassion",
+      color: "bg-rose-100 text-rose-600"
     },
     {
       title: "Mood Tracker",
@@ -171,7 +179,7 @@ const Index = () => {
     // ---- Nouvelles fonctionnalités CRÉATIVITÉ & DESIGN ---- //
     {
       title: "EmotionWheel",
-      description: "Roue des émotions interactive : granularité, journal, régulation",
+      description: "Roue des émotions interactive : granularité, journal, régulation",
       icon: Smile,
       path: "/emotionwheel",
       color: "bg-yellow-100 text-yellow-700"
@@ -308,6 +316,9 @@ const Index = () => {
             </Button>
             <Button asChild variant="outline" size="lg">
               <Link to="/stressscanner">Analyze Stress</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link to="/selfcompassion">Self-Compassion</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
               <Link to="/mood">Log Mood</Link>
