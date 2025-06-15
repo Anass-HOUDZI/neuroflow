@@ -47,7 +47,7 @@ export default function MemeCanvas({
     fontWeight: "bold",
     fontSize: "2.1rem",
     letterSpacing: "2px",
-    textTransform: "uppercase",
+    textTransform: "uppercase" as "uppercase", // <-- FIXED
     textAlign: "center" as const,
     width: "100%",
     WebkitUserSelect: "none",
