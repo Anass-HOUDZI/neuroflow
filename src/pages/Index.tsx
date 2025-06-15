@@ -1,9 +1,8 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello } from "lucide-react";
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, ColorPicker, Image, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand } from "lucide-react";
 
 const Index = () => {
   const [isDark, setIsDark] = useState(false);
@@ -83,7 +82,78 @@ const Index = () => {
       icon: Calendar,
       path: "/calendar",
       color: "bg-indigo-100 text-indigo-600"
-    }
+    },
+    // ---- Nouvelles fonctionnalités CRÉATIVITÉ & DESIGN ---- //
+    {
+      title: "PixelCraft",
+      description: "Éditeur pixel art, canvas pro, animation, palette, layers",
+      icon: Brush,
+      path: "/pixelcraft",
+      color: "bg-pink-100 text-pink-600"
+    },
+    {
+      title: "VectorStudio",
+      description: "SVG pro, Béziers, groupes, animation, gradients",
+      icon: Pencil,
+      path: "/vectorstudio",
+      color: "bg-green-100 text-green-600"
+    },
+    {
+      title: "ColorMaster",
+      description: "Studio couleurs, roue chromatique, harmonies, export dev",
+      icon: Palette,
+      path: "/colormaster",
+      color: "bg-orange-100 text-orange-600"
+    },
+    {
+      title: "SoundWeaver",
+      description: "Studio audio simple, multi-pistes, effets, export",
+      icon: Wand,
+      path: "/soundweaver",
+      color: "bg-blue-100 text-blue-600"
+    },
+    {
+      title: "QuickEdit",
+      description: "Photo rapide, filtres, correction, batch, presets",
+      icon: Scissors,
+      path: "/quickedit",
+      color: "bg-purple-100 text-purple-600"
+    },
+    {
+      title: "FontForge",
+      description: "Polices, glyphes, Béziers, import/export, preview",
+      icon: Text,
+      path: "/fontforge",
+      color: "bg-gray-100 text-gray-600"
+    },
+    {
+      title: "DiagramFlow",
+      description: "Diagrammes, flowcharts, auto-layout, connecteurs",
+      icon: PencilLine,
+      path: "/diagramflow",
+      color: "bg-cyan-100 text-cyan-600"
+    },
+    {
+      title: "LogoMaker",
+      description: "Logos, composition assistée, guidelines, export",
+      icon: Image,
+      path: "/logomaker",
+      color: "bg-fuchsia-100 text-fuchsia-600"
+    },
+    {
+      title: "MemeMaker",
+      description: "Memes, templates, upload, texte stylé, GIF animé",
+      icon: TextCursor,
+      path: "/mememaker",
+      color: "bg-yellow-100 text-yellow-600"
+    },
+    {
+      title: "PatternGen",
+      description: "Générateur motifs, tessellations, fractales, export",
+      icon: ColorPicker,
+      path: "/patterngen",
+      color: "bg-lime-100 text-lime-600"
+    },
   ];
 
   return (
