@@ -312,6 +312,9 @@ const Index = () => {
               <Link to="/localboard">Manage Projects</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
+              <Link to="/energybalance">Track Energy</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
               <Link to="/gratitudegarden">Practice Gratitude</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
