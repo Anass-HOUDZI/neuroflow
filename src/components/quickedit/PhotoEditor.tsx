@@ -1,9 +1,8 @@
-
 import React, { useRef, useState, useEffect } from "react";
 import EditorToolbar from "./EditorToolbar";
 import PhotoPreview from "./PhotoPreview";
 import ExportModal from "./ExportModal";
-import { applyFiltersToCanvas, getCroppedImageBlob } from "./utils";
+import { getCroppedImageBlob } from "./utils";
 
 // État initial des filtres
 const defaultFilters = {
