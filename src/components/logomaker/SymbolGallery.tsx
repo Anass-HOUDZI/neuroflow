@@ -4,7 +4,7 @@ import {
   Sparkles, Star, Heart, Flame, Camera, Image as ImageIcon, 
   Umbrella, Cloud, Moon, Sun, Leaf, Dice5, Infinity, Aperture, 
   Globe2, Bookmark, Eye, Brain, Triangle, Square, Hexagon, 
-  Rocket, Lightbulb, Flash, Feather, Waves, Smile, Apple, Github, 
+  Rocket, Lightbulb, Feather, Waves, Smile, Apple, Github, 
   Palette, Pen, Zap, AtSign, Check 
 } from "lucide-react";
 
@@ -25,7 +25,7 @@ const icons: { name: string; Icon: React.FC<{className?: string}> }[] = [
   { name: "Heart", Icon: Heart },
   { name: "Palette", Icon: Palette },
   { name: "Lightbulb", Icon: Lightbulb },
-  { name: "Flash", Icon: Flash },
+  // { name: "Flash", Icon: Flash }, <-- SUPPRIMÉ car inexistant
   { name: "Waves", Icon: Waves },
   { name: "Feather", Icon: Feather },
   { name: "Smile", Icon: Smile },
