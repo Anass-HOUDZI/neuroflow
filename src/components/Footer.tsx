@@ -13,7 +13,13 @@ const Footer = () => (
       items-center
       bg-transparent
       z-40
+      border-none
     "
+    style={{
+      border: "none",
+      background: "transparent",
+      boxShadow: "none",
+    }}
   >
     <span
       className="

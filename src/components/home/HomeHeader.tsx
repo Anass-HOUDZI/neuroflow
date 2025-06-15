@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Sun, Moon } from "lucide-react";
 
@@ -12,8 +11,6 @@ export default function HomeHeader({ isDark, toggleTheme }: HomeHeaderProps) {
     <header
       className="
         relative flex flex-col items-center w-full mb-0 animate-fade-in
-        rounded-3xl
-        shadow-sm
         px-2 sm:px-4
         bg-transparent
       "
@@ -34,7 +31,6 @@ export default function HomeHeader({ isDark, toggleTheme }: HomeHeaderProps) {
       >
         {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
       </Button>
-
       <div className="flex flex-col items-center w-full pt-10 pb-5 sm:pt-14 sm:pb-7">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-center leading-tight tracking-tight mb-4 select-none text-gray-900 dark:text-white drop-shadow">
           Neuro
