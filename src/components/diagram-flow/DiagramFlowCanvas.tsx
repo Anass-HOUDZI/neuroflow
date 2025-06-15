@@ -74,10 +74,7 @@ function AnnotationNode({ data }: any) {
 
 const nodeTypes = { annotation: AnnotationNode };
 
-const nodeClassName = (node: any) =>
-  node.type === "annotation"
-    ? "bg-transparent border-none shadow-none text-xs px-1"
-    : "";
+// REMOVED nodeClassName because it's not an accepted prop anymore
 
 export default function DiagramFlowCanvas() {
   const reactFlowRef = useRef<HTMLDivElement>(null);
@@ -91,8 +88,8 @@ export default function DiagramFlowCanvas() {
 
   // Export as PNG
   const handleExportPng = async () => {
-    // @ts-ignore
-    const flow = document.querySelector('.react-flow');
+    // Query returns Element | null; must be HTMLElement for html2canvas
+    const flow = document.querySelector('.react-flow') as HTMLElement | null;
     if (!flow) return;
     // Utilisation toBlob (nav support), fallback toCanvas
     const html2canvas = (await import('html2canvas')).default;
@@ -128,14 +125,15 @@ export default function DiagramFlowCanvas() {
         fitView
         minZoom={0.5}
         nodeTypes={nodeTypes}
-        nodeClassName={nodeClassName}
         proOptions={{ hideAttribution: true }}
         style={{ background: "transparent" }}
+        // nodeClassName REMOVED!
       >
-        <MiniMap nodeClassName={nodeClassName} />
+        <MiniMap /* nodeClassName REMOVED! */ />
         <Controls />
         <Background gap={16} size={0.5} color="#c3e6f5" className="opacity-80" />
       </ReactFlow>
     </div>
   );
 }
+
