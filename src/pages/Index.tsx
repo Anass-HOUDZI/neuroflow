@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun } from "lucide-react";
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText } from "lucide-react";
 
 const Index = () => {
   const [isDark, setIsDark] = useState(false);
@@ -14,6 +14,13 @@ const Index = () => {
   };
 
   const features = [
+    {
+      title: "ZenPad",
+      description: "Éditeur de texte sans distraction pour la créativité",
+      icon: FileText,
+      path: "/zenpad",
+      color: "bg-slate-100 text-slate-600"
+    },
     {
       title: "Mood Tracker",
       description: "Track your daily emotions and identify patterns",
@@ -128,6 +135,9 @@ const Index = () => {
           <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Quick Actions</h2>
           <div className="flex flex-wrap justify-center gap-4">
             <Button asChild variant="default" size="lg">
+              <Link to="/zenpad">Start Writing</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
               <Link to="/mood">Log Mood</Link>
             </Button>
             <Button asChild variant="outline" size="lg">

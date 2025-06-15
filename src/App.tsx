@@ -12,6 +12,7 @@ import Journal from "./pages/Journal";
 import Goals from "./pages/Goals";
 import Analytics from "./pages/Analytics";
 import CalendarPage from "./pages/Calendar";
+import ZenPad from "./pages/ZenPad";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/goals" element={<Goals />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/zenpad" element={<ZenPad />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
