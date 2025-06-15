@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3 } from "lucide-react";
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind } from "lucide-react";
 
 const Index = () => {
   const [isDark, setIsDark] = useState(false);
@@ -27,6 +27,13 @@ const Index = () => {
       icon: Grid3X3,
       path: "/habitgrid",
       color: "bg-emerald-100 text-emerald-600"
+    },
+    {
+      title: "MindfulBreath",
+      description: "Techniques de respiration pour la régulation du stress",
+      icon: Wind,
+      path: "/mindfulbreath",
+      color: "bg-sky-100 text-sky-600"
     },
     {
       title: "Mood Tracker",
@@ -146,6 +153,9 @@ const Index = () => {
             </Button>
             <Button asChild variant="outline" size="lg">
               <Link to="/habitgrid">Track Habits</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link to="/mindfulbreath">Breathe</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
               <Link to="/mood">Log Mood</Link>
