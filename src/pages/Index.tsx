@@ -122,31 +122,6 @@ const features = [
     category: "Productivité",
     color: "from-indigo-100 to-indigo-50"
   },
-  // ---- Nouvelles fonctionnalités CRÉATIVITÉ & DESIGN ---- //
-  {
-    title: "PixelCraft",
-    description: "Éditeur pixel art, canvas pro, animation, palette, layers",
-    icon: Brush,
-    path: "/pixelcraft",
-    category: "Créativité & Design",
-    color: "from-pink-100 to-pink-50"
-  },
-  {
-    title: "VectorStudio",
-    description: "SVG pro, Béziers, groupes, animation, gradients",
-    icon: Pencil,
-    path: "/vectorstudio",
-    category: "Créativité & Design",
-    color: "from-green-100 to-green-50"
-  },
-  {
-    title: "ColorMaster",
-    description: "Studio couleurs, roue chromatique, harmonies, export dev",
-    icon: Palette,
-    path: "/colormaster",
-    category: "Créativité & Design",
-    color: "from-orange-100 to-orange-50"
-  },
   {
     title: "SoundWeaver",
     description: "Studio audio simple, multi-pistes, effets, export",
@@ -155,55 +130,6 @@ const features = [
     category: "Créativité & Design",
     color: "from-blue-100 to-blue-50"
   },
-  {
-    title: "QuickEdit",
-    description: "Photo rapide, filtres, correction, batch, presets",
-    icon: Scissors,
-    path: "/quickedit",
-    category: "Créativité & Design",
-    color: "from-purple-100 to-purple-50"
-  },
-  {
-    title: "FontForge",
-    description: "Polices, glyphes, Béziers, import/export, preview",
-    icon: Text,
-    path: "/fontforge",
-    category: "Créativité & Design",
-    color: "from-gray-100 to-gray-50"
-  },
-  {
-    title: "DiagramFlow",
-    description: "Diagrammes, flowcharts, auto-layout, connecteurs",
-    icon: PencilLine,
-    path: "/diagramflow",
-    category: "Créativité & Design",
-    color: "from-cyan-100 to-cyan-50"
-  },
-  {
-    title: "LogoMaker",
-    description: "Logos, composition assistée, guidelines, export",
-    icon: Image,
-    path: "/logomaker",
-    category: "Créativité & Design",
-    color: "from-fuchsia-100 to-fuchsia-50"
-  },
-  {
-    title: "MemeMaker",
-    description: "Memes, templates, upload, texte stylé, GIF animé",
-    icon: TextCursor,
-    path: "/mememaker",
-    category: "Créativité & Design",
-    color: "from-yellow-100 to-yellow-50"
-  },
-  {
-    title: "PatternGen",
-    description: "Générateur motifs, tessellations, fractales, export",
-    icon: Palette,
-    path: "/patterngen",
-    category: "Créativité & Design",
-    color: "from-lime-100 to-lime-50"
-  },
-  // ---- Nouvelles fonctionnalités CRÉATIVITÉ & DESIGN ---- //
   {
     title: "EmotionWheel",
     description: "Roue des émotions interactive : granularité, journal, régulation",
@@ -315,3 +241,4 @@ export default function Index() {
   );
 }
 // ! Fichier refactoré. Reprendre la composition en sous-composants pour la maintenabilité !
+

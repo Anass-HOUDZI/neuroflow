@@ -15,16 +15,7 @@ import ZenPad from "./pages/ZenPad";
 import HabitGrid from "./pages/HabitGrid";
 import MindfulBreath from "./pages/MindfulBreath";
 import LocalBoard from "./pages/LocalBoard";
-import PixelCraft from "./pages/PixelCraft";
-import VectorStudio from "./pages/VectorStudio";
-import ColorMaster from "./pages/ColorMaster";
 import SoundWeaver from "./pages/SoundWeaver";
-import QuickEdit from "./pages/QuickEdit";
-import FontForge from "./pages/FontForge";
-import DiagramFlow from "./pages/DiagramFlow";
-import LogoMaker from "./pages/LogoMaker";
-import MemeMaker from "./pages/MemeMaker";
-import PatternGen from "./pages/PatternGen";
 import DataViz from "./pages/DataViz";
 import StatsPro from "./pages/StatsPro";
 import FitnessLog from "./pages/FitnessLog";
@@ -62,18 +53,17 @@ const App = () => (
           <Route path="/habitgrid" element={<HabitGrid />} />
           <Route path="/mindfulbreath" element={<MindfulBreath />} />
           <Route path="/localboard" element={<LocalBoard />} />
-          {/* DESIGN & CREATIVITY TOOLS */}
-          <Route path="/pixelcraft" element={<PixelCraft />} />
-          <Route path="/vectorstudio" element={<VectorStudio />} />
-          <Route path="/colormaster" element={<ColorMaster />} />
+          {/* DESIGN & CREATIVITY TOOLS SUPPRIMÉS */}
+          {/* <Route path="/pixelcraft" element={<PixelCraft />} /> */}
+          {/* <Route path="/vectorstudio" element={<VectorStudio />} /> */}
+          {/* <Route path="/colormaster" element={<ColorMaster />} /> */}
           <Route path="/soundweaver" element={<SoundWeaver />} />
-          <Route path="/quickedit" element={<QuickEdit />} />
-          <Route path="/fontforge" element={<FontForge />} />
-          <Route path="/diagramflow" element={<DiagramFlow />} />
-          <Route path="/logomaker" element={<LogoMaker />} />
-          <Route path="/mememaker" element={<MemeMaker />} />
-          <Route path="/patterngen" element={<PatternGen />} />
-          {/* ANALYSIS & DATA TOOLS */}
+          {/* <Route path="/quickedit" element={<QuickEdit />} /> */}
+          {/* <Route path="/fontforge" element={<FontForge />} /> */}
+          {/* <Route path="/diagramflow" element={<DiagramFlow />} /> */}
+          {/* <Route path="/logomaker" element={<LogoMaker />} /> */}
+          {/* <Route path="/mememaker" element={<MemeMaker />} /> */}
+          {/* <Route path="/patterngen" element={<PatternGen />} /> */}
           <Route path="/dataviz" element={<DataViz />} />
           <Route path="/statspro" element={<StatsPro />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
