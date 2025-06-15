@@ -1,9 +1,8 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image } from "lucide-react";
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator } from "lucide-react";
 // ColorPicker retiré car n’existe pas
 
 const Index = () => {
@@ -163,6 +162,13 @@ const Index = () => {
       icon: BarChart3,
       path: "/dataviz",
       color: "bg-blue-100 text-blue-600"
+    },
+    {
+      title: "StatsPro",
+      description: "Analyseur statistiques, tests hypothèses, corrélations, insights",
+      icon: Calculator,
+      path: "/statspro",
+      color: "bg-emerald-100 text-emerald-600"
     },
   ];
 
