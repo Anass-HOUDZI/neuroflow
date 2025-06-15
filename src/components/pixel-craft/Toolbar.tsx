@@ -1,5 +1,5 @@
 
-import { Pencil, Eraser, EyeDropper, Undo2, Redo, Download, Grid3X3, ZoomIn, ZoomOut } from "lucide-react";
+import { Pencil, Eraser, Pipette, Undo2, Redo, Download, Grid3X3, ZoomIn, ZoomOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import React from "react";
 
@@ -46,7 +46,7 @@ export function Toolbar({
         aria-label="Pipette"
         onClick={() => setTool("eyedropper")}
       >
-        <EyeDropper />
+        <Pipette />
       </Button>
       <span className="w-2" />
       <Button variant="outline" size="icon" aria-label="Undo" onClick={onUndo}>
