@@ -5,8 +5,8 @@ const Footer = () => (
   <footer
     className="
       w-full
-      py-2
-      mt-3
+      py-4
+      mt-14
       flex
       justify-center
       items-center
@@ -44,3 +44,4 @@ const Footer = () => (
 );
 
 export default Footer;
+
