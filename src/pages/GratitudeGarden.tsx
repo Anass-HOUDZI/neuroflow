@@ -95,10 +95,12 @@ export default function GratitudeGarden() {
         {plants.map((gratitude, index) => (
           <div 
             key={gratitude.id}
-            className="text-2xl hover:scale-110 transition-transform cursor-pointer"
+            className="text-2xl hover:scale-110 transition-transform cursor-pointer animate-pulse"
             title={`${gratitude.category}: ${gratitude.text}`}
             style={{
-              animation: `fadeIn 0.5s ease-out ${index * 0.1}s both`
+              animationDelay: `${index * 0.1}s`,
+              animationDuration: '0.5s',
+              animationFillMode: 'both'
             }}
           >
             {gratitude.plantType}
@@ -275,19 +277,6 @@ export default function GratitudeGarden() {
         </Card>
 
       </div>
-      
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px) scale(0.8);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-      `}</style>
     </main>
   );
 }
