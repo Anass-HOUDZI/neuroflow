@@ -5,9 +5,9 @@ const Footer = () => (
   <footer
     className="
       w-full
-      py-6
-      mt-4
-      mb-2
+      py-2
+      mt-2
+      mb-1
       flex
       justify-center
       items-center

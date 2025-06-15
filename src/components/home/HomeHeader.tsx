@@ -11,11 +11,11 @@ export default function HomeHeader({ isDark, toggleTheme }: HomeHeaderProps) {
   return (
     <header
       className="
-        relative flex flex-col items-center w-full mb-0 animate-fade-in 
-        bg-gradient-to-br from-blue-200 via-purple-100 to-pink-100 dark:from-slate-800 dark:via-fuchsia-900 dark:to-slate-900
+        relative flex flex-col items-center w-full mb-0 animate-fade-in
         rounded-3xl
         shadow-sm
         px-2 sm:px-4
+        bg-transparent
       "
       style={{
         minHeight: "auto",
