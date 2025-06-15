@@ -1,22 +1,13 @@
 import { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import HomeHeader from "@/components/home/HomeHeader";
+import HomeSearchBar from "@/components/home/HomeSearchBar";
+import FeatureCard from "@/components/home/FeatureCard";
 import {
   Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText,
   Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text,
   TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse, Smile,
   Flower, Scan, Apple, Timer, Salad, Leaf, Pill, Info, CheckCircle, Circle
 } from "lucide-react";
-
-const CATEGORIES = [
-  { name: "Bien-être & Mental", color: "from-blue-50 to-emerald-50" },
-  { name: "Productivité", color: "from-pink-50 to-purple-50" },
-  { name: "Données & Analyse", color: "from-indigo-50 to-sky-50" },
-  { name: "Créativité & Design", color: "from-orange-50 to-fuchsia-50" },
-  // ...extensible plus tard
-];
 
 const features = [
   {
@@ -312,82 +303,15 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 dark:from-gray-900 dark:to-gray-900 transition-colors duration-300">
       <div className="container mx-auto px-2 py-8">
-        {/* Header modernisé et centré */}
-        <div className="flex flex-col items-center justify-center mb-8 mt-2 relative">
-          <div className="bg-white/90 dark:bg-gray-900/80 rounded-3xl shadow-lg px-8 py-6 max-w-2xl w-full flex flex-col items-center animate-fade-in border border-gray-200 dark:border-gray-700">
-            <h1 className="text-5xl sm:text-6xl font-bold text-center text-gray-900 dark:text-white tracking-tight drop-shadow-lg mb-3">
-              NeuroFlow Suite
-            </h1>
-            <p className="text-xl sm:text-2xl text-center text-gray-600 dark:text-gray-300 font-medium leading-snug drop-shadow-sm">
-              Le compagnon neuroscience du mieux-être&nbsp;–&nbsp;Tout local, sans distraction
-            </p>
-          </div>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={toggleTheme}
-            className="rounded-full border-2 border-gray-200 dark:border-gray-700 shadow-sm absolute right-2 top-2"
-            aria-label="Basculer thème"
-          >
-            {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-          </Button>
-        </div>
-
-        {/* BARRE DE RECHERCHE */}
-        <div className="flex justify-center mb-6 animate-fade-in">
-          <Input
-            type="text"
-            placeholder="🔍 Rechercher un outil, une catégorie…"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="rounded-xl bg-white/80 dark:bg-gray-800 px-4 py-3 shadow-md w-full max-w-xl focus:outline-none transition"
-          />
-        </div>
-
-        {/* CARTES FONCTIONNALITÉS MODERNISÉES */}
+        <HomeHeader isDark={isDark} toggleTheme={toggleTheme} />
+        <HomeSearchBar search={search} setSearch={setSearch} />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4">
-          {filteredFeatures.map((feature, i) => {
-            const IconComponent = feature.icon;
-            return (
-              <Link key={feature.path} to={feature.path}>
-                <Card
-                  className={`
-                  group h-full cursor-pointer rounded-2xl transition 
-                  bg-gradient-to-tl ${feature.color}
-                  hover:shadow-2xl hover:-translate-y-0.5 
-                  duration-200 hover-scale
-                  border-0 shadow-md
-                  animate-fade-in
-                  `}
-                  style={{
-                    minHeight: '240px',
-                  }}>
-                  <CardHeader className="text-center flex flex-col items-center pb-2 pt-5">
-                    <div className="
-                      mx-auto rounded-full 
-                      bg-white/80 dark:bg-gray-900/80 
-                      border border-gray-200 dark:border-gray-800
-                      shadow flex items-center justify-center
-                      mb-2 w-16 h-16 sm:w-20 sm:h-20
-                      transition group-hover:scale-105
-                    ">
-                      <IconComponent className="h-9 w-9 sm:h-12 sm:w-12 text-primary-600 dark:text-primary" />
-                    </div>
-                    <CardTitle className="text-lg mt-1 font-semibold">{feature.title}</CardTitle>
-                    <CardDescription className="text-xs text-gray-600 dark:text-gray-400">{feature.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="text-center pt-0">
-                    <Button variant="outline" className="w-full rounded-xl shadow-sm hover:shadow group-hover:scale-[1.025] transition-all duration-150 text-[0.95em] py-2">
-                      Découvrir
-                    </Button>
-                  </CardContent>
-                </Card>
-              </Link>
-            );
-          })}
+          {filteredFeatures.map((feature, i) => (
+            <FeatureCard key={feature.path} feature={feature} />
+          ))}
         </div>
       </div>
     </div>
   );
 }
-// ! Ce fichier dépasse 350 lignes : il faudra penser à refactorer en composants plus petits pour la maintenance et la lisibilité !
+// ! Fichier refactoré. Reprendre la composition en sous-composants pour la maintenabilité !
