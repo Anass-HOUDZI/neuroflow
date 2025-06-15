@@ -9,7 +9,21 @@ interface HomeHeaderProps {
 
 export default function HomeHeader({ isDark, toggleTheme }: HomeHeaderProps) {
   return (
-    <header className="relative flex flex-col items-center w-full mb-0 animate-fade-in">
+    <header
+      className="
+        relative flex flex-col items-center w-full mb-0 animate-fade-in 
+        bg-gradient-to-br from-blue-200 via-purple-100 to-pink-100 dark:from-slate-800 dark:via-fuchsia-900 dark:to-slate-900
+        rounded-3xl
+        shadow-sm
+        px-2 sm:px-4
+      "
+      style={{
+        minHeight: "auto",
+        marginTop: "24px",
+        marginBottom: "26px",
+        overflow: "hidden"
+      }}
+    >
       {/* Bouton dark/light switch discret en haut à droite du bloc */}
       <Button
         variant="outline"
@@ -21,17 +35,17 @@ export default function HomeHeader({ isDark, toggleTheme }: HomeHeaderProps) {
         {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
       </Button>
 
-      <div className="flex flex-col items-center w-full pt-16 pb-10">
-        <h1 className="text-6xl sm:text-7xl md:text-8xl font-extrabold text-center leading-tight tracking-tight mb-8 select-none text-gray-900 dark:text-white">
+      <div className="flex flex-col items-center w-full pt-10 pb-5 sm:pt-14 sm:pb-7">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-center leading-tight tracking-tight mb-4 select-none text-gray-900 dark:text-white drop-shadow">
           Neuro
           <span className="ml-2 text-blue-600 dark:text-blue-400 drop-shadow">
             Flow Suite
           </span>
         </h1>
-        <p className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center text-gray-800 dark:text-gray-200 mb-4">
+        <p className="text-lg sm:text-xl md:text-2xl font-semibold text-center text-gray-800 dark:text-gray-200 mb-2">
           Le compagnon neuroscience du mieux-être
         </p>
-        <p className="text-xl sm:text-2xl md:text-2xl text-center text-gray-600 dark:text-gray-300 mt-2">
+        <p className="text-md sm:text-lg md:text-lg text-center text-gray-600 dark:text-gray-300 mt-1">
           Tout local, sans distraction
         </p>
       </div>
