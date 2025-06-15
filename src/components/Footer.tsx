@@ -5,14 +5,13 @@ const Footer = () => (
   <footer
     className="
       w-full
-      py-6
-      mt-24
-      mb-10
+      py-8
+      mt-32
+      mb-20
       flex
       justify-center
       items-center
       bg-transparent
-      // Plus de position fixed ici !
       z-40
     "
   >
@@ -43,4 +42,3 @@ const Footer = () => (
 );
 
 export default Footer;
-
