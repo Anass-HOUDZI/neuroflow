@@ -11,9 +11,9 @@ type Path = {
 
 interface VectorCanvasProps {
   paths: Path[];
-  setPaths: (p: Path[]) => void;
-  selectedId: string|null;
-  setSelectedId: (id: string|null) => void;
+  setPaths: React.Dispatch<React.SetStateAction<Path[]>>;
+  selectedId: string | null;
+  setSelectedId: (id: string | null) => void;
   tool: "pen" | "select";
 }
 
