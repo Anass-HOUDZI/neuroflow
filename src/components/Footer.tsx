@@ -6,8 +6,8 @@ const Footer = () => (
     className="
       w-full
       py-8
-      mt-32
-      mb-20
+      mt-10
+      mb-6
       flex
       justify-center
       items-center
