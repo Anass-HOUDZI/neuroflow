@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse } from "lucide-react";
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse, Smile } from "lucide-react";
 // ColorPicker retiré car n’existe pas
 
 const Index = () => {
@@ -154,6 +154,14 @@ const Index = () => {
       icon: Palette,
       path: "/patterngen",
       color: "bg-lime-100 text-lime-600"
+    },
+    // ---- Nouvelles fonctionnalités CRÉATIVITÉ & DESIGN ---- //
+    {
+      title: "EmotionWheel",
+      description: "Roue des émotions interactive : granularité, journal, régulation",
+      icon: Smile,
+      path: "/emotionwheel",
+      color: "bg-yellow-100 text-yellow-700"
     },
     // ---- Nouveaux outils ANALYSE & DONNÉES ---- //
     {
