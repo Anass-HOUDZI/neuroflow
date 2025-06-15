@@ -29,6 +29,7 @@ import DataViz from "./pages/DataViz";
 import StatsPro from "./pages/StatsPro";
 import FitnessLog from "./pages/FitnessLog";
 import SleepAnalyzer from "./pages/SleepAnalyzer";
+import HydroReminder from "./pages/HydroReminder";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +68,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="/fitnesslog" element={<FitnessLog />} />
           <Route path="/sleepanalyzer" element={<SleepAnalyzer />} />
+          <Route path="/hydro" element={<HydroReminder />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

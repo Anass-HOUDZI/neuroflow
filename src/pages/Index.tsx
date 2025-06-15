@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell } from "lucide-react";
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet } from "lucide-react";
 // ColorPicker retiré car n’existe pas
 
 const Index = () => {
@@ -183,6 +183,13 @@ const Index = () => {
       icon: Moon,
       path: "/sleepanalyzer",
       color: "bg-indigo-100 text-indigo-600"
+    },
+    {
+      title: "HydroReminder",
+      description: "Journal d'eau journalière et rappels hydratation",
+      icon: Droplet,
+      path: "/hydro",
+      color: "bg-sky-100 text-sky-600"
     },
   ];
 
