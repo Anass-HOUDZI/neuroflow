@@ -30,6 +30,7 @@ import StatsPro from "./pages/StatsPro";
 import FitnessLog from "./pages/FitnessLog";
 import SleepAnalyzer from "./pages/SleepAnalyzer";
 import HydroReminder from "./pages/HydroReminder";
+import AnxietyHelper from "./pages/AnxietyHelper";
 
 const queryClient = new QueryClient();
 
@@ -69,6 +70,8 @@ const App = () => (
           <Route path="/fitnesslog" element={<FitnessLog />} />
           <Route path="/sleepanalyzer" element={<SleepAnalyzer />} />
           <Route path="/hydro" element={<HydroReminder />} />
+          {/* --- AJOUT AnxietyHelper --- */}
+          <Route path="/anxietyhelper" element={<AnxietyHelper />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

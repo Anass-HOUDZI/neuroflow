@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet } from "lucide-react";
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse } from "lucide-react";
 // ColorPicker retiré car n’existe pas
 
 const Index = () => {
@@ -190,6 +190,14 @@ const Index = () => {
       icon: Droplet,
       path: "/hydro",
       color: "bg-sky-100 text-sky-600"
+    },
+    // ---- Nouveaux outils ANALYSE & DONNÉES ---- //
+    {
+      title: "AnxietyHelper",
+      description: "Assistant anti-anxiété basé CBT : questionnaire, techniques immédiates, protocoles crise",
+      icon: HeartPulse,
+      path: "/anxietyhelper",
+      color: "bg-pink-50 text-pink-500"
     },
   ];
 
