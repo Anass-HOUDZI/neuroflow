@@ -33,6 +33,7 @@ import AstingSupport from "./pages/AstingSupport";
 import NutrientTracker from "./pages/NutrientTracker";
 import Footer from "@/components/Footer";
 import ReloadPrompt from "@/components/pwa/ReloadPrompt";
+import PwaStatusBar from "@/components/pwa/PwaStatusBar";
 
 const queryClient = new QueryClient();
 
@@ -86,6 +87,8 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      {/* PWA: barre d’état connexion/offline (juste au dessus du footer) */}
+      <PwaStatusBar />
       {/* Le footer global, toujours visible */}
       <Footer />
     </TooltipProvider>
