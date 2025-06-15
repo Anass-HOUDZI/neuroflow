@@ -44,7 +44,29 @@ export default function FeatureCard({ feature }: FeatureCardProps) {
           <CardDescription className="text-xs text-gray-600 dark:text-gray-400">{feature.description}</CardDescription>
         </CardHeader>
         <CardContent className="text-center pt-0">
-          <Button variant="outline" className="w-full rounded-xl shadow-sm hover:shadow group-hover:scale-[1.025] transition-all duration-150 text-[0.95em] py-2">
+          <Button
+            variant="outline"
+            className={`
+              w-full rounded-xl shadow-sm hover:shadow group-hover:scale-[1.025] transition-all duration-200
+              text-[0.95em] py-2
+              bg-white/40
+              backdrop-blur-sm
+              border border-white/60
+              text-primary
+              hover:bg-white
+              active:bg-white
+              focus:bg-white
+              hover:text-primary
+              active:text-primary
+              focus:text-primary
+              hover:border-white
+              active:border-white
+              focus:border-white
+            `}
+            style={{
+              transition: "background 0.17s, border-color 0.17s, color 0.17s, box-shadow 0.17s"
+            }}
+          >
             Découvrir
           </Button>
         </CardContent>
