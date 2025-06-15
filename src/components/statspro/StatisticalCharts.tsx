@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { BarChart, Bar, LineChart, Line, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Histogram } from "recharts";
+import { BarChart, Bar, LineChart, Line, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { StatsData } from "@/pages/StatsPro";
 
 interface StatisticalChartsProps {
@@ -32,26 +32,6 @@ export default function StatisticalCharts({ datasets }: StatisticalChartsProps) 
     });
     
     return histogram;
-  };
-
-  const createBoxPlotData = (dataset: StatsData) => {
-    const sorted = [...dataset.values].sort((a, b) => a - b);
-    const n = sorted.length;
-    const q1 = sorted[Math.floor(n * 0.25)];
-    const median = n % 2 === 0 ? (sorted[n/2 - 1] + sorted[n/2]) / 2 : sorted[Math.floor(n/2)];
-    const q3 = sorted[Math.floor(n * 0.75)];
-    const min = sorted[0];
-    const max = sorted[n - 1];
-    
-    return [{
-      name: dataset.name,
-      min,
-      q1,
-      median,
-      q3,
-      max,
-      outliers: [] // Simplifié pour ce MVP
-    }];
   };
 
   const createScatterData = (dataset1: StatsData, dataset2: StatsData) => {
@@ -139,7 +119,6 @@ export default function StatisticalCharts({ datasets }: StatisticalChartsProps) 
                       {dataset.name}
                     </SelectItem>
                   ))}
-                </SelectContent>
                 </SelectContent>
               </Select>
             </div>
