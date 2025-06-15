@@ -1,12 +1,12 @@
 
-import { ColorPicker } from "lucide-react";
+import { Palette } from "lucide-react"; // ColorPicker remplacé par Palette
 
 export default function PatternGen() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-green-50 via-lime-50 to-yellow-50 dark:from-gray-900 dark:to-gray-800">
       <div className="w-full max-w-xl px-4 py-12">
         <div className="flex flex-col items-center gap-4">
-          <ColorPicker className="h-12 w-12 text-lime-500" />
+          <Palette className="h-12 w-12 text-lime-500" />
           <h1 className="text-3xl font-bold">PatternGen</h1>
           <p className="text-lg text-gray-700 dark:text-gray-300 text-center">
             Génère des motifs : fractales, tessellations, animation, palettes, export seamless, inspiration nature.
