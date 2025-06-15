@@ -20,12 +20,20 @@ const CATEGORIES = [
 
 const features = [
   {
+    title: "StressScanner",
+    description: "Analyseur stress physiologique : HRV, micro-expressions, biofeedback temps réel",
+    icon: Scan,
+    path: "/stressscanner",
+    category: "Bien-être & Mental",
+    color: "from-violet-400 via-fuchsia-300 to-pink-200" // plus vif
+  },
+  {
     title: "ZenPad",
     description: "Éditeur de texte sans distraction pour la créativité",
     icon: FileText,
     path: "/zenpad",
     category: "Productivité",
-    color: "from-blue-200 via-slate-100 to-blue-50"
+    color: "from-blue-400 via-sky-200 to-emerald-100"
   },
   {
     title: "HabitGrid",
@@ -33,7 +41,7 @@ const features = [
     icon: Grid3X3,
     path: "/habitgrid",
     category: "Bien-être & Mental",
-    color: "from-emerald-200 to-green-50"
+    color: "from-green-400 via-lime-200 to-yellow-100"
   },
   {
     title: "MindfulBreath",
@@ -41,7 +49,7 @@ const features = [
     icon: Wind,
     path: "/mindfulbreath",
     category: "Bien-être & Mental",
-    color: "from-sky-200 to-blue-50"
+    color: "from-cyan-400 via-sky-200 to-blue-100"
   },
   {
     title: "LocalBoard",
@@ -49,7 +57,7 @@ const features = [
     icon: Trello,
     path: "/localboard",
     category: "Productivité",
-    color: "from-purple-200 to-purple-50"
+    color: "from-purple-600 via-indigo-400 to-pink-200"
   },
   {
     title: "MindfulEating",
@@ -66,14 +74,6 @@ const features = [
     path: "/gratitudegarden",
     category: "Bien-être & Mental",
     color: "from-green-100 to-lime-50"
-  },
-  {
-    title: "StressScanner",
-    description: "Analyseur stress physiologique : HRV, micro-expressions, biofeedback temps réel",
-    icon: Scan,
-    path: "/stressscanner",
-    category: "Bien-être & Mental",
-    color: "from-blue-100 to-sky-50"
   },
   {
     title: "SelfCompassion",

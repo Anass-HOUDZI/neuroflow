@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Camera, Heart, Brain, Activity, TrendingUp, Play, Pause, Info, Wind } from "lucide-react";
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbPage, BreadcrumbLink } from "@/components/ui/breadcrumb";
+import { useNavigate } from "react-router-dom";
 
 interface StressReading {
   id: string;
@@ -67,6 +69,8 @@ export default function StressScanner() {
   const streamRef = useRef<MediaStream | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const scanIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const stored = localStorage.getItem('stress-readings');
@@ -184,16 +188,43 @@ export default function StressScanner() {
     : 0;
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 p-4">
+    <main className="min-h-screen animate-fade-in bg-gradient-to-br from-violet-400 via-fuchsia-300 to-pink-200 dark:from-gray-900 dark:to-gray-800 p-4">
       <div className="max-w-6xl mx-auto space-y-6">
-        
+
+        {/* Breadcrumbs et retour home */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-4">
+          <div>
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <span className="cursor-pointer text-blue-700 hover:underline" onClick={() => navigate("/")}>
+                      Accueil
+                    </span>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbItem>
+                  <BreadcrumbPage>StressScanner</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+          <button
+            onClick={() => navigate("/")}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 hover:bg-fuchsia-100 text-violet-700 font-semibold shadow transition group"
+          >
+            <Scan className="w-5 h-5 text-fuchsia-500 group-hover:scale-110 transition" />
+            Retour accueil
+          </button>
+        </div>
+
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="flex items-center justify-center gap-2">
-            <Brain className="h-10 w-10 text-blue-500" />
+            <Brain className="h-12 w-12 text-fuchsia-600 drop-shadow-lg" />
             <h1 className="text-3xl font-bold text-gray-800 dark:text-white">StressScanner</h1>
           </div>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-700 dark:text-gray-300 font-medium">
             Analyse physiologique du stress via caméra 📷
           </p>
           <div className="flex items-center justify-center gap-4 text-sm">
