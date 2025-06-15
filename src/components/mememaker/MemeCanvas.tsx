@@ -1,4 +1,3 @@
-
 import React, { useRef } from "react";
 
 type MemeCanvasProps = {
@@ -47,10 +46,10 @@ export default function MemeCanvas({
     fontWeight: "bold",
     fontSize: "2.1rem",
     letterSpacing: "2px",
-    textTransform: "uppercase" as "uppercase", // <-- FIXED
+    textTransform: "uppercase" as "uppercase",
     textAlign: "center" as const,
     width: "100%",
-    WebkitUserSelect: "none",
+    WebkitUserSelect: "none" as const,
     userSelect: "none" as const,
     padding: "0.25em 0.5em",
     lineHeight: 1.1,
