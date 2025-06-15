@@ -1,9 +1,8 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse, Smile, Flower, Scan } from "lucide-react";
+import { Brain, Heart, Target, BookOpen, BarChart3, Calendar, Moon, Sun, FileText, Grid3X3, Wind, Trello, Brush, Palette, Pencil, PencilLine, Scissors, Text, TextCursor, Wand, Image, Calculator, Dumbbell, Droplet, HeartPulse, Smile, Flower, Scan, Apple } from "lucide-react";
 
 const Index = () => {
   const [isDark, setIsDark] = useState(false);
@@ -41,6 +40,13 @@ const Index = () => {
       icon: Trello,
       path: "/localboard",
       color: "bg-purple-100 text-purple-600"
+    },
+    {
+      title: "MindfulEating",
+      description: "Alimentation consciente : signaux satiété, méditations alimentaires, gestion envies",
+      icon: Apple,
+      path: "/mindfuleating",
+      color: "bg-green-100 text-green-600"
     },
     {
       title: "GratitudeGarden",
