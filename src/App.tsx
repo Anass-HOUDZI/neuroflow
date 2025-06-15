@@ -28,6 +28,7 @@ import PatternGen from "./pages/PatternGen";
 import DataViz from "./pages/DataViz";
 import StatsPro from "./pages/StatsPro";
 import FitnessLog from "./pages/FitnessLog";
+import SleepAnalyzer from "./pages/SleepAnalyzer";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +66,7 @@ const App = () => (
           <Route path="/statspro" element={<StatsPro />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="/fitnesslog" element={<FitnessLog />} />
+          <Route path="/sleepanalyzer" element={<SleepAnalyzer />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

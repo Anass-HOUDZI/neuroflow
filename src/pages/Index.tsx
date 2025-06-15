@@ -177,6 +177,13 @@ const Index = () => {
       path: "/fitnesslog",
       color: "bg-lime-100 text-lime-600"
     },
+    {
+      title: "SleepAnalyzer",
+      description: "Analyse du sommeil : horaires, qualité, notes, historique",
+      icon: Moon,
+      path: "/sleepanalyzer",
+      color: "bg-indigo-100 text-indigo-600"
+    },
   ];
 
   return (
