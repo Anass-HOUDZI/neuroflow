@@ -1,8 +1,8 @@
-
 import React, { useRef, useState } from "react";
-import { Wand, AudioLines } from "lucide-react";
 import TrackControls from "@/components/sound-weaver/TrackControls";
 import TransportBar from "@/components/sound-weaver/TransportBar";
+import { SoundWeaverHeader } from "@/components/sound-weaver/SoundWeaverHeader";
+import { AudioVisualizer } from "@/components/sound-weaver/AudioVisualizer";
 
 type Track = {
   id: number;
@@ -10,7 +10,6 @@ type Track = {
   color: string;
   volume: number;
   muted: boolean;
-  // Pour MVP, chaque track sera un oscillateur sin/triangle
   type: OscillatorType;
 };
 
@@ -30,7 +29,6 @@ export default function SoundWeaver() {
 
   function handleMute(i: number) {
     setTracks(trs => trs.map((t, idx) => idx === i ? { ...t, muted: !t.muted } : t));
-    // si en train de jouer, mute le gain node
     const tr = tracks[i];
     if (nodesRef.current[tr.id]) {
       nodesRef.current[tr.id].gain.gain.value = tr.muted ? tracks[i].volume : 0;
@@ -57,10 +55,8 @@ export default function SoundWeaver() {
   function handlePlayPause() {
     setPlaying(prev => {
       if (!prev) {
-        // Play: crée AudioContext, démarre oscillateurs pour chaque track non-muted
         if (ctxRef.current == null) ctxRef.current = new window.AudioContext();
         let ctx = ctxRef.current;
-        // Stop tous existants
         stopAll();
 
         tracks.forEach(tr => {
@@ -82,24 +78,19 @@ export default function SoundWeaver() {
     });
   }
 
-  // Export simple : génère un buffer, puis download WAV
   function handleExport() {
-    // Pour MVP, mixe seulement la première piste (mono) pendant 2s
     const duration = 2;
     const sampleRate = 44100;
     const nSamples = duration * sampleRate;
     const buffer = new Float32Array(nSamples);
 
-    // use first track which is not muted
     const tr = tracks.find(t => !t.muted) || tracks[0];
-    // Rectangle waveform pour la démo
     for (let i = 0; i < nSamples; ++i) {
       let t = i / sampleRate;
       let v = Math.sin(2 * Math.PI * (tr.type === "triangle" ? 220 : tr.type === "sine" ? 100 : 5000) * t);
       buffer[i] = v * tr.volume;
     }
 
-    // Encode WAV (PCM 16bit), mono
     function encodeWav(samples: Float32Array, sampleRate: number) {
       const buffer = new ArrayBuffer(44 + samples.length * 2);
       const view = new DataView(buffer);
@@ -136,16 +127,7 @@ export default function SoundWeaver() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-emerald-50 via-cyan-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
       <div className="w-full max-w-2xl px-4 py-10 md:py-16 flex flex-col items-center gap-10">
-        <div className="flex flex-col items-center gap-3">
-          <Wand className="h-12 w-12 text-blue-500" />
-          <h1 className="text-3xl font-bold">SoundWeaver</h1>
-          <p className="text-lg text-gray-700 dark:text-gray-300 text-center">
-            Studio audio minimal : multi-pistes synthétiques, volume et export.
-          </p>
-          <span className="text-xs text-gray-500">
-            (Prototype – synchronisation & édition réelles : bientôt)
-          </span>
-        </div>
+        <SoundWeaverHeader />
         <div className="flex flex-col gap-8 w-full">
           <div className="flex flex-col gap-4 w-full">
             {tracks.map((track, i) => (
@@ -162,9 +144,7 @@ export default function SoundWeaver() {
           </div>
           <TransportBar playing={playing} onPlayPause={handlePlayPause} onExport={handleExport} />
         </div>
-        <div className="w-full flex justify-center mt-10">
-          <AudioLines className="w-24 h-10 text-blue-400/60" />
-        </div>
+        <AudioVisualizer />
       </div>
     </main>
   );

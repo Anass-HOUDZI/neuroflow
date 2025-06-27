@@ -1,10 +1,10 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { ArrowLeft, Download, FileText, Eye, EyeOff, Moon, Sun, Settings } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ZenPadHeader } from "@/components/zenpad/ZenPadHeader";
+import { ZenPadStats } from "@/components/zenpad/ZenPadStats";
+import { ZenPadEditor } from "@/components/zenpad/ZenPadEditor";
 
 const ZenPad = () => {
   const [content, setContent] = useState("");
@@ -88,7 +88,6 @@ const ZenPad = () => {
   if (isFullscreen) {
     return (
       <div className={`min-h-screen ${isDark ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300`}>
-        {/* Minimal header for fullscreen */}
         <div className="absolute top-4 left-4 z-10 flex items-center space-x-2 opacity-20 hover:opacity-100 transition-opacity">
           <Button
             variant="ghost"
@@ -106,7 +105,6 @@ const ZenPad = () => {
           )}
         </div>
 
-        {/* Fullscreen textarea */}
         <textarea
           ref={textareaRef}
           value={content}
@@ -126,120 +124,33 @@ const ZenPad = () => {
       isDark ? 'bg-gray-900' : 'bg-gradient-to-br from-blue-50 to-indigo-100'
     }`}>
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center">
-            <Link to="/">
-              <Button variant="ghost" size="icon" className="mr-4">
-                <ArrowLeft className="h-4 w-4" />
-              </Button>
-            </Link>
-            <div>
-              <h1 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>
-                ZenPad
-              </h1>
-              <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                Écriture sans distraction
-              </p>
-            </div>
-          </div>
+        <ZenPadHeader
+          isDark={isDark}
+          showStats={showStats}
+          onToggleStats={() => setShowStats(!showStats)}
+          onToggleTheme={toggleTheme}
+          onToggleFullscreen={() => setIsFullscreen(true)}
+        />
 
-          {/* Controls */}
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setShowStats(!showStats)}
-            >
-              {showStats ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={toggleTheme}
-            >
-              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setIsFullscreen(true)}
-            >
-              <FileText className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-
-        {/* Stats Bar */}
         {showStats && (
-          <Card className={`mb-6 p-4 ${isDark ? 'bg-gray-800 border-gray-700' : ''}`}>
-            <div className="flex justify-between items-center text-sm">
-              <div className="flex space-x-6">
-                <span className={isDark ? 'text-gray-300' : 'text-gray-600'}>
-                  <strong>{wordCount}</strong> mots
-                </span>
-                <span className={isDark ? 'text-gray-300' : 'text-gray-600'}>
-                  <strong>{charCount}</strong> caractères
-                </span>
-                <span className={isDark ? 'text-gray-300' : 'text-gray-600'}>
-                  <strong>{charCountNoSpaces}</strong> caractères (sans espaces)
-                </span>
-              </div>
-              <div className="flex items-center space-x-4">
-                {lastSaved && (
-                  <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                    Dernière sauvegarde: {lastSaved.toLocaleTimeString()}
-                  </span>
-                )}
-                <div className="flex space-x-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => exportText('txt')}
-                  >
-                    <Download className="h-3 w-3 mr-1" />
-                    TXT
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => exportText('md')}
-                  >
-                    <Download className="h-3 w-3 mr-1" />
-                    MD
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={clearContent}
-                  >
-                    Nouveau
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </Card>
+          <ZenPadStats
+            isDark={isDark}
+            wordCount={wordCount}
+            charCount={charCount}
+            charCountNoSpaces={charCountNoSpaces}
+            lastSaved={lastSaved}
+            onExportText={exportText}
+            onClearContent={clearContent}
+          />
         )}
 
-        {/* Main Editor */}
-        <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white/80 backdrop-blur-sm'}`}>
-          <div className="p-8">
-            <textarea
-              ref={textareaRef}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Commencez à écrire votre histoire..."
-              className={`w-full h-96 resize-none border-none outline-none text-lg leading-relaxed font-serif ${
-                isDark 
-                  ? 'bg-transparent text-white placeholder-gray-500' 
-                  : 'bg-transparent text-gray-900 placeholder-gray-400'
-              }`}
-              style={{ fontFamily: 'Georgia, serif' }}
-            />
-          </div>
-        </Card>
+        <ZenPadEditor
+          isDark={isDark}
+          content={content}
+          onContentChange={setContent}
+          textareaRef={textareaRef}
+        />
 
-        {/* Quick Actions */}
         <div className="mt-8 text-center">
           <div className="flex justify-center space-x-4">
             <Button
