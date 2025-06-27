@@ -1,22 +1,13 @@
-
 import { useState, useEffect, useRef } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, Play, Pause, RotateCcw, Volume2, VolumeX } from "lucide-react";
+import { ArrowLeft, Volume2, VolumeX } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-
-interface BreathingTechnique {
-  id: string;
-  name: string;
-  description: string;
-  inhale: number;
-  hold: number;
-  exhale: number;
-  cycles: number;
-  benefits: string[];
-}
+import { BreathingTechniques, BreathingTechnique } from "@/components/mindful-breath/BreathingTechniques";
+import { BreathingCircle } from "@/components/mindful-breath/BreathingCircle";
+import { SessionControls } from "@/components/mindful-breath/SessionControls";
+import { TechniqueInfo } from "@/components/mindful-breath/TechniqueInfo";
 
 const MindfulBreath = () => {
   const [selectedTechnique, setSelectedTechnique] = useState<BreathingTechnique | null>(null);
@@ -129,11 +120,9 @@ const MindfulBreath = () => {
     } else if (currentPhase === 'hold') {
       setCurrentPhase('exhale');
     } else {
-      // Fin du cycle
       setCurrentCycle(prev => {
         const newCycle = prev + 1;
         if (newCycle >= selectedTechnique.cycles) {
-          // Session terminée
           setIsActive(false);
           toast({
             title: "Session terminée ! 🌟",
@@ -178,24 +167,6 @@ const MindfulBreath = () => {
     }
   };
 
-  const getPhaseInstruction = () => {
-    switch (currentPhase) {
-      case 'inhale': return 'Inspirez profondément';
-      case 'hold': return 'Retenez votre souffle';
-      case 'exhale': return 'Expirez lentement';
-      default: return '';
-    }
-  };
-
-  const getPhaseColor = () => {
-    switch (currentPhase) {
-      case 'inhale': return 'bg-blue-500';
-      case 'hold': return 'bg-yellow-500';
-      case 'exhale': return 'bg-green-500';
-      default: return 'bg-gray-500';
-    }
-  };
-
   if (selectedTechnique) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100">
@@ -226,73 +197,26 @@ const MindfulBreath = () => {
           </div>
 
           {/* Breathing Circle */}
+          <BreathingCircle
+            currentPhase={currentPhase}
+            timeLeft={timeLeft}
+            isActive={isActive}
+          />
+
+          {/* Session Controls */}
           <div className="flex flex-col items-center mb-8">
-            <div className="relative mb-8">
-              <div 
-                className={`w-64 h-64 rounded-full ${getPhaseColor()} opacity-20 transition-all duration-1000 ${
-                  isActive && currentPhase === 'inhale' ? 'scale-125' : 
-                  isActive && currentPhase === 'exhale' ? 'scale-75' : 'scale-100'
-                }`}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl font-light text-gray-700 mb-2">
-                    {timeLeft}
-                  </div>
-                  <div className="text-lg font-medium text-gray-600">
-                    {getPhaseInstruction()}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Progress */}
-            <div className="w-full max-w-md mb-6">
-              <div className="flex justify-between text-sm text-gray-600 mb-2">
-                <span>Cycle {currentCycle + 1} sur {selectedTechnique.cycles}</span>
-                <span>{Math.round(progress)}%</span>
-              </div>
-              <Progress value={progress} className="h-2" />
-            </div>
-
-            {/* Controls */}
-            <div className="flex gap-4">
-              <Button onClick={toggleSession} size="lg">
-                {isActive ? (
-                  <>
-                    <Pause className="h-4 w-4 mr-2" />
-                    Pause
-                  </>
-                ) : (
-                  <>
-                    <Play className="h-4 w-4 mr-2" />
-                    {currentCycle === 0 ? 'Commencer' : 'Reprendre'}
-                  </>
-                )}
-              </Button>
-              <Button variant="outline" onClick={resetSession} size="lg">
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Reset
-              </Button>
-            </div>
+            <SessionControls
+              technique={selectedTechnique}
+              isActive={isActive}
+              currentCycle={currentCycle}
+              progress={progress}
+              onToggleSession={toggleSession}
+              onResetSession={resetSession}
+            />
           </div>
 
           {/* Technique Info */}
-          <Card className="max-w-md mx-auto">
-            <CardHeader>
-              <CardTitle className="text-lg">Bénéfices</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                {selectedTechnique.benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-center text-sm">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mr-3" />
-                    {benefit}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+          <TechniqueInfo technique={selectedTechnique} />
         </div>
       </div>
     );
@@ -330,43 +254,10 @@ const MindfulBreath = () => {
         </Card>
 
         {/* Techniques Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {techniques.map((technique) => (
-            <Card 
-              key={technique.id} 
-              className="hover:shadow-lg transition-all duration-300 cursor-pointer bg-white/80 backdrop-blur-sm"
-              onClick={() => startSession(technique)}
-            >
-              <CardHeader>
-                <CardTitle className="text-lg">{technique.name}</CardTitle>
-                <CardDescription>{technique.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between text-sm text-gray-600">
-                    <span>Inspiration: {technique.inhale}s</span>
-                    {technique.hold > 0 && <span>Rétention: {technique.hold}s</span>}
-                    <span>Expiration: {technique.exhale}s</span>
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    <span>{technique.cycles} cycles • ~{Math.round((technique.inhale + technique.hold + technique.exhale) * technique.cycles / 60)} minutes</span>
-                  </div>
-                  <div className="space-y-1">
-                    {technique.benefits.slice(0, 2).map((benefit, index) => (
-                      <div key={index} className="flex items-center text-xs text-gray-500">
-                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2" />
-                        {benefit}
-                      </div>
-                    ))}
-                  </div>
-                  <Button className="w-full mt-4">
-                    Commencer cette technique
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <BreathingTechniques
+          techniques={techniques}
+          onSelectTechnique={startSession}
+        />
       </div>
     </div>
   );

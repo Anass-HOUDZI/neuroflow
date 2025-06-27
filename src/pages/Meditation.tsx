@@ -1,18 +1,18 @@
-
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, Play, Pause, SkipForward, Volume2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { MeditationSession, MeditationSessionData } from "@/components/meditation/MeditationSession";
+import { MeditationPlayer } from "@/components/meditation/MeditationPlayer";
+import { QuickStart } from "@/components/meditation/QuickStart";
 
 const Meditation = () => {
-  const [selectedSession, setSelectedSession] = useState<any>(null);
+  const [selectedSession, setSelectedSession] = useState<MeditationSessionData | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
 
-  const sessions = [
+  const sessions: MeditationSessionData[] = [
     {
       id: 1,
       title: "Morning Mindfulness",
@@ -73,7 +73,7 @@ const Meditation = () => {
     let interval: NodeJS.Timeout;
     
     if (isPlaying && selectedSession) {
-      const duration = parseInt(selectedSession.duration) * 60; // Convert to seconds
+      const duration = parseInt(selectedSession.duration) * 60;
       setTotalTime(duration);
       
       interval = setInterval(() => {
@@ -127,71 +127,14 @@ const Meditation = () => {
           </div>
 
           {/* Meditation Player */}
-          <div className="max-w-2xl mx-auto">
-            <Card className="mb-6">
-              <CardContent className="pt-6">
-                {/* Meditation Visual */}
-                <div className="text-center mb-8">
-                  <div className="w-48 h-48 mx-auto bg-gradient-to-br from-purple-200 to-blue-200 rounded-full flex items-center justify-center mb-4">
-                    <div className={`w-32 h-32 rounded-full ${selectedSession.color} flex items-center justify-center animate-pulse`}>
-                      <Volume2 className="h-12 w-12" />
-                    </div>
-                  </div>
-                  <h2 className="text-2xl font-semibold mb-2">{selectedSession.title}</h2>
-                  <p className="text-gray-600">{selectedSession.category} • {selectedSession.difficulty}</p>
-                </div>
-
-                {/* Progress */}
-                <div className="mb-6">
-                  <Progress value={progress} className="mb-2" />
-                  <div className="flex justify-between text-sm text-gray-500">
-                    <span>{formatTime(currentTime)}</span>
-                    <span>{selectedSession.duration}</span>
-                  </div>
-                </div>
-
-                {/* Controls */}
-                <div className="flex items-center justify-center space-x-4">
-                  <Button variant="outline" size="icon">
-                    <SkipForward className="h-4 w-4 rotate-180" />
-                  </Button>
-                  <Button
-                    size="lg"
-                    className="w-16 h-16 rounded-full"
-                    onClick={togglePlayPause}
-                  >
-                    {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
-                  </Button>
-                  <Button variant="outline" size="icon">
-                    <SkipForward className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Session Info */}
-            <Card>
-              <CardHeader>
-                <CardTitle>About This Session</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  <div>
-                    <p className="text-2xl font-bold text-purple-600">{selectedSession.duration}</p>
-                    <p className="text-sm text-gray-600">Duration</p>
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-blue-600">{selectedSession.difficulty}</p>
-                    <p className="text-sm text-gray-600">Level</p>
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-green-600">{selectedSession.category}</p>
-                    <p className="text-sm text-gray-600">Type</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <MeditationPlayer
+            session={selectedSession}
+            isPlaying={isPlaying}
+            currentTime={currentTime}
+            progress={progress}
+            onTogglePlayPause={togglePlayPause}
+            formatTime={formatTime}
+          />
         </div>
       </div>
     );
@@ -214,61 +157,12 @@ const Meditation = () => {
         </div>
 
         {/* Quick Start */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>Quick Start</CardTitle>
-            <CardDescription>Jump into a meditation session right now</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-4">
-            <Button 
-              variant="outline" 
-              onClick={() => setSelectedSession(sessions[5])}
-            >
-              5 Min Breathing
-            </Button>
-            <Button 
-              variant="outline"
-              onClick={() => setSelectedSession(sessions[0])}
-            >
-              10 Min Mindfulness
-            </Button>
-            <Button 
-              variant="outline"
-              onClick={() => setSelectedSession(sessions[1])}
-            >
-              15 Min Stress Relief
-            </Button>
-          </CardContent>
-        </Card>
+        <QuickStart sessions={sessions} onSelectSession={setSelectedSession} />
 
         {/* Session Library */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-6 text-gray-800">Meditation Library</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sessions.map((session) => (
-              <Card 
-                key={session.id} 
-                className="hover:shadow-lg transition-all cursor-pointer"
-                onClick={() => setSelectedSession(session)}
-              >
-                <CardHeader>
-                  <div className={`w-12 h-12 rounded-full ${session.color} flex items-center justify-center mb-4`}>
-                    <Play className="h-6 w-6" />
-                  </div>
-                  <CardTitle className="text-lg">{session.title}</CardTitle>
-                  <CardDescription>{session.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex justify-between items-center text-sm text-gray-600">
-                    <span>{session.duration}</span>
-                    <span className="bg-gray-100 px-2 py-1 rounded-full text-xs">
-                      {session.difficulty}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <MeditationSession sessions={sessions} onSelectSession={setSelectedSession} />
         </div>
       </div>
     </div>
