@@ -1,19 +1,13 @@
 
 import React, { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Flower, Heart, Sun, Sprout, TreePine, Leaf } from "lucide-react";
-
-const GRATITUDE_CATEGORIES = [
-  { name: "Relations", icon: Heart, color: "bg-pink-100 text-pink-600", plantType: "🌹" },
-  { name: "Progrès perso", icon: Sprout, color: "bg-green-100 text-green-600", plantType: "🌱" },
-  { name: "Nature", icon: TreePine, color: "bg-emerald-100 text-emerald-600", plantType: "🌲" },
-  { name: "Santé", icon: Sun, color: "bg-yellow-100 text-yellow-600", plantType: "🌻" },
-  { name: "Créativité", icon: Flower, color: "bg-purple-100 text-purple-600", plantType: "🌺" },
-  { name: "Général", icon: Leaf, color: "bg-blue-100 text-blue-600", plantType: "🍀" }
-];
+import { Flower, TreePine } from "lucide-react";
+import { PageLayout, PageHeader } from "@/components/layout/PageLayout";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { GratitudeGardenDisplay, Gratitude } from "@/components/gratitude/GratitudeGarden";
+import { GratitudeForm } from "@/components/gratitude/GratitudeForm";
+import { GRATITUDE_CATEGORIES, GratitudeCategory } from "@/components/gratitude/GratitudeCategories";
 
 const GRATITUDE_PROMPTS = [
   "Qu'est-ce qui t'a fait sourire aujourd'hui ?",
@@ -26,41 +20,23 @@ const GRATITUDE_PROMPTS = [
   "Quel geste bienveillant as-tu reçu ou donné ?"
 ];
 
-interface Gratitude {
-  id: string;
-  text: string;
-  category: string;
-  date: string;
-  plantType: string;
-}
-
 export default function GratitudeGarden() {
-  const [gratitudes, setGratitudes] = useState<Gratitude[]>([]);
+  const [gratitudes, setGratitudes] = useLocalStorage<Gratitude[]>('gratitude-garden', []);
   const [newGratitude, setNewGratitude] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(GRATITUDE_CATEGORIES[0]);
+  const [selectedCategory, setSelectedCategory] = useState<GratitudeCategory>(GRATITUDE_CATEGORIES[0]);
   const [currentPrompt, setCurrentPrompt] = useState(GRATITUDE_PROMPTS[0]);
   const [todaysCount, setTodaysCount] = useState(0);
 
   useEffect(() => {
-    const stored = localStorage.getItem('gratitude-garden');
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      setGratitudes(parsed);
-      
-      // Count today's gratitudes
-      const today = new Date().toDateString();
-      const todayCount = parsed.filter((g: Gratitude) => 
-        new Date(g.date).toDateString() === today
-      ).length;
-      setTodaysCount(todayCount);
-    }
+    // Count today's gratitudes
+    const today = new Date().toDateString();
+    const todayCount = gratitudes.filter((g) => 
+      new Date(g.date).toDateString() === today
+    ).length;
+    setTodaysCount(todayCount);
     
     // Random prompt
     setCurrentPrompt(GRATITUDE_PROMPTS[Math.floor(Math.random() * GRATITUDE_PROMPTS.length)]);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('gratitude-garden', JSON.stringify(gratitudes));
   }, [gratitudes]);
 
   const addGratitude = () => {
@@ -82,60 +58,23 @@ export default function GratitudeGarden() {
     setCurrentPrompt(GRATITUDE_PROMPTS[Math.floor(Math.random() * GRATITUDE_PROMPTS.length)]);
   };
 
-  const getGardenDisplay = () => {
-    const gardenSize = Math.min(gratitudes.length, 50); // Max 50 plants visible
-    const rows = Math.ceil(Math.sqrt(gardenSize));
-    const plants = gratitudes.slice(-gardenSize);
-    
-    return (
-      <div 
-        className="grid gap-2 p-6 bg-gradient-to-br from-green-50 to-emerald-100 rounded-lg min-h-[300px]"
-        style={{ gridTemplateColumns: `repeat(${rows || 1}, 1fr)` }}
-      >
-        {plants.map((gratitude, index) => (
-          <div 
-            key={gratitude.id}
-            className="text-2xl hover:scale-110 transition-transform cursor-pointer animate-pulse"
-            title={`${gratitude.category}: ${gratitude.text}`}
-            style={{
-              animationDelay: `${index * 0.1}s`,
-              animationDuration: '0.5s',
-              animationFillMode: 'both'
-            }}
-          >
-            {gratitude.plantType}
-          </div>
-        ))}
-        {gardenSize === 0 && (
-          <div className="col-span-full flex flex-col items-center justify-center text-gray-500 py-12">
-            <Sprout className="h-16 w-16 mb-4 opacity-50" />
-            <p className="text-lg">Ton jardin attend tes premières gratitudes...</p>
-          </div>
-        )}
-      </div>
-    );
-  };
-
   const recentGratitudes = gratitudes.slice(-5).reverse();
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-900 dark:to-gray-800 p-4">
+    <PageLayout className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-4xl mx-auto space-y-6">
         
-        {/* Header */}
-        <div className="text-center space-y-2">
-          <div className="flex items-center justify-center gap-2">
-            <Flower className="h-10 w-10 text-pink-500" />
-            <h1 className="text-3xl font-bold text-gray-800 dark:text-white">GratitudeGarden</h1>
-          </div>
-          <p className="text-gray-600 dark:text-gray-300">
-            Cultive ton bien-être avec la gratitude quotidienne 🌱
-          </p>
-          <div className="flex items-center justify-center gap-4 text-sm">
-            <Badge variant="secondary">{gratitudes.length} gratitudes totales</Badge>
-            <Badge variant="secondary">{todaysCount}/3 aujourd'hui</Badge>
-          </div>
-        </div>
+        <PageHeader
+          title="GratitudeGarden"
+          description="Cultive ton bien-être avec la gratitude quotidienne 🌱"
+          icon={<Flower className="h-10 w-10 text-pink-500" />}
+          actions={
+            <div className="flex items-center justify-center gap-4 text-sm">
+              <Badge variant="secondary">{gratitudes.length} gratitudes totales</Badge>
+              <Badge variant="secondary">{todaysCount}/3 aujourd'hui</Badge>
+            </div>
+          }
+        />
 
         {/* Garden Display */}
         <Card>
@@ -149,7 +88,7 @@ export default function GratitudeGarden() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {getGardenDisplay()}
+            <GratitudeGardenDisplay gratitudes={gratitudes} />
           </CardContent>
         </Card>
 
@@ -159,58 +98,17 @@ export default function GratitudeGarden() {
           <Card>
             <CardHeader>
               <CardTitle>✨ Nouvelle Gratitude</CardTitle>
-              <CardDescription className="italic text-emerald-600">
-                "{currentPrompt}"
-              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              
-              {/* Category Selection */}
-              <div>
-                <label className="text-sm font-medium mb-2 block">Catégorie</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {GRATITUDE_CATEGORIES.map((category) => {
-                    const IconComponent = category.icon;
-                    return (
-                      <Button
-                        key={category.name}
-                        variant={selectedCategory.name === category.name ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => setSelectedCategory(category)}
-                        className="justify-start"
-                      >
-                        <IconComponent className="h-4 w-4 mr-2" />
-                        {category.name}
-                      </Button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Gratitude Input */}
-              <div>
-                <Textarea
-                  value={newGratitude}
-                  onChange={(e) => setNewGratitude(e.target.value)}
-                  placeholder="Exprime ta gratitude avec authenticité..."
-                  rows={3}
-                  className="resize-none"
-                />
-              </div>
-
-              <Button 
-                onClick={addGratitude}
-                disabled={!newGratitude.trim() || todaysCount >= 3}
-                className="w-full"
-              >
-                {todaysCount >= 3 ? "Limite quotidienne atteinte" : "Planter ma gratitude 🌱"}
-              </Button>
-              
-              {todaysCount >= 3 && (
-                <p className="text-sm text-gray-500 text-center">
-                  Revenez demain pour de nouvelles gratitudes ! La qualité prime sur la quantité.
-                </p>
-              )}
+            <CardContent>
+              <GratitudeForm
+                newGratitude={newGratitude}
+                onGratitudeChange={setNewGratitude}
+                selectedCategory={selectedCategory}
+                onCategorySelect={setSelectedCategory}
+                onSubmit={addGratitude}
+                currentPrompt={currentPrompt}
+                todaysCount={todaysCount}
+              />
             </CardContent>
           </Card>
 
@@ -253,30 +151,7 @@ export default function GratitudeGarden() {
           </Card>
         </div>
 
-        {/* Features Coming Soon */}
-        <Card>
-          <CardHeader>
-            <CardTitle>🚀 Fonctionnalités à venir</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-600 dark:text-gray-400">
-              <ul className="space-y-1">
-                <li>• Jardin 3D interactif (WebGL)</li>
-                <li>• Saisonnalité basée sur la constance</li>
-                <li>• Export journal de gratitude (PDF)</li>
-                <li>• Rappels personnalisés bienveillants</li>
-              </ul>
-              <ul className="space-y-1">
-                <li>• Photos attachées aux gratitudes</li>
-                <li>• Partage communautaire (optionnel)</li>
-                <li>• Statistiques bien-être longitudinales</li>
-                <li>• Détection patterns de gratitude</li>
-              </ul>
-            </div>
-          </CardContent>
-        </Card>
-
       </div>
-    </main>
+    </PageLayout>
   );
 }
