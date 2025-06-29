@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -31,6 +30,10 @@ import EnergyBalance from "./pages/EnergyBalance";
 import MindfulEating from "./pages/MindfulEating";
 import AstingSupport from "./pages/AstingSupport";
 import NutrientTracker from "./pages/NutrientTracker";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Favorites from "./pages/Favorites";
+import Settings from "./pages/Settings";
 import Footer from "@/components/Footer";
 import ReloadPrompt from "@/components/pwa/ReloadPrompt";
 import PwaStatusBar from "@/components/pwa/PwaStatusBar";
@@ -47,6 +50,13 @@ const App = () => (
         {/* ROUTES PRINCIPALES */}
         <Routes>
           <Route path="/" element={<Index />} />
+          {/* Nouvelles pages principales */}
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/settings" element={<Settings />} />
+          
+          {/* Routes existantes */}
           <Route path="/mood" element={<MoodTracker />} />
           <Route path="/meditation" element={<Meditation />} />
           <Route path="/journal" element={<Journal />} />
@@ -57,24 +67,12 @@ const App = () => (
           <Route path="/habitgrid" element={<HabitGrid />} />
           <Route path="/mindfulbreath" element={<MindfulBreath />} />
           <Route path="/localboard" element={<LocalBoard />} />
-          {/* DESIGN & CREATIVITY TOOLS SUPPRIMÉS */}
-          {/* <Route path="/pixelcraft" element={<PixelCraft />} /> */}
-          {/* <Route path="/vectorstudio" element={<VectorStudio />} /> */}
-          {/* <Route path="/colormaster" element={<ColorMaster />} /> */}
           <Route path="/soundweaver" element={<SoundWeaver />} />
-          {/* <Route path="/quickedit" element={<QuickEdit />} /> */}
-          {/* <Route path="/fontforge" element={<FontForge />} /> */}
-          {/* <Route path="/diagramflow" element={<DiagramFlow />} /> */}
-          {/* <Route path="/logomaker" element={<LogoMaker />} /> */}
-          {/* <Route path="/mememaker" element={<MemeMaker />} /> */}
-          {/* <Route path="/patterngen" element={<PatternGen />} /> */}
           <Route path="/dataviz" element={<DataViz />} />
           <Route path="/statspro" element={<StatsPro />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="/fitnesslog" element={<FitnessLog />} />
           <Route path="/sleepanalyzer" element={<SleepAnalyzer />} />
           <Route path="/hydro" element={<HydroReminder />} />
-          {/* --- WELL-BEING TOOLS --- */}
           <Route path="/astingsupport" element={<AstingSupport />} />
           <Route path="/anxietyhelper" element={<AnxietyHelper />} />
           <Route path="/emotionwheel" element={<EmotionWheel />} />

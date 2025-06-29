@@ -1,5 +1,6 @@
 
 import HomeHeader from "@/components/home/HomeHeader";
+import HeroSection from "@/components/home/HeroSection";
 import HomeSearchBar from "@/components/home/HomeSearchBar";
 import FeatureGrid from "@/components/home/FeatureGrid";
 import { features } from "@/data/features";
@@ -18,8 +19,13 @@ export default function Index() {
     ">
       <div className="container mx-auto px-2 py-8">
         <HomeHeader isDark={isDark} toggleTheme={toggleTheme} />
-        <HomeSearchBar search={search} setSearch={setSearch} />
-        <FeatureGrid features={filteredFeatures} />
+        <HeroSection />
+        
+        {/* Section des outils avec ID pour le scroll */}
+        <div id="tools-section" className="scroll-mt-8">
+          <HomeSearchBar search={search} setSearch={setSearch} />
+          <FeatureGrid features={filteredFeatures} />
+        </div>
       </div>
     </div>
   );
