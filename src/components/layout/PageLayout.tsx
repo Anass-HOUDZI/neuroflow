@@ -2,16 +2,18 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { ErrorBoundary } from "@/components/ui/error-boundary"
+import Breadcrumb from "@/components/navigation/Breadcrumb"
 
 interface PageLayoutProps {
   children: React.ReactNode
   className?: string
   maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "full"
   padding?: "none" | "sm" | "md" | "lg"
+  showBreadcrumb?: boolean
 }
 
 const PageLayout = React.forwardRef<HTMLDivElement, PageLayoutProps>(
-  ({ children, className, maxWidth = "2xl", padding = "md", ...props }, ref) => {
+  ({ children, className, maxWidth = "2xl", padding = "md", showBreadcrumb = true, ...props }, ref) => {
     const maxWidthClasses = {
       sm: "max-w-sm",
       md: "max-w-2xl", 
@@ -40,6 +42,7 @@ const PageLayout = React.forwardRef<HTMLDivElement, PageLayoutProps>(
           )}
           {...props}
         >
+          {showBreadcrumb && <Breadcrumb />}
           {children}
         </main>
       </ErrorBoundary>

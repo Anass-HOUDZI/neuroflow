@@ -1,6 +1,8 @@
 
 import { Button } from "@/components/ui/button";
-import { Sun, Moon } from "lucide-react";
+import { Moon, Sun, Brain } from "lucide-react";
+import MainNavigation from "@/components/navigation/MainNavigation";
+import { Link } from "react-router-dom";
 
 interface HomeHeaderProps {
   isDark: boolean;
@@ -9,51 +11,39 @@ interface HomeHeaderProps {
 
 export default function HomeHeader({ isDark, toggleTheme }: HomeHeaderProps) {
   return (
-    <header className="relative flex flex-col items-center w-full mb-6 animate-fade-in px-2 sm:px-4">
-      {/* Bouton de basculement de thème */}
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={toggleTheme}
-        className="
-          absolute right-3 top-3 
-          bg-white/60 dark:bg-gray-900/60 
-          border border-gray-200 dark:border-gray-700 
-          shadow-sm rounded-full z-10
-          hover:bg-white/80 dark:hover:bg-gray-900/80
-          transition-all duration-200
-        "
-        aria-label={isDark ? "Passer au thème clair" : "Passer au thème sombre"}
-      >
-        {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-      </Button>
+    <header className="flex items-center justify-between mb-8 p-4 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+      {/* Logo/Titre */}
+      <Link to="/" className="flex items-center gap-3 group">
+        <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-xl group-hover:scale-105 transition-transform">
+          <Brain className="h-7 w-7 text-blue-600 dark:text-blue-400" />
+        </div>
+        <div>
+          <h1 className="text-xl font-bold text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            NeuroFlow Suite
+          </h1>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Compagnon bien-être
+          </p>
+        </div>
+      </Link>
 
-      {/* Contenu principal du header */}
-      <div className="flex flex-col items-center w-full pt-10 pb-5 sm:pt-14 sm:pb-7">
-        <h1 className="
-          text-4xl sm:text-5xl md:text-6xl font-extrabold 
-          text-center leading-tight tracking-tight mb-4 select-none 
-          text-gray-900 dark:text-white drop-shadow
-        ">
-          Neuro
-          <span className="ml-2 text-blue-600 dark:text-blue-400 drop-shadow">
-            Flow Suite
-          </span>
-        </h1>
+      {/* Navigation */}
+      <div className="flex items-center gap-4">
+        <MainNavigation />
         
-        <p className="
-          text-lg sm:text-xl md:text-2xl font-semibold 
-          text-center text-gray-800 dark:text-gray-200 mb-2
-        ">
-          Le compagnon neuroscience du mieux-être
-        </p>
-        
-        <p className="
-          text-md sm:text-lg md:text-lg 
-          text-center text-gray-600 dark:text-gray-300 mt-1
-        ">
-          Tout local, sans distraction
-        </p>
+        {/* Toggle thème */}
+        <Button
+          onClick={toggleTheme}
+          variant="ghost"
+          size="icon"
+          className="rounded-full"
+        >
+          {isDark ? (
+            <Sun className="h-5 w-5 text-yellow-500" />
+          ) : (
+            <Moon className="h-5 w-5 text-blue-600" />
+          )}
+        </Button>
       </div>
     </header>
   );
