@@ -8,9 +8,8 @@ import { features } from "@/data/features";
 import { Link } from "react-router-dom";
 
 interface FavoriteFeature {
-  id: string;
-  title: string;
   path: string;
+  title: string;
   description: string;
   addedAt: string;
 }
@@ -25,17 +24,16 @@ export default function Favorites() {
     }
   }, []);
 
-  const removeFavorite = (id: string) => {
-    const updatedFavorites = favorites.filter(fav => fav.id !== id);
+  const removeFavorite = (path: string) => {
+    const updatedFavorites = favorites.filter(fav => fav.path !== path);
     setFavorites(updatedFavorites);
     localStorage.setItem('neuroflow-favorites', JSON.stringify(updatedFavorites));
   };
 
   const addSampleFavorites = () => {
     const sampleFavorites = features.slice(0, 3).map(feature => ({
-      id: feature.id,
-      title: feature.title,
       path: feature.path,
+      title: feature.title,
       description: feature.description,
       addedAt: new Date().toISOString()
     }));
@@ -69,7 +67,7 @@ export default function Favorites() {
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {favorites.map((favorite) => (
-            <Card key={favorite.id} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm group">
+            <Card key={favorite.path} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm group">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -81,7 +79,7 @@ export default function Favorites() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => removeFavorite(favorite.id)}
+                    onClick={() => removeFavorite(favorite.path)}
                     className="opacity-0 group-hover:opacity-100 transition-opacity text-red-500 hover:text-red-600"
                   >
                     <Trash2 className="h-4 w-4" />
