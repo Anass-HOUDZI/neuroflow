@@ -11,9 +11,9 @@ interface HomeHeaderProps {
 
 export default function HomeHeader({ isDark, toggleTheme }: HomeHeaderProps) {
   return (
-    <header className="flex items-center justify-between mb-8 p-4 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+    <header className="flex items-center justify-between mb-6 p-4 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
       {/* Logo/Titre */}
-      <Link to="/" className="flex items-center gap-3 group">
+      <Link to="/" className="flex items-center gap-2 group">
         <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-xl group-hover:scale-105 transition-transform">
           <Brain className="h-7 w-7 text-blue-600 dark:text-blue-400" />
         </div>
@@ -21,9 +21,6 @@ export default function HomeHeader({ isDark, toggleTheme }: HomeHeaderProps) {
           <h1 className="text-xl font-bold text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
             NeuroFlow Suite
           </h1>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            Compagnon bien-être
-          </p>
         </div>
       </Link>
 

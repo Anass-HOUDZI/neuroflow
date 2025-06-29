@@ -18,7 +18,7 @@ export default function HeroSection() {
       {/* Contenu principal */}
       <div className="text-center mb-12">
         <div className="mb-8">
-          <div className="inline-flex items-center gap-2 bg-blue-100/80 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 bg-blue-100/80 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-4 backdrop-blur-sm">
             <Sparkles className="h-4 w-4" />
             Basé sur les neurosciences du bien-être
           </div>
@@ -68,8 +68,8 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        {/* CTA centré */}
+        <div className="flex justify-center">
           <Button 
             onClick={scrollToTools}
             size="lg" 
@@ -78,10 +78,6 @@ export default function HeroSection() {
             Découvrir les outils
             <ChevronDown className="ml-2 h-5 w-5 group-hover:translate-y-0.5 transition-transform" />
           </Button>
-          
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Plus de 25+ outils disponibles • Gratuit • Open Source
-          </p>
         </div>
       </div>
 
