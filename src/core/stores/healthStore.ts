@@ -47,7 +47,7 @@ export const useHealthStore = create<HealthState>()(
   persist(
     (set) => ({
       sleepEntries: [],
-      fitnessessions: [],
+      fitnessSessions: [],
       hydrationEntries: [],
       
       addSleepEntry: (entry) => set((state) => ({
@@ -58,10 +58,10 @@ export const useHealthStore = create<HealthState>()(
       })),
       
       addFitnessSession: (session) => set((state) => ({
-        fitnessessions: [{
+        fitnessSessions: [{
           ...session,
           id: Date.now().toString()
-        }, ...state.fitnessessions]
+        }, ...state.fitnessSessions]
       })),
       
       addHydrationEntry: (entry) => set((state) => ({
@@ -73,7 +73,7 @@ export const useHealthStore = create<HealthState>()(
       
       clearData: () => set({
         sleepEntries: [],
-        fitnessessions: [],
+        fitnessSessions: [],
         hydrationEntries: []
       })
     }),

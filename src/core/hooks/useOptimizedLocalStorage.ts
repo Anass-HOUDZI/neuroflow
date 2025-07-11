@@ -1,11 +1,13 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 
+interface Serializer<T> {
+  serialize: (value: T) => string
+  deserialize: (value: string) => T
+}
+
 interface StorageOptions<T> {
-  serializer?: {
-    serialize: (value: T) => string
-    deserialize: (value: string) => T
-  }
+  serializer?: Serializer<T>
   syncAcrossTabs?: boolean
 }
 
@@ -15,7 +17,10 @@ export function useOptimizedLocalStorage<T>(
   options: StorageOptions<T> = {}
 ) {
   const {
-    serializer = JSON,
+    serializer = {
+      serialize: JSON.stringify,
+      deserialize: JSON.parse
+    } as Serializer<T>,
     syncAcrossTabs = true
   } = options
 
