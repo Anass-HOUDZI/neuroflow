@@ -11,6 +11,11 @@ const Index = lazy(() => import('@/pages/Index'))
 const OptimizedMoodTracker = lazy(() => import('@/modules/wellness/pages/OptimizedMoodTracker'))
 const OptimizedMeditation = lazy(() => import('@/modules/wellness/pages/OptimizedMeditation'))
 
+// Productivity Module - Optimized versions
+const OptimizedJournal = lazy(() => import('@/modules/productivity/pages/OptimizedJournal'))
+const OptimizedHabitGrid = lazy(() => import('@/modules/productivity/pages/OptimizedHabitGrid'))
+const OptimizedZenPad = lazy(() => import('@/modules/productivity/pages/OptimizedZenPad'))
+
 // Keep original imports for non-optimized pages for now
 const MindfulBreath = lazy(() => import('@/pages/MindfulBreath'))
 const AnxietyHelper = lazy(() => import('@/pages/AnxietyHelper'))
@@ -20,9 +25,6 @@ const EmotionWheel = lazy(() => import('@/pages/EmotionWheel'))
 const GratitudeGarden = lazy(() => import('@/pages/GratitudeGarden'))
 
 // Other modules (to be optimized in next phases)
-const Journal = lazy(() => import('@/pages/Journal'))
-const HabitGrid = lazy(() => import('@/pages/HabitGrid'))
-const ZenPad = lazy(() => import('@/pages/ZenPad'))
 const LocalBoard = lazy(() => import('@/pages/LocalBoard'))
 const Goals = lazy(() => import('@/pages/Goals'))
 const Analytics = lazy(() => import('@/pages/Analytics'))
@@ -67,10 +69,12 @@ function App() {
               <Route path="/emotion-wheel" element={<EmotionWheel />} />
               <Route path="/gratitude-garden" element={<GratitudeGarden />} />
               
-              {/* Productivity Module */}
-              <Route path="/journal" element={<Journal />} />
-              <Route path="/habit-grid" element={<HabitGrid />} />
-              <Route path="/zenpad" element={<ZenPad />} />
+              {/* Productivity Module - Optimized */}
+              <Route path="/journal" element={<OptimizedJournal />} />
+              <Route path="/habit-grid" element={<OptimizedHabitGrid />} />
+              <Route path="/zenpad" element={<OptimizedZenPad />} />
+              
+              {/* Productivity Module - Original (to be optimized) */}
               <Route path="/local-board" element={<LocalBoard />} />
               <Route path="/goals" element={<Goals />} />
               <Route path="/analytics" element={<Analytics />} />

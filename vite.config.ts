@@ -37,11 +37,34 @@ export default defineConfig({
             './src/modules/wellness/components/MeditationPlayer'
           ],
           
+          // Productivity Module - Ultra-optimized chunking
+          'productivity-core': [
+            './src/core/stores/productivityStore',
+            './src/modules/productivity/hooks/useDebouncedSave',
+            './src/modules/productivity/hooks/useVirtualScrolling'
+          ],
+          'productivity-journal': [
+            './src/modules/productivity/components/journal/OptimizedJournalEditor',
+            './src/modules/productivity/components/journal/OptimizedJournalList',
+            './src/modules/productivity/pages/OptimizedJournal'
+          ],
+          'productivity-habits': [
+            './src/modules/productivity/pages/OptimizedHabitGrid',
+            './src/components/habit-grid/HabitForm',
+            './src/components/habit-grid/HabitList',
+            './src/components/habit-grid/WeeklyGrid'
+          ],
+          'productivity-zenpad': [
+            './src/modules/productivity/components/zenpad/OptimizedZenEditor',
+            './src/modules/productivity/pages/OptimizedZenPad'
+          ],
+          
           // Other modules (to be optimized in future phases)
-          'productivity': [
-            './src/pages/Journal',
-            './src/pages/HabitGrid',
-            './src/pages/ZenPad'
+          'productivity-legacy': [
+            './src/pages/LocalBoard',
+            './src/pages/Goals',
+            './src/pages/Analytics',
+            './src/pages/Calendar'
           ],
           'health': [
             './src/pages/SleepAnalyzer',
