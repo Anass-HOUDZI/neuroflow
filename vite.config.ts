@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => ({
       registerType: 'autoUpdate',
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB limit
+        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10MB limit increased
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
@@ -26,8 +26,26 @@ export default defineConfig(({ mode }) => ({
             options: {
               cacheName: 'unsplash-images',
               expiration: {
-                maxEntries: 50,
+                maxEntries: 100,
                 maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+              }
+            }
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'google-fonts-stylesheets',
+            }
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-webfonts',
+              expiration: {
+                maxEntries: 30,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
               }
             }
           }
@@ -72,11 +90,54 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
+          // Core libraries
           'react-vendor': ['react', 'react-dom'],
           'router': ['react-router-dom'],
-          'ui': ['@radix-ui/react-dialog', '@radix-ui/react-popover', '@radix-ui/react-tabs'],
+          
+          // UI libraries by usage frequency
+          'ui-core': ['@radix-ui/react-dialog', '@radix-ui/react-popover', '@radix-ui/react-tabs', '@radix-ui/react-toast'],
+          'ui-forms': ['@radix-ui/react-select', '@radix-ui/react-slider', '@radix-ui/react-switch', '@radix-ui/react-checkbox'],
+          'ui-navigation': ['@radix-ui/react-dropdown-menu', '@radix-ui/react-navigation-menu', '@radix-ui/react-menubar'],
+          
+          // Business logic by domain
+          'wellness': [
+            './src/pages/MoodTracker',
+            './src/pages/Meditation', 
+            './src/pages/MindfulBreath',
+            './src/pages/AnxietyHelper',
+            './src/pages/StressScanner',
+            './src/pages/SelfCompassion',
+            './src/pages/EmotionWheel',
+            './src/pages/GratitudeGarden'
+          ],
+          'productivity': [
+            './src/pages/Journal',
+            './src/pages/Goals',
+            './src/pages/HabitGrid', 
+            './src/pages/ZenPad',
+            './src/pages/LocalBoard',
+            './src/pages/Analytics',
+            './src/pages/Calendar'
+          ],
+          'health': [
+            './src/pages/SleepAnalyzer',
+            './src/pages/FitnessLog',
+            './src/pages/HydroReminder',
+            './src/pages/NutrientTracker',
+            './src/pages/AstingSupport',
+            './src/pages/MindfulEating',
+            './src/pages/EnergyBalance'
+          ],
+          'data-tools': [
+            './src/pages/DataViz',
+            './src/pages/StatsPro', 
+            './src/pages/SoundWeaver'
+          ],
+          
+          // Heavy libraries
           'charts': ['recharts'],
           'query': ['@tanstack/react-query'],
+          'state': ['zustand'],
           'icons': ['lucide-react']
         }
       }
@@ -85,8 +146,23 @@ export default defineConfig(({ mode }) => ({
     minify: 'esbuild',
     cssMinify: true,
     reportCompressedSize: false,
+    sourcemap: mode === 'development',
+    chunkSizeWarningLimit: 1000 // Increase threshold for our optimized chunks
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'lucide-react']
+    include: [
+      'react', 
+      'react-dom', 
+      'react-router-dom', 
+      'lucide-react',
+      'zustand',
+      '@tanstack/react-query'
+    ],
+    // Pre-bundle frequently used dependencies
+    force: mode === 'development'
+  },
+  // Performance optimizations
+  esbuild: {
+    drop: mode === 'production' ? ['console', 'debugger'] : [],
   }
 }));

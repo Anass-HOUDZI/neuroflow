@@ -4,11 +4,11 @@ import HeroSection from "@/components/home/HeroSection";
 import HomeSearchBar from "@/components/home/HomeSearchBar";
 import FeatureGrid from "@/components/home/FeatureGrid";
 import { features } from "@/data/features";
-import { useTheme } from "@/hooks/useTheme";
+import { useOptimizedTheme } from "@/core/hooks/useOptimizedTheme";
 import { useFeatureSearch } from "@/hooks/useFeatureSearch";
 
 export default function Index() {
-  const { isDark, toggleTheme } = useTheme();
+  const { isDark, toggleTheme } = useOptimizedTheme();
   const { search, setSearch, filteredFeatures } = useFeatureSearch(features);
 
   return (

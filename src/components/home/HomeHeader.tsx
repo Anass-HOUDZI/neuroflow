@@ -2,13 +2,15 @@
 import { Button } from "@/components/ui/button";
 import { Moon, Sun, Heart, Settings, Info } from "lucide-react";
 import { Link } from "react-router-dom";
+import { memo } from "react";
 
 interface HomeHeaderProps {
   isDark: boolean;
   toggleTheme: () => void;
 }
 
-export default function HomeHeader({ isDark, toggleTheme }: HomeHeaderProps) {
+// Memoize pour éviter les re-renders inutiles
+export default memo<HomeHeaderProps>(function HomeHeader({ isDark, toggleTheme }) {
   return (
     <header className="flex items-center justify-between mb-12">
       <div className="flex items-center gap-3">
@@ -23,24 +25,29 @@ export default function HomeHeader({ isDark, toggleTheme }: HomeHeaderProps) {
 
       <nav className="flex items-center gap-2">
         <Button variant="ghost" size="icon" asChild>
-          <Link to="/about">
+          <Link to="/about" aria-label="À propos">
             <Info className="h-4 w-4" />
           </Link>
         </Button>
         <Button variant="ghost" size="icon" asChild>
-          <Link to="/favorites">
+          <Link to="/favorites" aria-label="Favoris">
             <Heart className="h-4 w-4" />
           </Link>
         </Button>
         <Button variant="ghost" size="icon" asChild>
-          <Link to="/settings">
+          <Link to="/settings" aria-label="Paramètres">
             <Settings className="h-4 w-4" />
           </Link>
         </Button>
-        <Button variant="ghost" size="icon" onClick={toggleTheme}>
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={toggleTheme}
+          aria-label={isDark ? "Mode clair" : "Mode sombre"}
+        >
           {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
         </Button>
       </nav>
     </header>
   );
-}
+});
