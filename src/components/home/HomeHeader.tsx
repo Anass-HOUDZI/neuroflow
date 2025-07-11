@@ -1,7 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, Brain } from "lucide-react";
-import MainNavigation from "@/components/navigation/MainNavigation";
+import { Moon, Sun, Heart, Settings, Info } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface HomeHeaderProps {
@@ -11,37 +10,37 @@ interface HomeHeaderProps {
 
 export default function HomeHeader({ isDark, toggleTheme }: HomeHeaderProps) {
   return (
-    <header className="flex items-center justify-between mb-6 p-4 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
-      {/* Logo/Titre */}
-      <Link to="/" className="flex items-center gap-2 group">
-        <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-xl group-hover:scale-105 transition-transform">
-          <Brain className="h-7 w-7 text-blue-600 dark:text-blue-400" />
+    <header className="flex items-center justify-between mb-12">
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 bg-gradient-to-br from-primary to-purple-600 rounded-xl flex items-center justify-center">
+          <span className="text-white font-bold text-lg">N</span>
         </div>
         <div>
-          <h1 className="text-xl font-bold text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-            NeuroFlow Suite
-          </h1>
+          <h1 className="text-2xl font-bold gradient-text">NeuroFlow Suite</h1>
+          <p className="text-sm text-muted-foreground">Compagnon bien-être scientifique</p>
         </div>
-      </Link>
-
-      {/* Navigation */}
-      <div className="flex items-center gap-4">
-        <MainNavigation />
-        
-        {/* Toggle thème */}
-        <Button
-          onClick={toggleTheme}
-          variant="ghost"
-          size="icon"
-          className="rounded-full"
-        >
-          {isDark ? (
-            <Sun className="h-5 w-5 text-yellow-500" />
-          ) : (
-            <Moon className="h-5 w-5 text-blue-600" />
-          )}
-        </Button>
       </div>
+
+      <nav className="flex items-center gap-2">
+        <Button variant="ghost" size="icon" asChild>
+          <Link to="/about">
+            <Info className="h-4 w-4" />
+          </Link>
+        </Button>
+        <Button variant="ghost" size="icon" asChild>
+          <Link to="/favorites">
+            <Heart className="h-4 w-4" />
+          </Link>
+        </Button>
+        <Button variant="ghost" size="icon" asChild>
+          <Link to="/settings">
+            <Settings className="h-4 w-4" />
+          </Link>
+        </Button>
+        <Button variant="ghost" size="icon" onClick={toggleTheme}>
+          {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        </Button>
+      </nav>
     </header>
   );
 }

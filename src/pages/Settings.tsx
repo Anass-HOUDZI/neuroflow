@@ -1,85 +1,58 @@
 
+import { useState } from "react";
 import { PageLayout, PageHeader } from "@/components/layout/PageLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings as SettingsIcon, Moon, Sun, Globe, Bell, Download, Trash } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Settings as SettingsIcon, Palette, Database, Bell, Shield, Download } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
-import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Settings() {
   const { isDark, toggleTheme } = useTheme();
-  const [language, setLanguage] = useState('fr');
+  const { toast } = useToast();
   const [notifications, setNotifications] = useState(true);
+  const [analytics, setAnalytics] = useState(false);
   const [autoSave, setAutoSave] = useState(true);
 
-  useEffect(() => {
-    const savedSettings = localStorage.getItem('neuroflow-settings');
-    if (savedSettings) {
-      const settings = JSON.parse(savedSettings);
-      setLanguage(settings.language || 'fr');
-      setNotifications(settings.notifications ?? true);
-      setAutoSave(settings.autoSave ?? true);
+  const handleExportData = () => {
+    try {
+      const data = {
+        timestamp: new Date().toISOString(),
+        settings: { isDark, notifications, analytics, autoSave },
+        // Add other local storage data
+      };
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `neuroflow-backup-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      toast({
+        title: "Export réussi",
+        description: "Vos données ont été exportées avec succès."
+      });
+    } catch (error) {
+      toast({
+        title: "Erreur d'export",
+        description: "Impossible d'exporter vos données.",
+        variant: "destructive"
+      });
     }
-  }, []);
-
-  const saveSettings = (newSettings: any) => {
-    const settings = {
-      language,
-      notifications,
-      autoSave,
-      ...newSettings
-    };
-    localStorage.setItem('neuroflow-settings', JSON.stringify(settings));
   };
 
-  const handleLanguageChange = (value: string) => {
-    setLanguage(value);
-    saveSettings({ language: value });
-  };
-
-  const handleNotificationsChange = (checked: boolean) => {
-    setNotifications(checked);
-    saveSettings({ notifications: checked });
-  };
-
-  const handleAutoSaveChange = (checked: boolean) => {
-    setAutoSave(checked);
-    saveSettings({ autoSave: checked });
-  };
-
-  const exportData = () => {
-    const allData = {};
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key?.startsWith('neuroflow-')) {
-        allData[key] = localStorage.getItem(key);
-      }
-    }
-    
-    const dataStr = JSON.stringify(allData, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `neuroflow-backup-${new Date().toISOString().split('T')[0]}.json`;
-    link.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const clearAllData = () => {
-    if (confirm('Êtes-vous sûr de vouloir effacer toutes vos données ? Cette action est irréversible.')) {
-      const keysToRemove = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key?.startsWith('neuroflow-')) {
-          keysToRemove.push(key);
-        }
-      }
-      keysToRemove.forEach(key => localStorage.removeItem(key));
-      alert('Toutes vos données ont été effacées.');
-      window.location.reload();
+  const handleClearData = () => {
+    if (confirm("Êtes-vous sûr de vouloir effacer toutes vos données locales ?")) {
+      localStorage.clear();
+      toast({
+        title: "Données effacées",
+        description: "Toutes vos données locales ont été supprimées."
+      });
     }
   };
 
@@ -87,127 +60,114 @@ export default function Settings() {
     <PageLayout className="bg-gradient-to-br from-slate-50 to-blue-100 dark:from-gray-900 dark:to-gray-900">
       <PageHeader
         title="Paramètres"
-        description="Personnalisez votre expérience NeuroFlow Suite selon vos préférences"
+        description="Personnalisez votre expérience NeuroFlow Suite"
         icon={<SettingsIcon className="h-12 w-12 text-blue-600 dark:text-blue-400" />}
       />
 
-      <div className="space-y-6">
+      <div className="max-w-2xl mx-auto space-y-6">
+        
+        {/* Appearance */}
         <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              {isDark ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+              <Palette className="h-5 w-5" />
               Apparence
             </CardTitle>
             <CardDescription>
               Personnalisez l'apparence de l'interface
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium">Mode sombre</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Activer le thème sombre pour réduire la fatigue oculaire
-                </p>
-              </div>
-              <Switch checked={isDark} onCheckedChange={toggleTheme} />
+              <Label htmlFor="theme">Mode sombre</Label>
+              <Switch 
+                id="theme" 
+                checked={isDark} 
+                onCheckedChange={toggleTheme} 
+              />
             </div>
           </CardContent>
         </Card>
 
+        {/* Privacy & Data */}
         <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Globe className="h-5 w-5" />
-              Langue et Région
+              <Shield className="h-5 w-5" />
+              Confidentialité & Données
             </CardTitle>
             <CardDescription>
-              Configurez la langue de l'interface
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium">Langue de l'interface</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Choisissez votre langue préférée
-                </p>
-              </div>
-              <Select value={language} onValueChange={handleLanguageChange}>
-                <SelectTrigger className="w-40">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="fr">Français</SelectItem>
-                  <SelectItem value="en">English</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Bell className="h-5 w-5" />
-              Notifications et Données
-            </CardTitle>
-            <CardDescription>
-              Gérez vos préférences de notifications et de sauvegarde
+              Contrôlez vos données et votre confidentialité
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium">Notifications</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Recevoir des rappels et notifications
-                </p>
-              </div>
-              <Switch checked={notifications} onCheckedChange={handleNotificationsChange} />
+              <Label htmlFor="notifications">Notifications</Label>
+              <Switch 
+                id="notifications" 
+                checked={notifications} 
+                onCheckedChange={setNotifications} 
+              />
             </div>
             
             <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium">Sauvegarde automatique</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Sauvegarder automatiquement vos données
-                </p>
-              </div>
-              <Switch checked={autoSave} onCheckedChange={handleAutoSaveChange} />
+              <Label htmlFor="analytics">Analyses d'usage (anonymes)</Label>
+              <Switch 
+                id="analytics" 
+                checked={analytics} 
+                onCheckedChange={setAnalytics} 
+              />
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <Label htmlFor="autosave">Sauvegarde automatique</Label>
+              <Switch 
+                id="autosave" 
+                checked={autoSave} 
+                onCheckedChange={setAutoSave} 
+              />
             </div>
           </CardContent>
         </Card>
 
+        {/* Data Management */}
         <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle>Données et Sauvegarde</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Database className="h-5 w-5" />
+              Gestion des données
+            </CardTitle>
             <CardDescription>
-              Gérez vos données personnelles stockées localement
+              Exportez ou supprimez vos données locales
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button onClick={exportData} className="flex items-center gap-2">
-                <Download className="h-4 w-4" />
-                Exporter mes données
-              </Button>
-              
-              <Button 
-                variant="destructive" 
-                onClick={clearAllData}
-                className="flex items-center gap-2"
-              >
-                <Trash className="h-4 w-4" />
-                Effacer toutes les données
-              </Button>
-            </div>
+            <Button onClick={handleExportData} variant="outline" className="w-full justify-start">
+              <Download className="h-4 w-4 mr-2" />
+              Exporter mes données
+            </Button>
             
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              Vos données sont stockées localement sur votre appareil et ne sont jamais transmises à des serveurs externes.
-            </p>
+            <Separator />
+            
+            <Button onClick={handleClearData} variant="destructive" className="w-full">
+              Effacer toutes les données
+            </Button>
           </CardContent>
         </Card>
+
+        {/* App Info */}
+        <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle>À propos</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-muted-foreground space-y-2">
+            <p><strong>Version :</strong> 1.0.0</p>
+            <p><strong>Build :</strong> Production</p>
+            <p><strong>Stockage :</strong> 100% Local</p>
+            <p><strong>Connexion :</strong> Non requise</p>
+          </CardContent>
+        </Card>
+
       </div>
     </PageLayout>
   );

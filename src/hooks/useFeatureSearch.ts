@@ -1,16 +1,15 @@
 
-import { useState, useMemo } from "react";
-import { Feature } from "@/data/features";
+import { useState, useMemo } from 'react';
+import { Feature } from '@/data/features';
 
-export const useFeatureSearch = (features: Feature[]) => {
-  const [search, setSearch] = useState("");
+export function useFeatureSearch(features: Feature[]) {
+  const [search, setSearch] = useState('');
 
   const filteredFeatures = useMemo(() => {
     if (!search.trim()) return features;
     
-    const searchLower = search.toLowerCase().trim();
-    
-    return features.filter((feature) =>
+    const searchLower = search.toLowerCase();
+    return features.filter(feature =>
       feature.title.toLowerCase().includes(searchLower) ||
       feature.description.toLowerCase().includes(searchLower) ||
       feature.category.toLowerCase().includes(searchLower)
@@ -22,4 +21,4 @@ export const useFeatureSearch = (features: Feature[]) => {
     setSearch,
     filteredFeatures
   };
-};
+}

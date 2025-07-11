@@ -1,32 +1,29 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-export const useTheme = () => {
+export function useTheme() {
   const [isDark, setIsDark] = useState(() => {
-    // Vérifier si un thème est déjà stocké
-    const stored = localStorage.getItem('theme');
-    if (stored) {
-      return stored === 'dark';
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('theme');
+      if (saved) return saved === 'dark';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
-    // Sinon, utiliser la préférence système
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return false;
   });
 
   useEffect(() => {
-    // Appliquer le thème au chargement
+    const root = window.document.documentElement;
+    
     if (isDark) {
-      document.documentElement.classList.add('dark');
+      root.classList.add('dark');
     } else {
-      document.documentElement.classList.remove('dark');
+      root.classList.remove('dark');
     }
     
-    // Sauvegarder la préférence
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   }, [isDark]);
 
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-  };
+  const toggleTheme = () => setIsDark(!isDark);
 
   return { isDark, toggleTheme };
-};
+}

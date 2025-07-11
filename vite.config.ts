@@ -13,20 +13,32 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === 'development' &&
-    componentTagger(),
+    mode === 'development' && componentTagger(),
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
-        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, // 3MB limit instead of default 2MB
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB limit
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'unsplash-images',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+              }
+            }
+          }
+        ]
       },
       manifest: {
         name: 'NeuroFlow Suite',
         short_name: 'NeuroFlow',
         description: 'Le compagnon neuroscience du mieux-être. Tout local, sans distraction.',
-        theme_color: '#3b82f6', // blue-600 from tailwind
-        background_color: '#f9fafb', // gray-50 from tailwind
+        theme_color: '#3b82f6',
+        background_color: '#f9fafb',
         display: 'standalone',
         scope: '/',
         start_url: '/',
@@ -56,4 +68,25 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'router': ['react-router-dom'],
+          'ui': ['@radix-ui/react-dialog', '@radix-ui/react-popover', '@radix-ui/react-tabs'],
+          'charts': ['recharts'],
+          'query': ['@tanstack/react-query'],
+          'icons': ['lucide-react']
+        }
+      }
+    },
+    target: 'es2020',
+    minify: 'esbuild',
+    cssMinify: true,
+    reportCompressedSize: false,
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', 'lucide-react']
+  }
 }));
