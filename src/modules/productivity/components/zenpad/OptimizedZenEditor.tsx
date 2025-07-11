@@ -4,7 +4,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { X, Plus } from 'lucide-react'
+import { X, Plus, Maximize, Minimize, BarChart3 } from 'lucide-react'
 import { useProductivityStore } from '@/core/stores/productivityStore'
 import { useDebouncedSave } from '@/modules/productivity/hooks/useDebouncedSave'
 
@@ -21,6 +21,8 @@ export const OptimizedZenEditor: React.FC<OptimizedZenEditorProps> = ({
   const [content, setContent] = useState('')
   const [tags, setTags] = useState<string[]>([])
   const [newTag, setNewTag] = useState('')
+  const [isFullscreen, setIsFullscreen] = useState(false)
+  const [showStats, setShowStats] = useState(false)
   
   const { zenDocuments, addZenDocument, updateZenDocument } = useProductivityStore()
   
@@ -53,7 +55,7 @@ export const OptimizedZenEditor: React.FC<OptimizedZenEditorProps> = ({
   }, [title, content, tags, documentId, addZenDocument, updateZenDocument])
 
   // Debounced auto-save
-  const debouncedSave = useDebouncedSave(handleSave, 2000)
+  const { debouncedSave } = useDebouncedSave(handleSave, 2000)
 
   // Trigger debounced save when content changes
   useEffect(() => {
@@ -81,9 +83,44 @@ export const OptimizedZenEditor: React.FC<OptimizedZenEditorProps> = ({
   }
 
   const wordCount = content.split(/\s+/).filter(word => word.length > 0).length
+  const charCount = content.length
+  const readingTime = Math.ceil(wordCount / 200)
 
   return (
-    <div className={`w-full max-w-4xl mx-auto space-y-4 ${className}`}>
+    <div className={`w-full max-w-4xl mx-auto space-y-4 ${className} ${
+      isFullscreen ? 'fixed inset-0 z-50 bg-white dark:bg-gray-900 p-8' : ''
+    }`}>
+      {/* Controls Bar */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          {showStats && (
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <span>{wordCount} mots</span>
+              <span>{charCount} caractères</span>
+              <span>{readingTime} min lecture</span>
+            </div>
+          )}
+        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowStats(!showStats)}
+            title={showStats ? "Masquer les stats" : "Afficher les stats"}
+          >
+            <BarChart3 className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsFullscreen(!isFullscreen)}
+            title={isFullscreen ? "Quitter plein écran" : "Plein écran"}
+          >
+            {isFullscreen ? <Minimize className="h-4 w-4" /> : <Maximize className="h-4 w-4" />}
+          </Button>
+        </div>
+      </div>
+
       {/* Minimal Header */}
       <div className="space-y-2">
         <Input
@@ -115,8 +152,10 @@ export const OptimizedZenEditor: React.FC<OptimizedZenEditorProps> = ({
           placeholder="Begin writing..."
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="min-h-[500px] border-none bg-transparent resize-none text-lg leading-relaxed placeholder:text-muted-foreground/50 px-0 focus-visible:ring-0"
-          rows={20}
+          className={`resize-none border-none bg-transparent text-lg leading-relaxed placeholder:text-muted-foreground/50 px-0 focus-visible:ring-0 ${
+            isFullscreen ? 'min-h-[calc(100vh-200px)]' : 'min-h-[500px]'
+          }`}
+          rows={isFullscreen ? 30 : 20}
         />
       </div>
 

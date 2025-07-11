@@ -125,7 +125,11 @@ export const OptimizedJournal: React.FC = () => {
         {showEditor && (
           <OptimizedJournalEditor
             entryId={editingEntryId}
+            onSave={() => {
+              handleCloseEditor()
+            }}
             onClose={handleCloseEditor}
+            isOpen={showEditor}
           />
         )}
       </div>
