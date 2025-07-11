@@ -1,188 +1,172 @@
 
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { Save, X, Hash } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Plus, Save, X } from 'lucide-react'
 import { useProductivityStore } from '@/core/stores/productivityStore'
-import { useDebouncedSave } from '../../hooks/useDebouncedSave'
+import { useDebouncedSave } from '@/modules/productivity/hooks/useDebouncedSave'
 
 interface OptimizedJournalEditorProps {
   entryId?: string
-  onClose: () => void
+  onSave?: () => void
 }
 
 export const OptimizedJournalEditor: React.FC<OptimizedJournalEditorProps> = ({
   entryId,
-  onClose
+  onSave
 }) => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [mood, setMood] = useState<number>(5)
   const [tags, setTags] = useState<string[]>([])
   const [newTag, setNewTag] = useState('')
-  const [mood, setMood] = useState<number>()
   
   const { journalEntries, addJournalEntry, updateJournalEntry } = useProductivityStore()
   
-  // Load existing entry if editing
+  // Load entry if editing
   useEffect(() => {
     if (entryId) {
       const entry = journalEntries.find(e => e.id === entryId)
       if (entry) {
         setTitle(entry.title)
         setContent(entry.content)
-        setTags(entry.tags)
         setMood(entry.mood)
+        setTags(entry.tags || [])
       }
     }
   }, [entryId, journalEntries])
-  
-  // Auto-focus textarea
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.focus()
-    }
-  }, [])
-  
-  // Debounced save function
-  const saveEntry = useCallback(() => {
-    if (!title.trim() || !content.trim()) return
-    
+
+  const handleSave = useCallback(() => {
     const entryData = {
-      title: title.trim(),
-      content: content.trim(),
-      tags,
+      title: title || 'Untitled Entry',
+      content,
       mood,
-      date: new Date().toISOString().split('T')[0]
+      tags,
+      date: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     }
-    
+
     if (entryId) {
       updateJournalEntry(entryId, entryData)
     } else {
       addJournalEntry(entryData)
     }
-  }, [title, content, tags, mood, entryId, addJournalEntry, updateJournalEntry])
-  
-  const { debouncedSave, saveImmediately } = useDebouncedSave(saveEntry, 2000)
-  
-  // Auto-save on content change
+    
+    onSave?.()
+  }, [title, content, mood, tags, entryId, addJournalEntry, updateJournalEntry, onSave])
+
+  // Debounced auto-save
+  const debouncedSave = useDebouncedSave(handleSave, 2000)
+
+  // Trigger debounced save when content changes
   useEffect(() => {
-    if (title.trim() && content.trim()) {
-      debouncedSave()
+    if (title || content) {
+      debouncedSave(handleSave)
     }
-  }, [title, content, tags, mood, debouncedSave])
-  
-  const handleSave = () => {
-    saveImmediately()
-    onClose()
+  }, [title, content, mood, tags, debouncedSave, handleSave])
+
+  const handleManualSave = () => {
+    handleSave()
   }
-  
-  const handleAddTag = () => {
+
+  const addTag = () => {
     if (newTag.trim() && !tags.includes(newTag.trim())) {
       setTags([...tags, newTag.trim()])
       setNewTag('')
     }
   }
-  
-  const handleRemoveTag = (tagToRemove: string) => {
+
+  const removeTag = (tagToRemove: string) => {
     setTags(tags.filter(tag => tag !== tagToRemove))
   }
-  
-  const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0
-  const charCount = content.length
-  
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      addTag()
+    }
+  }
+
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <Card className="w-full max-w-4xl max-h-[90vh] overflow-hidden">
-        <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-lg font-semibold">
-            {entryId ? 'Modifier l\'entrée' : 'Nouvelle entrée'}
-          </h2>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">
-              {wordCount} mots • {charCount} caractères
-            </span>
-            <Button onClick={handleSave} size="sm">
-              <Save className="h-4 w-4 mr-2" />
-              Sauvegarder
-            </Button>
-            <Button onClick={onClose} variant="ghost" size="sm">
-              <X className="h-4 w-4" />
+    <Card className="w-full max-w-4xl mx-auto">
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>Journal Entry</CardTitle>
+        <Button onClick={handleManualSave} size="sm" className="gap-2">
+          <Save className="h-4 w-4" />
+          Save
+        </Button>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {/* Title */}
+        <Input
+          placeholder="Entry title..."
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="text-lg font-medium"
+        />
+
+        {/* Mood Slider */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Mood (1-10)</label>
+          <input
+            type="range"
+            min="1"
+            max="10"
+            value={mood}
+            onChange={(e) => setMood(Number(e.target.value))}
+            className="w-full"
+          />
+          <div className="text-center text-sm text-muted-foreground">
+            Current mood: {mood}/10
+          </div>
+        </div>
+
+        {/* Content */}
+        <Textarea
+          placeholder="Write your thoughts..."
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          className="min-h-[300px] resize-none"
+          rows={12}
+        />
+
+        {/* Tags */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Tags</label>
+          <div className="flex gap-2 flex-wrap">
+            {tags.map((tag) => (
+              <Badge key={tag} variant="secondary" className="gap-1">
+                {tag}
+                <X
+                  className="h-3 w-3 cursor-pointer"
+                  onClick={() => removeTag(tag)}
+                />
+              </Badge>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <Input
+              placeholder="Add tag..."
+              value={newTag}
+              onChange={(e) => setNewTag(e.target.value)}
+              onKeyPress={handleKeyPress}
+              className="flex-1"
+            />
+            <Button onClick={addTag} size="sm" variant="outline">
+              <Plus className="h-4 w-4" />
             </Button>
           </div>
         </div>
-        
-        <CardContent className="p-6 space-y-6 max-h-[calc(90vh-8rem)] overflow-y-auto">
-          {/* Title */}
-          <Input
-            placeholder="Titre de votre entrée..."
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="text-lg font-medium"
-          />
-          
-          {/* Mood Selector */}
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-medium">Humeur :</span>
-            {[1, 2, 3, 4, 5].map((num) => (
-              <button
-                key={num}
-                onClick={() => setMood(mood === num ? undefined : num)}
-                className={`w-8 h-8 rounded-full border-2 transition-colors ${
-                  mood === num 
-                    ? 'border-primary bg-primary/10' 
-                    : 'border-muted hover:border-primary/50'
-                }`}
-              >
-                {num === 1 ? '😢' : num === 2 ? '😕' : num === 3 ? '😐' : num === 4 ? '😊' : '😄'}
-              </button>
-            ))}
-          </div>
-          
-          {/* Tags */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Hash className="h-4 w-4" />
-              <Input
-                placeholder="Ajouter un tag..."
-                value={newTag}
-                onChange={(e) => setNewTag(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
-                className="flex-1"
-              />
-              <Button onClick={handleAddTag} size="sm" variant="outline">
-                Ajouter
-              </Button>
-            </div>
-            {tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {tags.map((tag) => (
-                  <Badge
-                    key={tag}
-                    variant="secondary"
-                    className="cursor-pointer"
-                    onClick={() => handleRemoveTag(tag)}
-                  >
-                    {tag} ×
-                  </Badge>
-                ))}
-              </div>
-            )}
-          </div>
-          
-          {/* Content Editor */}
-          <textarea
-            ref={textareaRef}
-            placeholder="Commencez à écrire vos pensées..."
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            className="w-full h-96 resize-none border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md"
-            style={{ fontFamily: 'Georgia, serif', lineHeight: '1.6' }}
-          />
-        </CardContent>
-      </Card>
-    </div>
+
+        {/* Word Count */}
+        <div className="text-right text-sm text-muted-foreground">
+          {content.split(/\s+/).filter(word => word.length > 0).length} words
+        </div>
+      </CardContent>
+    </Card>
   )
 }

@@ -16,6 +16,12 @@ const OptimizedJournal = lazy(() => import('@/modules/productivity/pages/Optimiz
 const OptimizedHabitGrid = lazy(() => import('@/modules/productivity/pages/OptimizedHabitGrid'))
 const OptimizedZenPad = lazy(() => import('@/modules/productivity/pages/OptimizedZenPad'))
 
+// Health Module - Optimized versions (Phase 4)
+const OptimizedSleepAnalyzer = lazy(() => import('@/modules/health/pages/OptimizedSleepAnalyzer'))
+
+// Analytics Module - Optimized versions (Phase 4)
+const OptimizedAnalytics = lazy(() => import('@/modules/analytics/pages/OptimizedAnalytics'))
+
 // Keep original imports for non-optimized pages for now
 const MindfulBreath = lazy(() => import('@/pages/MindfulBreath'))
 const AnxietyHelper = lazy(() => import('@/pages/AnxietyHelper'))
@@ -77,11 +83,12 @@ function App() {
               {/* Productivity Module - Original (to be optimized) */}
               <Route path="/local-board" element={<LocalBoard />} />
               <Route path="/goals" element={<Goals />} />
-              <Route path="/analytics" element={<Analytics />} />
               <Route path="/calendar" element={<Calendar />} />
               
-              {/* Health Module */}
-              <Route path="/sleep-analyzer" element={<SleepAnalyzer />} />
+              {/* Health Module - Phase 4 Optimized */}
+              <Route path="/sleep-analyzer" element={<OptimizedSleepAnalyzer />} />
+              
+              {/* Health Module - Original (will be optimized) */}
               <Route path="/fitness-log" element={<FitnessLog />} />
               <Route path="/hydro-reminder" element={<HydroReminder />} />
               <Route path="/nutrient-tracker" element={<NutrientTracker />} />
@@ -89,7 +96,10 @@ function App() {
               <Route path="/mindful-eating" element={<MindfulEating />} />
               <Route path="/energy-balance" element={<EnergyBalance />} />
               
-              {/* Data Module */}
+              {/* Analytics Module - Phase 4 Optimized */}
+              <Route path="/analytics" element={<OptimizedAnalytics />} />
+              
+              {/* Data Module - Original (will be optimized) */}
               <Route path="/data-viz" element={<DataViz />} />
               <Route path="/stats-pro" element={<StatsPro />} />
               <Route path="/sound-weaver" element={<SoundWeaver />} />
