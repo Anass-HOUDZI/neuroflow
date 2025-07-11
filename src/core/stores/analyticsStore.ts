@@ -87,6 +87,22 @@ interface PersonalMetrics {
   }
 }
 
+// Consolidated Insights Types
+interface ConsolidatedInsights {
+  overallScore: number
+  recommendations: {
+    title: string
+    description: string
+    priority: 'low' | 'medium' | 'high'
+    modules: string[]
+  }[]
+  trends: {
+    improving: string[]
+    declining: string[]
+    stable: string[]
+  }
+}
+
 // Main Store Interface
 interface AnalyticsState {
   // Charts & Visualizations
@@ -107,6 +123,10 @@ interface AnalyticsState {
   crossModuleCorrelations: CrossModuleCorrelation[]
   generateInsights: () => void
   generateCorrelations: () => void
+  
+  // New methods for analytics
+  getConsolidatedInsights: (timeRange: 'week' | 'month' | 'quarter') => ConsolidatedInsights
+  getCrossModuleCorrelations: () => CrossModuleCorrelation[]
   
   // Personal Metrics
   personalMetrics: PersonalMetrics | null
@@ -311,6 +331,58 @@ export const useAnalyticsStore = create<AnalyticsState>()(
         })
         
         set({ crossModuleCorrelations: correlations })
+      },
+      
+      // New Analytics Methods
+      getConsolidatedInsights: (timeRange) => {
+        // Mock consolidated insights based on time range
+        const baseScore = timeRange === 'week' ? 78 : timeRange === 'month' ? 82 : 85
+        
+        return {
+          overallScore: baseScore,
+          recommendations: [
+            {
+              title: 'Améliorer la régularité du sommeil',
+              description: 'Vos heures de coucher varient trop, impactant votre récupération',
+              priority: 'high',
+              modules: ['health', 'wellness']
+            },
+            {
+              title: 'Augmenter la fréquence de méditation',
+              description: 'La méditation régulière pourrait améliorer votre gestion du stress',
+              priority: 'medium',
+              modules: ['wellness']
+            },
+            {
+              title: 'Optimiser vos sessions de journal',
+              description: 'Écrire plus régulièrement pourrait améliorer votre clarté mentale',
+              priority: 'low',
+              modules: ['productivity']
+            }
+          ],
+          trends: {
+            improving: ['Qualité du sommeil', 'Humeur générale'],
+            declining: ['Niveau d\'énergie'],
+            stable: ['Productivité', 'Méditation']
+          }
+        }
+      },
+      
+      getCrossModuleCorrelations: () => {
+        return get().crossModuleCorrelations.length > 0 ? get().crossModuleCorrelations : [
+          {
+            id: 'default-sleep-mood',
+            title: 'Sommeil et Humeur',
+            description: 'Corrélation positive entre qualité du sommeil et humeur quotidienne',
+            strength: 'strong' as const
+          },
+          {
+            id: 'default-exercise-energy',
+            title: 'Exercice et Énergie',
+            description: 'L\'activité physique régulière améliore significativement les niveaux d\'énergie',
+            strength: 'moderate' as const
+          }
+        ]
       },
       
       // Personal Metrics Actions

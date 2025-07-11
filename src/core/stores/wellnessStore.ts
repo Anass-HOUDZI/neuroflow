@@ -1,3 +1,4 @@
+
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -18,6 +19,28 @@ interface MeditationSession {
   quality: number
 }
 
+interface WellnessStats {
+  mood: {
+    totalEntries: number
+    averageMood: number
+    moodTrend: 'improving' | 'stable' | 'declining'
+  }
+  meditation: {
+    totalSessions: number
+    totalMinutes: number
+    averageQuality: number
+    favoritesTechniques: string[]
+  }
+  energy: {
+    averageEnergy: number
+    energyTrend: 'improving' | 'stable' | 'declining'
+  }
+  stress: {
+    averageStress: number
+    stressTrend: 'improving' | 'stable' | 'declining'
+  }
+}
+
 interface WellnessState {
   // Mood Tracker
   moodEntries: MoodEntry[]
@@ -32,6 +55,9 @@ interface WellnessState {
     averageQuality: number
     favoritesTechniques: string[]
   }
+  
+  // New method for getting comprehensive stats
+  getStats: () => WellnessStats
   
   // Shared
   clearData: () => void
@@ -87,6 +113,40 @@ export const useWellnessStore = create<WellnessState>()(
           totalMinutes,
           averageQuality: Math.round(averageQuality * 10) / 10,
           favoritesTechniques
+        }
+      },
+      
+      getStats: () => {
+        const moodEntries = get().moodEntries
+        const meditationSessions = get().meditationSessions
+        
+        // Calculate mood stats
+        const moodStats = {
+          totalEntries: moodEntries.length,
+          averageMood: moodEntries.length > 0 ? moodEntries.reduce((sum, entry) => sum + entry.mood, 0) / moodEntries.length : 0,
+          moodTrend: 'stable' as const
+        }
+        
+        // Calculate energy stats
+        const energyStats = {
+          averageEnergy: moodEntries.length > 0 ? moodEntries.reduce((sum, entry) => sum + entry.energy, 0) / moodEntries.length : 0,
+          energyTrend: 'stable' as const
+        }
+        
+        // Calculate stress stats
+        const stressStats = {
+          averageStress: moodEntries.length > 0 ? moodEntries.reduce((sum, entry) => sum + entry.stress, 0) / moodEntries.length : 0,
+          stressTrend: 'stable' as const
+        }
+        
+        // Calculate meditation stats
+        const meditationStats = get().getMeditationStats()
+        
+        return {
+          mood: moodStats,
+          meditation: meditationStats,
+          energy: energyStats,
+          stress: stressStats
         }
       },
       

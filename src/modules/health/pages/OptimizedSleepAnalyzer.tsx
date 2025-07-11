@@ -18,13 +18,17 @@ export const OptimizedSleepAnalyzer: React.FC = () => {
   const handleAddEntry = () => {
     if (!bedtime || !waketime) return
     
+    const duration = calculateDuration(bedtime, waketime)
+    const sleepDebt = Math.max(0, 8 - duration) // Assuming 8h target
+    
     addSleepEntry({
       date: new Date().toISOString().split('T')[0],
       bedtime,
       waketime,
       quality,
       notes: notes.trim(),
-      duration: calculateDuration(bedtime, waketime)
+      duration,
+      sleepDebt
     })
     
     // Reset form

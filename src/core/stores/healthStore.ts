@@ -9,8 +9,8 @@ interface SleepEntry {
   bedtime: string
   waketime: string
   quality: number // 1-10
-  duration: number // in minutes
-  sleepDebt: number
+  duration: number // in hours
+  sleepDebt: number // in hours
   notes: string
   stages?: {
     deep: number
@@ -21,7 +21,7 @@ interface SleepEntry {
 }
 
 interface SleepGoals {
-  targetDuration: number // in minutes
+  targetDuration: number // in hours
   targetBedtime: string
   targetWaketime: string
 }
@@ -143,6 +143,15 @@ interface HealthCorrelation {
   significance: number
 }
 
+// Sleep Stats Interface
+interface SleepStats {
+  totalEntries: number
+  averageDuration: number
+  averageQuality: number
+  sleepDebt: number
+  consistency: number
+}
+
 // Main Store Interface
 interface HealthState {
   // Sleep
@@ -152,6 +161,7 @@ interface HealthState {
   updateSleepEntry: (id: string, entry: Partial<SleepEntry>) => void
   deleteSleepEntry: (id: string) => void
   setSleepGoals: (goals: SleepGoals) => void
+  getSleepStats: () => SleepStats
   
   // Fitness
   workoutEntries: WorkoutEntry[]
@@ -195,7 +205,7 @@ interface HealthState {
 }
 
 const defaultSleepGoals: SleepGoals = {
-  targetDuration: 480, // 8 hours
+  targetDuration: 8, // 8 hours
   targetBedtime: '22:00',
   targetWaketime: '06:00'
 }
@@ -287,6 +297,32 @@ export const useHealthStore = create<HealthState>()(
       })),
       
       setSleepGoals: (goals) => set({ sleepGoals: goals }),
+      
+      getSleepStats: () => {
+        const entries = get().sleepEntries
+        if (entries.length === 0) {
+          return {
+            totalEntries: 0,
+            averageDuration: 0,
+            averageQuality: 0,
+            sleepDebt: 0,
+            consistency: 0
+          }
+        }
+        
+        const totalDuration = entries.reduce((sum, entry) => sum + entry.duration, 0)
+        const totalQuality = entries.reduce((sum, entry) => sum + entry.quality, 0)
+        const targetDuration = get().sleepGoals.targetDuration
+        const sleepDebt = entries.reduce((sum, entry) => sum + Math.max(0, targetDuration - entry.duration), 0)
+        
+        return {
+          totalEntries: entries.length,
+          averageDuration: totalDuration / entries.length,
+          averageQuality: totalQuality / entries.length,
+          sleepDebt: sleepDebt,
+          consistency: entries.length > 0 ? (entries.filter(e => Math.abs(e.duration - targetDuration) <= 1).length / entries.length) * 100 : 0
+        }
+      },
       
       // Fitness Actions
       addWorkoutEntry: (entry) => set((state) => ({
