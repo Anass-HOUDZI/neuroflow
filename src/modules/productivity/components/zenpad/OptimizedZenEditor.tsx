@@ -28,7 +28,7 @@ export const OptimizedZenEditor: React.FC<OptimizedZenEditorProps> = ({
   const [content, setContent] = useState('')
   const [tags, setTags] = useState<string[]>([])
   
-  const { zenDocuments, addZenDocument, updateZenDocument, setCurrentDocument } = useProductivityStore()
+  const { zenDocuments, addZenDocument, updateZenDocument } = useProductivityStore()
   
   // Load document if editing
   useEffect(() => {
@@ -62,8 +62,7 @@ export const OptimizedZenEditor: React.FC<OptimizedZenEditorProps> = ({
     if (documentId) {
       updateZenDocument(documentId, docData)
     } else {
-      const newDoc = addZenDocument(docData)
-      // Set as current document for future saves
+      addZenDocument(docData)
     }
   }, [title, content, tags, documentId, addZenDocument, updateZenDocument])
   

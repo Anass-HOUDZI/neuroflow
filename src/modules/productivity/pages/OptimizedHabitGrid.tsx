@@ -11,6 +11,25 @@ import { HabitList } from '@/components/habit-grid/HabitList'
 import { WeeklyGrid } from '@/components/habit-grid/WeeklyGrid'
 import { EncouragementMessage } from '@/components/habit-grid/EncouragementMessage'
 
+// Local interfaces to avoid conflicts with existing HabitGrid types
+interface LocalHabit {
+  id: string;
+  name: string;
+  description: string;
+  type: 'positive' | 'negative';
+  scoringType: 'binary' | 'scale' | 'duration';
+  color: string;
+  createdAt: string;
+  isActive: boolean;
+}
+
+interface LocalHabitEntry {
+  habitId: string;
+  date: string;
+  value: number;
+  note?: string;
+}
+
 export const OptimizedHabitGrid: React.FC = () => {
   const [showAddForm, setShowAddForm] = useState(false)
   const [selectedWeek, setSelectedWeek] = useState(new Date())
@@ -28,7 +47,10 @@ export const OptimizedHabitGrid: React.FC = () => {
   const stats = getStats()
   
   const handleAddHabit = (habit: any) => {
-    addHabit(habit)
+    addHabit({
+      ...habit,
+      description: habit.description || ''
+    })
     setShowAddForm(false)
   }
   
@@ -84,7 +106,22 @@ export const OptimizedHabitGrid: React.FC = () => {
   }
   
   const weeklyProgress = getWeeklyProgress()
-  const activeHabits = habits.filter(h => h.isActive)
+  const activeHabitsCount = habits.filter(h => h.isActive).length
+  
+  // Convert habits to match expected interface for components
+  const convertedHabits: LocalHabit[] = habits.map(habit => ({
+    ...habit,
+    description: habit.description || ''
+  }))
+  
+  const convertedEntries: LocalHabitEntry[] = habitEntries.map(entry => ({
+    habitId: entry.habitId,
+    date: entry.date,
+    value: entry.value,
+    note: entry.note
+  }))
+  
+  const activeConvertedHabits = convertedHabits.filter(h => h.isActive)
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 dark:from-gray-900 dark:to-gray-800">
@@ -144,7 +181,7 @@ export const OptimizedHabitGrid: React.FC = () => {
               <Heart className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{activeHabits.length}</div>
+              <div className="text-2xl font-bold">{activeHabitsCount}</div>
               <p className="text-xs text-muted-foreground mt-2">
                 En cours de suivi
               </p>
@@ -169,7 +206,7 @@ export const OptimizedHabitGrid: React.FC = () => {
         <EncouragementMessage 
           weeklyProgress={weeklyProgress}
           streak={stats.habits.longestStreak}
-          activeHabitsCount={activeHabits.length}
+          activeHabitsCount={activeHabitsCount}
         />
 
         {/* Main Content */}
@@ -185,8 +222,8 @@ export const OptimizedHabitGrid: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <WeeklyGrid
-                  habits={activeHabits}
-                  entries={habitEntries}
+                  habits={activeConvertedHabits}
+                  entries={convertedEntries}
                   selectedWeek={selectedWeek}
                   onUpdateEntry={handleUpdateEntry}
                   onWeekChange={setSelectedWeek}
@@ -206,7 +243,7 @@ export const OptimizedHabitGrid: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <HabitList
-                  habits={habits}
+                  habits={convertedHabits}
                   onDeleteHabit={handleDeleteHabit}
                   onToggleActive={handleToggleActive}
                 />
