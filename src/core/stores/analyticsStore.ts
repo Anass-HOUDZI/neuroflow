@@ -1,4 +1,3 @@
-
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -63,6 +62,8 @@ interface CrossModuleCorrelation {
     start: string
     end: string
   }
+  title: string
+  description: string
 }
 
 // Personal Metrics Summary
@@ -303,7 +304,9 @@ export const useAnalyticsStore = create<AnalyticsState>()(
           dateRange: {
             start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
             end: new Date().toISOString()
-          }
+          },
+          title: 'Sommeil et Humeur',
+          description: 'Corrélation positive entre qualité du sommeil et humeur quotidienne'
         })
         
         // Example correlation: Exercise vs Energy
@@ -327,7 +330,9 @@ export const useAnalyticsStore = create<AnalyticsState>()(
           dateRange: {
             start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
             end: new Date().toISOString()
-          }
+          },
+          title: 'Exercice et Énergie',
+          description: 'L\'activité physique régulière améliore significativement les niveaux d\'énergie'
         })
         
         set({ crossModuleCorrelations: correlations })
@@ -369,18 +374,60 @@ export const useAnalyticsStore = create<AnalyticsState>()(
       },
       
       getCrossModuleCorrelations: () => {
-        return get().crossModuleCorrelations.length > 0 ? get().crossModuleCorrelations : [
+        const state = get()
+        if (state.crossModuleCorrelations.length > 0) {
+          return state.crossModuleCorrelations
+        }
+        
+        // Return default correlations with proper structure
+        return [
           {
             id: 'default-sleep-mood',
+            variable1: {
+              module: 'health',
+              field: 'sleepQuality',
+              label: 'Qualité du sommeil'
+            },
+            variable2: {
+              module: 'wellness',
+              field: 'mood',
+              label: 'Humeur moyenne'
+            },
+            correlation: 0.73,
+            pValue: 0.02,
+            strength: 'strong' as const,
+            significance: 'significant' as const,
+            sampleSize: 30,
+            dateRange: {
+              start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+              end: new Date().toISOString()
+            },
             title: 'Sommeil et Humeur',
-            description: 'Corrélation positive entre qualité du sommeil et humeur quotidienne',
-            strength: 'strong' as const
+            description: 'Corrélation positive entre qualité du sommeil et humeur quotidienne'
           },
           {
             id: 'default-exercise-energy',
+            variable1: {
+              module: 'health',
+              field: 'exerciseFrequency',
+              label: 'Fréquence d\'exercice'
+            },
+            variable2: {
+              module: 'wellness',
+              field: 'energyLevel',
+              label: 'Niveau d\'énergie'
+            },
+            correlation: 0.65,
+            pValue: 0.04,
+            strength: 'moderate' as const,
+            significance: 'significant' as const,
+            sampleSize: 25,
+            dateRange: {
+              start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+              end: new Date().toISOString()
+            },
             title: 'Exercice et Énergie',
-            description: 'L\'activité physique régulière améliore significativement les niveaux d\'énergie',
-            strength: 'moderate' as const
+            description: 'L\'activité physique régulière améliore significativement les niveaux d\'énergie'
           }
         ]
       },
