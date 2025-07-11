@@ -2,7 +2,6 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { LucideIcon } from "lucide-react";
 import { Feature } from "@/data/features";
 
 interface FeatureCardProps {
@@ -17,7 +16,7 @@ export default function FeatureCard({ feature }: FeatureCardProps) {
       <Card
         className={`
           h-full cursor-pointer rounded-2xl transition-all duration-200
-          bg-gradient-to-tl ${feature.color}
+          bg-gradient-to-tl ${feature.color || 'from-blue-500 to-purple-600'}
           hover:shadow-2xl hover:-translate-y-0.5 
           border-0 shadow-md animate-fade-in
           group-hover:scale-[1.02]

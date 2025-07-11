@@ -59,8 +59,12 @@ const PerformanceMonitor: React.FC = () => {
       const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
       const connectionType = connection ? connection.effectiveType || 'unknown' : 'unknown';
 
+      // Use loadEventEnd and fetchStart for load time calculation
+      const loadTime = navigation.loadEventEnd && navigation.fetchStart ? 
+        Math.round(navigation.loadEventEnd - navigation.fetchStart) : 0;
+
       setMetrics({
-        loadTime: Math.round(navigation.loadEventEnd - navigation.navigationStart),
+        loadTime,
         firstContentfulPaint: Math.round(fcp),
         largestContentfulPaint: Math.round(lcp),
         cumulativeLayoutShift: 0, // Would need Layout Instability API

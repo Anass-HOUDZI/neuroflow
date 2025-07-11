@@ -10,20 +10,24 @@ interface FeatureGridProps {
 const categoryImages = {
   productivity: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=300&fit=crop&crop=faces",
   creativity: "https://images.unsplash.com/photo-1561736778-92e52a7769ef?w=400&h=300&fit=crop&crop=faces", 
-  wellbeing: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop&crop=faces",
+  wellness: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop&crop=faces",
   learning: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop&crop=faces",
-  technical: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop&crop=faces",
-  data: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop&crop=faces"
+  utility: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop&crop=faces",
+  'data-tools': "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop&crop=faces",
+  health: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop&crop=faces",
+  'dev-tools': "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop&crop=faces"
 };
 
 const getGradientForCategory = (category: string) => {
   switch (category) {
     case 'productivity': return 'primary';
     case 'creativity': return 'secondary';
-    case 'wellbeing': return 'accent';
+    case 'wellness': return 'accent';
     case 'learning': return 'warm';
-    case 'technical': return 'primary';
-    case 'data': return 'secondary';
+    case 'utility': return 'primary';
+    case 'data-tools': return 'secondary';
+    case 'health': return 'accent';
+    case 'dev-tools': return 'warm';
     default: return 'primary';
   }
 };
@@ -31,7 +35,7 @@ const getGradientForCategory = (category: string) => {
 const getBadgeForFeature = (feature: Feature) => {
   if (feature.popular) return '🔥 Populaire';
   if (feature.new) return '✨ Nouveau';
-  if (feature.category === 'wellbeing') return '🧘 Zen';
+  if (feature.category === 'wellness') return '🧘 Zen';
   if (feature.category === 'productivity') return '⚡ Pro';
   return undefined;
 };
@@ -77,7 +81,7 @@ export default function FeatureGrid({ features }: FeatureGridProps) {
               title={feature.title}
               description={feature.description}
               icon={feature.icon}
-              href={feature.href}
+              href={feature.href || feature.path}
               gradient={getGradientForCategory(feature.category) as 'primary' | 'secondary' | 'accent' | 'warm'}
               image={categoryImages[feature.category as keyof typeof categoryImages]}
               badge={getBadgeForFeature(feature)}
