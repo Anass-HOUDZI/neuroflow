@@ -71,7 +71,6 @@ export default function FeatureGrid({ features }: FeatureGridProps) {
             className="transform transition-all duration-300"
             style={{
               animationDelay: `${index * 100}ms`,
-              animation: 'fadeInUp 0.6s ease-out forwards'
             }}
           >
             <ModernCard
@@ -89,19 +88,25 @@ export default function FeatureGrid({ features }: FeatureGridProps) {
 
       {/* Bottom Gradient Fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+      
+      <style>
+        {`
+          @keyframes fadeInUp {
+            from {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          
+          .transform {
+            animation: fadeInUp 0.6s ease-out forwards;
+          }
+        `}
+      </style>
     </div>
   );
 }
-
-<style jsx>{`
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-`}</style>
