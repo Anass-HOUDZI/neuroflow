@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { OptimizedErrorBoundary } from '@/core/components/OptimizedErrorBoundary'
 import { OptimizedLoadingSpinner } from '@/core/components/OptimizedLoadingSpinner'
 import { Toaster } from '@/components/ui/sonner'
+import PerformanceMonitor from '@/core/monitoring/PerformanceMonitor'
 
 // Lazy load pages for optimal performance
 const Index = lazy(() => import('@/pages/Index'))
@@ -21,6 +22,10 @@ const OptimizedSleepAnalyzer = lazy(() => import('@/modules/health/pages/Optimiz
 
 // Analytics Module - Optimized versions (Phase 4)
 const OptimizedAnalytics = lazy(() => import('@/modules/analytics/pages/OptimizedAnalytics'))
+
+// Phase 5 - Finalization components
+const TechnicalDocs = lazy(() => import('@/core/documentation/TechnicalDocs'))
+const PerformanceTestSuite = lazy(() => import('@/core/testing/PerformanceTestSuite'))
 
 // Keep original imports for non-optimized pages for now
 const MindfulBreath = lazy(() => import('@/pages/MindfulBreath'))
@@ -104,6 +109,10 @@ function App() {
               <Route path="/stats-pro" element={<StatsPro />} />
               <Route path="/sound-weaver" element={<SoundWeaver />} />
               
+              {/* Phase 5 - Finalization Routes */}
+              <Route path="/technical-docs" element={<TechnicalDocs />} />
+              <Route path="/performance-tests" element={<PerformanceTestSuite />} />
+              
               {/* Utility Pages */}
               <Route path="/settings" element={<Settings />} />
               <Route path="/about" element={<About />} />
@@ -113,6 +122,7 @@ function App() {
             </Routes>
           </Suspense>
           <Toaster />
+          <PerformanceMonitor />
         </div>
       </OptimizedErrorBoundary>
     </Router>
