@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { OptimizedErrorBoundary } from '@/core/components/OptimizedErrorBoundary'
 import { OptimizedLoadingSpinner } from '@/core/components/OptimizedLoadingSpinner'
 import { Toaster } from '@/components/ui/sonner'
-import PerformanceMonitor from '@/core/monitoring/PerformanceMonitor'
 
 // Lazy load pages for optimal performance
 const Index = lazy(() => import('@/pages/Index'))
@@ -59,6 +58,12 @@ const Contact = lazy(() => import('@/pages/Contact'))
 const Favorites = lazy(() => import('@/pages/Favorites'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 
+// Original pages imports
+const MoodTracker = lazy(() => import('@/pages/MoodTracker'))
+const ZenPad = lazy(() => import('@/pages/ZenPad'))
+const Journal = lazy(() => import('@/pages/Journal'))
+const HabitGrid = lazy(() => import('@/pages/HabitGrid'))
+
 function App() {
   return (
     <Router>
@@ -68,45 +73,58 @@ function App() {
             <Routes>
               <Route path="/" element={<Index />} />
               
-              {/* Wellness Module - Optimized */}
+              {/* Wellness Module - Using correct routes */}
+              <Route path="/mood" element={<MoodTracker />} />
               <Route path="/mood-tracker" element={<OptimizedMoodTracker />} />
               <Route path="/meditation" element={<OptimizedMeditation />} />
-              
-              {/* Wellness Module - Original (to be optimized) */}
+              <Route path="/mindfulbreath" element={<MindfulBreath />} />
               <Route path="/mindful-breath" element={<MindfulBreath />} />
+              <Route path="/anxietyhelper" element={<AnxietyHelper />} />
               <Route path="/anxiety-helper" element={<AnxietyHelper />} />
+              <Route path="/stressscanner" element={<StressScanner />} />
               <Route path="/stress-scanner" element={<StressScanner />} />
+              <Route path="/selfcompassion" element={<SelfCompassion />} />
               <Route path="/self-compassion" element={<SelfCompassion />} />
+              <Route path="/emotionwheel" element={<EmotionWheel />} />
               <Route path="/emotion-wheel" element={<EmotionWheel />} />
+              <Route path="/gratitudegarden" element={<GratitudeGarden />} />
               <Route path="/gratitude-garden" element={<GratitudeGarden />} />
               
-              {/* Productivity Module - Optimized */}
-              <Route path="/journal" element={<OptimizedJournal />} />
+              {/* Productivity Module - Using correct routes */}
+              <Route path="/journal" element={<Journal />} />
+              <Route path="/habitgrid" element={<HabitGrid />} />
               <Route path="/habit-grid" element={<OptimizedHabitGrid />} />
-              <Route path="/zenpad" element={<OptimizedZenPad />} />
-              
-              {/* Productivity Module - Original (to be optimized) */}
+              <Route path="/zenpad" element={<ZenPad />} />
+              <Route path="/localboard" element={<LocalBoard />} />
               <Route path="/local-board" element={<LocalBoard />} />
               <Route path="/goals" element={<Goals />} />
               <Route path="/calendar" element={<Calendar />} />
               
-              {/* Health Module - Phase 4 Optimized */}
+              {/* Health Module - Using correct routes */}
+              <Route path="/sleepanalyzer" element={<SleepAnalyzer />} />
               <Route path="/sleep-analyzer" element={<OptimizedSleepAnalyzer />} />
-              
-              {/* Health Module - Original (will be optimized) */}
+              <Route path="/fitnesslog" element={<FitnessLog />} />
               <Route path="/fitness-log" element={<FitnessLog />} />
+              <Route path="/hydro" element={<HydroReminder />} />
               <Route path="/hydro-reminder" element={<HydroReminder />} />
+              <Route path="/nutrienttracker" element={<NutrientTracker />} />
               <Route path="/nutrient-tracker" element={<NutrientTracker />} />
+              <Route path="/astingsupport" element={<AstingSupport />} />
               <Route path="/asting-support" element={<AstingSupport />} />
+              <Route path="/mindfuleating" element={<MindfulEating />} />
               <Route path="/mindful-eating" element={<MindfulEating />} />
+              <Route path="/energybalance" element={<EnergyBalance />} />
               <Route path="/energy-balance" element={<EnergyBalance />} />
               
-              {/* Analytics Module - Phase 4 Optimized */}
-              <Route path="/analytics" element={<OptimizedAnalytics />} />
+              {/* Analytics Module - Using correct routes */}
+              <Route path="/analytics" element={<Analytics />} />
               
-              {/* Data Module - Original (will be optimized) */}
+              {/* Data Module - Using correct routes */}
+              <Route path="/dataviz" element={<DataViz />} />
               <Route path="/data-viz" element={<DataViz />} />
+              <Route path="/statspro" element={<StatsPro />} />
               <Route path="/stats-pro" element={<StatsPro />} />
+              <Route path="/soundweaver" element={<SoundWeaver />} />
               <Route path="/sound-weaver" element={<SoundWeaver />} />
               
               {/* Phase 5 - Finalization Routes */}
@@ -122,7 +140,6 @@ function App() {
             </Routes>
           </Suspense>
           <Toaster />
-          <PerformanceMonitor />
         </div>
       </OptimizedErrorBoundary>
     </Router>

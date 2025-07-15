@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => ({
               cacheName: 'google-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+                maxAgeSeconds: 60 * 60 * 24 * 365
               }
             }
           },
@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => ({
               cacheName: 'gstatic-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+                maxAgeSeconds: 60 * 60 * 24 * 365
               }
             }
           }
@@ -86,78 +86,96 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          // Core framework chunks
-          'react-vendor': ['react', 'react-dom'],
-          'router': ['react-router-dom'],
-          'ui-vendor': ['@radix-ui/react-slot', '@radix-ui/react-toast', '@radix-ui/react-progress'],
+          // Core framework chunks - optimized
+          'react-core': ['react', 'react-dom'],
+          'routing': ['react-router-dom'],
           
-          // State management
-          'state': ['zustand'],
+          // UI chunks - ultra-optimized
+          'ui-core': ['@radix-ui/react-slot', '@radix-ui/react-toast'],
+          'ui-forms': ['@radix-ui/react-progress', '@radix-ui/react-dialog'],
           
-          // Wellness Module - Optimized chunking
-          'wellness-core': [
-            './src/modules/wellness/components/MoodEntryForm',
-            './src/modules/wellness/components/MoodHistory',
-            './src/core/stores/wellnessStore'
-          ],
-          'wellness-meditation': [
-            './src/modules/wellness/components/MeditationLibrary',
-            './src/modules/wellness/components/MeditationPlayer'
-          ],
+          // Icons - separate chunk for better caching
+          'icons': ['lucide-react'],
           
-          // Productivity Module - Ultra-optimized chunking
-          'productivity-core': [
-            './src/core/stores/productivityStore',
-            './src/modules/productivity/hooks/useDebouncedSave',
-            './src/modules/productivity/hooks/useVirtualScrolling'
-          ],
-          'productivity-journal': [
-            './src/modules/productivity/components/journal/OptimizedJournalEditor',
-            './src/modules/productivity/components/journal/OptimizedJournalList',
-            './src/modules/productivity/pages/OptimizedJournal'
-          ],
-          'productivity-habits': [
-            './src/modules/productivity/pages/OptimizedHabitGrid',
-            './src/components/habit-grid/HabitForm',
-            './src/components/habit-grid/HabitList',
-            './src/components/habit-grid/WeeklyGrid'
-          ],
-          'productivity-zenpad': [
-            './src/modules/productivity/components/zenpad/OptimizedZenEditor',
-            './src/modules/productivity/pages/OptimizedZenPad'
-          ],
+          // Utils and hooks
+          'utils': ['clsx', 'tailwind-merge', 'class-variance-authority'],
           
-          // Other modules (to be optimized in future phases)
-          'productivity-legacy': [
+          // Productivity tools - highly optimized
+          'productivity-main': [
+            './src/pages/Journal',
+            './src/pages/HabitGrid',
+            './src/pages/ZenPad'
+          ],
+          'productivity-secondary': [
             './src/pages/LocalBoard',
             './src/pages/Goals',
-            './src/pages/Analytics',
             './src/pages/Calendar'
           ],
-          'health': [
-            './src/pages/SleepAnalyzer',
-            './src/pages/FitnessLog',
-            './src/pages/HydroReminder'
+          
+          // Wellness tools - optimized chunking
+          'wellness-main': [
+            './src/pages/MoodTracker',
+            './src/pages/MindfulBreath'
           ],
-          'data-tools': [
+          'wellness-secondary': [
+            './src/pages/AnxietyHelper',
+            './src/pages/StressScanner',
+            './src/pages/SelfCompassion'
+          ],
+          
+          // Health tools
+          'health-main': [
+            './src/pages/HydroReminder',
+            './src/pages/SleepAnalyzer'
+          ],
+          'health-secondary': [
+            './src/pages/FitnessLog',
+            './src/pages/NutrientTracker',
+            './src/pages/EnergyBalance'
+          ],
+          
+          // Data and tools
+          'tools': [
             './src/pages/DataViz',
-            './src/pages/StatsPro'
+            './src/pages/StatsPro',
+            './src/pages/SoundWeaver',
+            './src/pages/Analytics'
           ]
         }
       }
     },
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 500, // Reduced for better performance
     sourcemap: false,
     target: 'esnext',
     minify: 'terser',
     terserOptions: {
       compress: {
         drop_console: true,
-        drop_debugger: true
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.warn'],
+        passes: 2
+      },
+      mangle: {
+        safari10: true
       }
-    }
+    },
+    // Ultra performance optimizations
+    reportCompressedSize: false,
+    assetsInlineLimit: 4096
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'zustand']
+    include: [
+      'react', 
+      'react-dom', 
+      'react-router-dom',
+      'lucide-react'
+    ],
+    exclude: ['@vite/client', '@vite/env']
+  },
+  // Additional performance optimizations
+  esbuild: {
+    target: 'esnext',
+    platform: 'browser',
+    treeShaking: true
   }
 }));
