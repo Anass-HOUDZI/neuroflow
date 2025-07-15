@@ -20,38 +20,52 @@ export default function FeatureCard({ feature }: FeatureCardProps) {
           hover:shadow-2xl hover:-translate-y-0.5 
           border-0 shadow-md animate-fade-in
           group-hover:scale-[1.02]
+          relative overflow-hidden
         `}
-        style={{ minHeight: '240px' }}
+        style={{ minHeight: '280px' }}
       >
-        <CardHeader className="text-center flex flex-col items-center pb-2 pt-5">
+        {/* Background Image */}
+        {feature.image && (
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-300"
+            style={{ backgroundImage: `url(${feature.image})` }}
+          />
+        )}
+        
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+        
+        <CardHeader className="text-center flex flex-col items-center pb-2 pt-5 relative z-10">
           <div className="
-            mx-auto rounded-full 
-            bg-white/80 dark:bg-gray-900/80 
+            mx-auto rounded-2xl 
+            bg-white/90 dark:bg-gray-900/90 
             border border-gray-200 dark:border-gray-800
-            shadow flex items-center justify-center
-            mb-2 w-16 h-16 sm:w-20 sm:h-20
-            transition-transform duration-200 group-hover:scale-105
+            shadow-lg flex items-center justify-center
+            mb-3 w-16 h-16 sm:w-20 sm:h-20
+            transition-transform duration-200 group-hover:scale-110
+            backdrop-blur-sm
           ">
-            <IconComponent className="h-9 w-9 sm:h-12 sm:w-12 text-primary-600 dark:text-primary" />
+            <IconComponent className="h-8 w-8 sm:h-10 sm:w-10 text-primary-600 dark:text-primary" />
           </div>
-          <CardTitle className="text-lg mt-1 font-semibold text-gray-900 dark:text-gray-100">
+          <CardTitle className="text-lg sm:text-xl mt-1 font-semibold text-white drop-shadow-lg">
             {feature.title}
           </CardTitle>
-          <CardDescription className="text-xs text-gray-600 dark:text-gray-400 line-clamp-2">
+          <CardDescription className="text-xs sm:text-sm text-white/90 line-clamp-2 drop-shadow-sm">
             {feature.description}
           </CardDescription>
         </CardHeader>
-        <CardContent className="text-center pt-0">
+        <CardContent className="text-center pt-0 relative z-10">
           <Button
             variant="outline"
             className="
               w-full rounded-xl shadow-sm transition-all duration-200
-              text-[0.95em] py-2
+              text-sm sm:text-base py-2
               bg-white/40 backdrop-blur-sm
               border border-white/60
-              text-primary hover:bg-white hover:text-primary
+              text-white hover:bg-white hover:text-primary
               hover:border-white hover:shadow-md
               group-hover:scale-[1.025]
+              font-medium
             "
           >
             Découvrir

@@ -12,7 +12,7 @@ export default function HomeSearchBar({ search, setSearch }: HomeSearchBarProps)
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <div className="flex justify-center mb-16 relative">
+    <div className="flex justify-center mb-12 sm:mb-16 relative px-4">
       {/* Background Glow */}
       <div className={`
         absolute inset-0 -m-4 rounded-3xl bg-gradient-to-r from-primary/20 to-purple-500/20 blur-xl
@@ -20,13 +20,13 @@ export default function HomeSearchBar({ search, setSearch }: HomeSearchBarProps)
       `} />
       
       <div className="relative w-full max-w-2xl">
-        {/* Floating Icon */}
-        <div className="absolute left-6 top-1/2 transform -translate-y-1/2 z-10">
+        {/* Floating Icon - Properly Aligned */}
+        <div className="absolute left-4 sm:left-6 top-1/2 transform -translate-y-1/2 z-10 flex items-center">
           <div className={`
             p-2 rounded-xl bg-gradient-to-br from-primary/20 to-purple-500/20 backdrop-blur-sm
             transition-all duration-300 ${isFocused ? 'scale-110 rotate-3' : ''}
           `}>
-            <Search className="h-5 w-5 text-primary" />
+            <Search className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
           </div>
         </div>
 
@@ -39,7 +39,7 @@ export default function HomeSearchBar({ search, setSearch }: HomeSearchBarProps)
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           className={`
-            h-16 pl-20 pr-6 text-lg
+            h-14 sm:h-16 pl-16 sm:pl-20 pr-4 sm:pr-6 text-base sm:text-lg
             glass-card backdrop-blur-xl border-white/20
             rounded-3xl shadow-2xl
             placeholder:text-muted-foreground/60
