@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { JournalEntry, JournalEntryData } from "@/components/journal/JournalEntry";
 import { JournalStats } from "@/components/journal/JournalStats";
 import { JournalEditor } from "@/components/journal/JournalEditor";
+import GlobalLayout from "@/components/layout/GlobalLayout";
 
 const Journal = () => {
   const [entries, setEntries] = useState<JournalEntryData[]>([
@@ -77,73 +78,77 @@ const Journal = () => {
 
   if (isWriting) {
     return (
-      <JournalEditor
-        title={newTitle}
-        content={newContent}
-        onTitleChange={setNewTitle}
-        onContentChange={setNewContent}
-        onSave={handleSaveEntry}
-        onCancel={() => setIsWriting(false)}
-      />
+      <GlobalLayout>
+        <JournalEditor
+          title={newTitle}
+          content={newContent}
+          onTitleChange={setNewTitle}
+          onContentChange={setNewContent}
+          onSave={handleSaveEntry}
+          onCancel={() => setIsWriting(false)}
+        />
+      </GlobalLayout>
     );
   }
 
   return (
-    <PageLayout className="bg-gradient-to-br from-blue-50 to-green-100 dark:from-gray-900 dark:to-gray-800">
-      <PageHeader
-        title="Journal"
-        description="Capturez vos pensées et réflexions quotidiennes"
-        icon={<BookOpen className="h-12 w-12 text-blue-600" />}
-        actions={
-          <Button onClick={() => setIsWriting(true)} className="gap-2">
-            <Plus className="h-4 w-4" />
-            Nouvelle entrée
-          </Button>
-        }
-      />
-
-      <div className="max-w-4xl mx-auto space-y-6">
-        {/* Search */}
-        <Card className="glass-card">
-          <CardContent className="pt-6">
-            <div className="relative">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Rechercher dans vos entrées..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Stats */}
-        <JournalStats
-          totalEntries={entries.length}
-          streak={7}
-          consistency={85}
+    <GlobalLayout>
+      <PageLayout className="bg-gradient-to-br from-blue-50 to-green-100 dark:from-gray-900 dark:to-gray-800">
+        <PageHeader
+          title="Journal"
+          description="Capturez vos pensées et réflexions quotidiennes"
+          icon={<BookOpen className="h-12 w-12 text-blue-600" />}
+          actions={
+            <Button onClick={() => setIsWriting(true)} className="gap-2">
+              <Plus className="h-4 w-4" />
+              Nouvelle entrée
+            </Button>
+          }
         />
 
-        {/* Entries List */}
-        {filteredEntries.length === 0 ? (
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Search */}
           <Card className="glass-card">
-            <CardContent className="pt-6 text-center py-12">
-              <BookOpen className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-              <h3 className="text-lg font-semibold mb-2">Aucune entrée trouvée</h3>
-              <p className="text-muted-foreground mb-4">
-                {searchTerm ? "Essayez avec d'autres mots-clés" : "Commencez par écrire votre première entrée"}
-              </p>
-              <Button onClick={() => setIsWriting(true)}>
-                Écrire ma première entrée
-              </Button>
+            <CardContent className="pt-6">
+              <div className="relative">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <Input
+                  placeholder="Rechercher dans vos entrées..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
             </CardContent>
           </Card>
-        ) : (
-          <JournalEntry entries={filteredEntries} />
-        )}
-      </div>
-    </PageLayout>
+
+          {/* Stats */}
+          <JournalStats
+            totalEntries={entries.length}
+            streak={7}
+            consistency={85}
+          />
+
+          {/* Entries List */}
+          {filteredEntries.length === 0 ? (
+            <Card className="glass-card">
+              <CardContent className="pt-6 text-center py-12">
+                <BookOpen className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+                <h3 className="text-lg font-semibold mb-2">Aucune entrée trouvée</h3>
+                <p className="text-muted-foreground mb-4">
+                  {searchTerm ? "Essayez avec d'autres mots-clés" : "Commencez par écrire votre première entrée"}
+                </p>
+                <Button onClick={() => setIsWriting(true)}>
+                  Écrire ma première entrée
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
+            <JournalEntry entries={filteredEntries} />
+          )}
+        </div>
+      </PageLayout>
+    </GlobalLayout>
   );
 };
 
