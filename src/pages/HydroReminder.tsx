@@ -62,65 +62,67 @@ export default function HydroReminder() {
           icon={<Droplet className="h-12 w-12 text-sky-500" />}
         />
 
-        {/* Goal Setting */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Objectif quotidien</CardTitle>
-            <CardDescription>Fixez votre objectif (en ml)</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form 
-              className="flex gap-2" 
-              onSubmit={(e) => { e.preventDefault(); handleGoalSave(); }}
-            >
-              <Input
-                type="number"
-                min={500}
-                max={8000}
-                step={50}
-                value={inputGoal}
-                onChange={(e) => setInputGoal(e.target.value)}
-                className="max-w-[140px]"
-              />
-              <Button type="submit" variant="outline">Enregistrer</Button>
-            </form>
-            <div className="mt-2 text-sm text-gray-500">
-              Recommandé : 1500-2500 ml / jour (adulte)
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Today's Progress */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Journal d'aujourd'hui</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <HydroProgress current={todayTotal} goal={goal} className="mb-4" />
-            
-            <DrinkEntry
-              amount={drinkAmount}
-              onAmountChange={setDrinkAmount}
-              onAdd={handleAddEntry}
-              disabled={todayTotal >= dailyLimit}
-            />
-
-            <TodayHistory entries={todayEntries} onReset={handleResetDay} />
-            
-            {todayTotal >= dailyLimit && (
-              <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                <p className="text-sm text-yellow-800">
-                  ⚠️ Limite quotidienne atteinte. Consultez un professionnel de santé si nécessaire.
-                </p>
+        <div className="space-y-6">
+          {/* Goal Setting */}
+          <Card className="glass-card">
+            <CardHeader>
+              <CardTitle>Objectif quotidien</CardTitle>
+              <CardDescription>Fixez votre objectif (en ml)</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form 
+                className="flex gap-2" 
+                onSubmit={(e) => { e.preventDefault(); handleGoalSave(); }}
+              >
+                <Input
+                  type="number"
+                  min={500}
+                  max={8000}
+                  step={50}
+                  value={inputGoal}
+                  onChange={(e) => setInputGoal(e.target.value)}
+                  className="max-w-[140px]"
+                />
+                <Button type="submit" variant="outline">Enregistrer</Button>
+              </form>
+              <div className="mt-2 text-sm text-muted-foreground">
+                Recommandé : 1500-2500 ml / jour (adulte)
               </div>
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        <div className="text-xs text-gray-400 text-center">
-          Bois régulièrement, sans surdoser. <br /> 
-          L'application est un rappel, mais écoute aussi ta soif ! <br />
-          Les données restent uniquement sur cet appareil.
+          {/* Today's Progress */}
+          <Card className="glass-card">
+            <CardHeader>
+              <CardTitle>Journal d'aujourd'hui</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <HydroProgress current={todayTotal} goal={goal} className="mb-4" />
+              
+              <DrinkEntry
+                amount={drinkAmount}
+                onAmountChange={setDrinkAmount}
+                onAdd={handleAddEntry}
+                disabled={todayTotal >= dailyLimit}
+              />
+
+              <TodayHistory entries={todayEntries} onReset={handleResetDay} />
+              
+              {todayTotal >= dailyLimit && (
+                <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg dark:bg-yellow-900/20 dark:border-yellow-800">
+                  <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                    ⚠️ Limite quotidienne atteinte. Consultez un professionnel de santé si nécessaire.
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          <div className="text-xs text-center text-muted-foreground">
+            Bois régulièrement, sans surdoser. <br /> 
+            L'application est un rappel, mais écoute aussi ta soif ! <br />
+            Les données restent uniquement sur cet appareil.
+          </div>
         </div>
       </div>
     </PageLayout>

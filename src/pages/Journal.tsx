@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Plus, Search, BookOpen } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Plus, Search, BookOpen } from "lucide-react";
+import { PageLayout, PageHeader } from "@/components/layout/PageLayout";
 import { useToast } from "@/hooks/use-toast";
 import { JournalEntry, JournalEntryData } from "@/components/journal/JournalEntry";
 import { JournalStats } from "@/components/journal/JournalStats";
@@ -89,34 +89,27 @@ const Journal = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-100">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center">
-            <Link to="/">
-              <Button variant="ghost" size="icon" className="mr-4">
-                <ArrowLeft className="h-4 w-4" />
-              </Button>
-            </Link>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-800">Journal</h1>
-              <p className="text-gray-600">Capture your thoughts and reflections</p>
-            </div>
-          </div>
+    <PageLayout className="bg-gradient-to-br from-blue-50 to-green-100 dark:from-gray-900 dark:to-gray-800">
+      <PageHeader
+        title="Journal"
+        description="Capturez vos pensées et réflexions quotidiennes"
+        icon={<BookOpen className="h-12 w-12 text-blue-600" />}
+        actions={
           <Button onClick={() => setIsWriting(true)} className="gap-2">
             <Plus className="h-4 w-4" />
-            New Entry
+            Nouvelle entrée
           </Button>
-        </div>
+        }
+      />
 
+      <div className="max-w-4xl mx-auto space-y-6">
         {/* Search */}
-        <Card className="mb-6">
+        <Card className="glass-card">
           <CardContent className="pt-6">
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
               <Input
-                placeholder="Search your entries..."
+                placeholder="Rechercher dans vos entrées..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
@@ -134,15 +127,15 @@ const Journal = () => {
 
         {/* Entries List */}
         {filteredEntries.length === 0 ? (
-          <Card>
+          <Card className="glass-card">
             <CardContent className="pt-6 text-center py-12">
               <BookOpen className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-              <h3 className="text-lg font-semibold mb-2">No entries found</h3>
-              <p className="text-gray-600 mb-4">
-                {searchTerm ? "Try a different search term" : "Start writing your first journal entry"}
+              <h3 className="text-lg font-semibold mb-2">Aucune entrée trouvée</h3>
+              <p className="text-muted-foreground mb-4">
+                {searchTerm ? "Essayez avec d'autres mots-clés" : "Commencez par écrire votre première entrée"}
               </p>
               <Button onClick={() => setIsWriting(true)}>
-                Write First Entry
+                Écrire ma première entrée
               </Button>
             </CardContent>
           </Card>
@@ -150,7 +143,7 @@ const Journal = () => {
           <JournalEntry entries={filteredEntries} />
         )}
       </div>
-    </div>
+    </PageLayout>
   );
 };
 

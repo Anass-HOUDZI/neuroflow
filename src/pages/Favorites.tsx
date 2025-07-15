@@ -42,7 +42,7 @@ export default function Favorites() {
   };
 
   return (
-    <PageLayout className="bg-gradient-to-br from-slate-50 to-blue-100 dark:from-gray-900 dark:to-gray-900">
+    <PageLayout className="bg-gradient-to-br from-slate-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
       <PageHeader
         title="Mes Favoris"
         description="Retrouvez rapidement vos outils préférés pour un accès simplifié"
@@ -50,7 +50,7 @@ export default function Favorites() {
       />
 
       {favorites.length === 0 ? (
-        <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-center">
+        <Card className="glass-card text-center max-w-md mx-auto">
           <CardHeader>
             <Star className="h-16 w-16 text-yellow-500 mx-auto mb-4" />
             <CardTitle>Aucun favori pour le moment</CardTitle>
@@ -67,7 +67,7 @@ export default function Favorites() {
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {favorites.map((favorite) => (
-            <Card key={favorite.path} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm group">
+            <Card key={favorite.path} className="glass-card group hover:shadow-lg transition-shadow">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -88,7 +88,7 @@ export default function Favorites() {
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                  <span className="text-xs text-muted-foreground">
                     Ajouté le {new Date(favorite.addedAt).toLocaleDateString('fr-FR')}
                   </span>
                   <Link to={favorite.path}>
