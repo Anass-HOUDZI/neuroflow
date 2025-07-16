@@ -1,599 +1,157 @@
 
-import { useState, useEffect } from "react";
+import GlobalLayout from "@/components/layout/GlobalLayout";
+import { PageLayout, PageHeader } from "@/components/layout/PageLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Slider } from "@/components/ui/slider";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import { 
-  Battery, 
-  Sun, 
-  Moon, 
-  Coffee, 
-  Zap, 
-  Clock, 
-  TrendingUp, 
-  Calendar,
-  Activity,
-  Lightbulb,
-  Timer,
-  BarChart3,
-  CloudSun,
-  Home
-} from "lucide-react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Battery, Zap, Coffee, Moon, Sun, TrendingUp } from "lucide-react";
 
-interface EnergyEntry {
-  id: string;
-  timestamp: string;
-  level: number;
-  activity: string;
-  notes: string;
-  weather?: string;
-}
+const energyLevels = [
+  { value: 1, label: "Épuisé", color: "text-red-500" },
+  { value: 2, label: "Fatigué", color: "text-orange-500" },
+  { value: 3, label: "Neutre", color: "text-yellow-500" },
+  { value: 4, label: "Énergique", color: "text-green-500" },
+  { value: 5, label: "Plein d'énergie", color: "text-emerald-500" },
+];
 
-interface CircadianTip {
-  time: string;
-  activity: string;
-  reason: string;
-  icon: any;
-}
+const activities = [
+  { name: "Méditation", boost: 15, icon: "🧘" },
+  { name: "Exercice", boost: 25, icon: "🏃" },
+  { name: "Sieste", boost: 20, icon: "😴" },
+  { name: "Café", boost: 10, icon: "☕" },
+  { name: "Marche", boost: 15, icon: "🚶" },
+  { name: "Musique", boost: 10, icon: "🎵" },
+];
 
-const EnergyBalance = () => {
-  const [energyLevel, setEnergyLevel] = useState([7]);
-  const [currentActivity, setCurrentActivity] = useState("");
-  const [notes, setNotes] = useState("");
-  const [energyEntries, setEnergyEntries] = useState<EnergyEntry[]>([]);
-  const [caffeineTime, setCaffeineTime] = useState("");
-  const [sleepTime, setSleepTime] = useState("22:00");
-  const [wakeTime, setWakeTime] = useState("07:00");
-  const { toast } = useToast();
+export default function EnergyBalance() {
+  const [currentEnergy, setCurrentEnergy] = useState(3);
+  const [todayActivities, setTodayActivities] = useState<string[]>([]);
 
-  // Load saved data
-  useEffect(() => {
-    const savedEntries = localStorage.getItem("energyBalance_entries");
-    const savedCaffeineTime = localStorage.getItem("energyBalance_caffeineTime");
-    const savedSleepTime = localStorage.getItem("energyBalance_sleepTime");
-    const savedWakeTime = localStorage.getItem("energyBalance_wakeTime");
-
-    if (savedEntries) {
-      setEnergyEntries(JSON.parse(savedEntries));
+  const addActivity = (activity: string) => {
+    if (!todayActivities.includes(activity)) {
+      setTodayActivities([...todayActivities, activity]);
     }
-    if (savedCaffeineTime) setCaffeineTime(savedCaffeineTime);
-    if (savedSleepTime) setSleepTime(savedSleepTime);
-    if (savedWakeTime) setWakeTime(savedWakeTime);
-  }, []);
-
-  // Save data
-  const saveToStorage = (key: string, value: any) => {
-    localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
   };
 
-  const logEnergyLevel = () => {
-    const entry: EnergyEntry = {
-      id: Date.now().toString(),
-      timestamp: new Date().toISOString(),
-      level: energyLevel[0],
-      activity: currentActivity,
-      notes: notes
-    };
-
-    const updatedEntries = [entry, ...energyEntries];
-    setEnergyEntries(updatedEntries);
-    saveToStorage("energyBalance_entries", updatedEntries);
-
-    // Reset form
-    setCurrentActivity("");
-    setNotes("");
-    
-    toast({
-      title: "Niveau d'énergie enregistré",
-      description: `Énergie: ${energyLevel[0]}/10 - ${currentActivity}`,
-    });
-  };
-
-  const getCurrentTime = () => {
-    return new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-  };
-
-  const getCircadianTips = (): CircadianTip[] => {
-    const currentHour = new Date().getHours();
-    
-    const tips: CircadianTip[] = [
-      {
-        time: "06:00-08:00",
-        activity: "Exposition à la lumière naturelle",
-        reason: "Synchronise votre horloge circadienne",
-        icon: Sun
-      },
-      {
-        time: "08:00-10:00",
-        activity: "Tâches cognitives importantes",
-        reason: "Pic de cortisol et d'alertness",
-        icon: Lightbulb
-      },
-      {
-        time: "10:00-12:00",
-        activity: "Travail de concentration",
-        reason: "Optimal pour la productivité",
-        icon: Zap
-      },
-      {
-        time: "13:00-15:00",
-        activity: "Power nap (15-20 min)",
-        reason: "Creux naturel d'énergie post-déjeuner",
-        icon: Moon
-      },
-      {
-        time: "15:00-18:00",
-        activity: "Exercice physique",
-        reason: "Température corporelle optimale",
-        icon: Activity
-      },
-      {
-        time: "19:00-21:00",
-        activity: "Activités sociales/créatives",
-        reason: "Pics de sérotonine et dopamine",
-        icon: TrendingUp
-      },
-      {
-        time: "21:00-22:00",
-        activity: "Routine de détente",
-        reason: "Préparation à la production de mélatonine",
-        icon: Moon
-      }
-    ];
-
-    return tips;
-  };
-
-  const getOptimalCaffeineTime = () => {
-    const wakeHour = parseInt(wakeTime.split(':')[0]);
-    const optimal1 = `${String(wakeHour + 1).padStart(2, '0')}:30`;
-    const optimal2 = `${String(wakeHour + 5).padStart(2, '0')}:00`;
-    return { first: optimal1, second: optimal2 };
-  };
-
-  const getEnergyForecast = () => {
-    if (energyEntries.length < 3) return null;
-
-    const today = new Date().toDateString();
-    const todayEntries = energyEntries.filter(entry => 
-      new Date(entry.timestamp).toDateString() === today
-    );
-
-    if (todayEntries.length === 0) return null;
-
-    const avgEnergy = todayEntries.reduce((sum, entry) => sum + entry.level, 0) / todayEntries.length;
-    const currentHour = new Date().getHours();
-
-    let forecast = "";
-    if (currentHour < 12 && avgEnergy < 5) {
-      forecast = "Énergie faible ce matin. Considérez une exposition à la lumière et une hydratation.";
-    } else if (currentHour >= 12 && currentHour < 15 && avgEnergy > 7) {
-      forecast = "Bonne énergie ! Profitez-en pour les tâches importantes avant le creux de l'après-midi.";
-    } else if (currentHour >= 15 && avgEnergy < 4) {
-      forecast = "Creux d'énergie naturel. Une courte sieste ou une pause active pourrait aider.";
-    } else {
-      forecast = "Votre énergie suit un rythme normal aujourd'hui.";
-    }
-
-    return forecast;
-  };
-
-  const energyBoostingActivities = [
-    "5 minutes de respiration profonde",
-    "Exposition à la lumière naturelle",
-    "Étirements rapides",
-    "Hydratation (verre d'eau)",
-    "Marche de 2-3 minutes",
-    "Musique énergisante",
-    "Collation protéinée",
-    "Interaction sociale positive"
-  ];
-
-  const energyDrainingActivities = [
-    "Scrolling réseaux sociaux excessif",
-    "Multitâche intensif",
-    "Lumière bleue en soirée",
-    "Caféine après 14h",
-    "Repas lourds",
-    "Sédentarité prolongée",
-    "Stress non géré",
-    "Manque d'hydratation"
-  ];
+  const energyPercentage = (currentEnergy / 5) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 dark:from-gray-900 dark:to-gray-800">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            <Link to="/">
-              <Button variant="ghost" size="icon">
-                <Home className="h-5 w-5" />
-              </Button>
-            </Link>
-            <div>
-              <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2">
-                ⚡ EnergyBalance
-              </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300">
-                Optimisation circadienne de votre énergie
-              </p>
-            </div>
-          </div>
-          <div className="text-right">
-            <div className="text-2xl font-bold text-orange-600">{getCurrentTime()}</div>
-            <div className="text-sm text-gray-500">Maintenant</div>
-          </div>
-        </div>
+    <GlobalLayout>
+      <PageLayout className="bg-gradient-to-br from-yellow-50 to-orange-100 dark:from-gray-900 dark:to-gray-800">
+        <PageHeader
+          title="Équilibre Énergétique"
+          description="Suivez et optimisez votre niveau d'énergie quotidien"
+          icon={<Battery className="h-12 w-12 text-yellow-500" />}
+        />
 
-        <Tabs defaultValue="track" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="track">Tracking</TabsTrigger>
-            <TabsTrigger value="circadian">Circadien</TabsTrigger>
-            <TabsTrigger value="optimize">Optimiser</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          </TabsList>
-
-          {/* Tracking Tab */}
-          <TabsContent value="track" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Battery className="h-5 w-5" />
-                  Niveau d'énergie actuel
-                </CardTitle>
-                <CardDescription>
-                  Évaluez votre énergie de 1 (épuisé) à 10 (très énergique)
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <Label>Niveau d'énergie: {energyLevel[0]}/10</Label>
-                  <Slider
-                    value={energyLevel}
-                    onValueChange={setEnergyLevel}
-                    max={10}
-                    min={1}
-                    step={1}
-                    className="mt-2"
-                  />
-                  <div className="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>Épuisé</span>
-                    <span>Modéré</span>
-                    <span>Très énergique</span>
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Niveau d'énergie actuel */}
+          <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Zap className="h-5 w-5 text-yellow-500" />
+                Votre niveau d'énergie actuel
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl font-bold">
+                    {energyLevels.find(level => level.value === currentEnergy)?.label}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <Battery className="h-6 w-6 text-yellow-500" />
+                    <span className="text-xl font-semibold">{energyPercentage}%</span>
                   </div>
                 </div>
-
-                <div>
-                  <Label htmlFor="activity">Activité actuelle</Label>
-                  <Input
-                    id="activity"
-                    value={currentActivity}
-                    onChange={(e) => setCurrentActivity(e.target.value)}
-                    placeholder="Ex: Travail sur ordinateur, réunion, pause..."
-                  />
+                <Progress value={energyPercentage} className="h-3" />
+                <div className="grid grid-cols-5 gap-2">
+                  {energyLevels.map((level) => (
+                    <Button
+                      key={level.value}
+                      variant={currentEnergy === level.value ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setCurrentEnergy(level.value)}
+                      className="text-xs"
+                    >
+                      {level.label}
+                    </Button>
+                  ))}
                 </div>
+              </div>
+            </CardContent>
+          </Card>
 
-                <div>
-                  <Label htmlFor="notes">Notes (optionnel)</Label>
-                  <Textarea
-                    id="notes"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Ex: Après café, manque de sommeil, stress..."
-                    rows={3}
-                  />
-                </div>
+          {/* Activités énergisantes */}
+          <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingUp className="h-5 w-5 text-green-500" />
+                Activités énergisantes
+              </CardTitle>
+              <CardDescription>
+                Sélectionnez les activités que vous avez pratiquées aujourd'hui
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {activities.map((activity) => (
+                  <Button
+                    key={activity.name}
+                    variant={todayActivities.includes(activity.name) ? "default" : "outline"}
+                    onClick={() => addActivity(activity.name)}
+                    className="h-20 flex flex-col gap-2"
+                  >
+                    <span className="text-2xl">{activity.icon}</span>
+                    <span className="text-sm font-medium">{activity.name}</span>
+                    <span className="text-xs text-muted-foreground">+{activity.boost}%</span>
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
 
-                <Button onClick={logEnergyLevel} className="w-full">
-                  <Zap className="h-4 w-4 mr-2" />
-                  Enregistrer niveau d'énergie
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Energy Forecast */}
-            {getEnergyForecast() && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5" />
-                    Prédiction énergétique
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm">{getEnergyForecast()}</p>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Recent Entries */}
-            {energyEntries.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Historique récent</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {energyEntries.slice(0, 5).map((entry) => (
-                      <div key={entry.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center gap-1">
-                            <Battery className="h-4 w-4" />
-                            <span className="font-medium">{entry.level}/10</span>
-                          </div>
-                          <span className="text-sm text-gray-600">{entry.activity}</span>
-                        </div>
-                        <span className="text-xs text-gray-500">
-                          {new Date(entry.timestamp).toLocaleTimeString('fr-FR', { 
-                            hour: '2-digit', 
-                            minute: '2-digit' 
-                          })}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </TabsContent>
-
-          {/* Circadian Tab */}
-          <TabsContent value="circadian" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Sun className="h-5 w-5" />
-                  Recommandations circadiennes
-                </CardTitle>
-                <CardDescription>
-                  Optimisez vos activités selon votre rythme naturel
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {getCircadianTips().map((tip, index) => {
-                    const IconComponent = tip.icon;
-                    return (
-                      <div key={index} className="flex items-start gap-3 p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg">
-                        <IconComponent className="h-5 w-5 text-orange-600 mt-0.5" />
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <Badge variant="outline">{tip.time}</Badge>
-                          </div>
-                          <h4 className="font-medium">{tip.activity}</h4>
-                          <p className="text-sm text-gray-600">{tip.reason}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Sleep Schedule */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Moon className="h-5 w-5" />
-                  Horaires de sommeil
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="wakeTime">Heure de réveil</Label>
-                    <Input
-                      id="wakeTime"
-                      type="time"
-                      value={wakeTime}
-                      onChange={(e) => {
-                        setWakeTime(e.target.value);
-                        saveToStorage("energyBalance_wakeTime", e.target.value);
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="sleepTime">Heure de coucher</Label>
-                    <Input
-                      id="sleepTime"
-                      type="time"
-                      value={sleepTime}
-                      onChange={(e) => {
-                        setSleepTime(e.target.value);
-                        saveToStorage("energyBalance_sleepTime", e.target.value);
-                      }}
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Optimize Tab */}
-          <TabsContent value="optimize" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Coffee className="h-5 w-5" />
-                  Timing optimal caféine
-                </CardTitle>
-                <CardDescription>
-                  Basé sur votre horaire de réveil et votre cortisol naturel
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="p-4 bg-green-50 rounded-lg">
-                    <h4 className="font-medium text-green-800 mb-2">Créneaux optimaux</h4>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <span className="text-sm text-green-600">Premier café</span>
-                        <div className="font-bold text-green-800">{getOptimalCaffeineTime().first}</div>
-                      </div>
-                      <div>
-                        <span className="text-sm text-green-600">Dernier café</span>
-                        <div className="font-bold text-green-800">{getOptimalCaffeineTime().second}</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="caffeineTime">Dernière prise de caféine aujourd'hui</Label>
-                    <Input
-                      id="caffeineTime"
-                      type="time"
-                      value={caffeineTime}
-                      onChange={(e) => {
-                        setCaffeineTime(e.target.value);
-                        saveToStorage("energyBalance_caffeineTime", e.target.value);
-                      }}
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-green-600">
-                    <TrendingUp className="h-5 w-5" />
-                    Activités énergisantes
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    {energyBoostingActivities.map((activity, index) => (
-                      <div key={index} className="flex items-center gap-2 p-2 bg-green-50 rounded">
-                        <Zap className="h-4 w-4 text-green-600" />
-                        <span className="text-sm">{activity}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-red-600">
-                    <Battery className="h-5 w-5" />
-                    Activités épuisantes
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    {energyDrainingActivities.map((activity, index) => (
-                      <div key={index} className="flex items-center gap-2 p-2 bg-red-50 rounded">
-                        <Timer className="h-4 w-4 text-red-600" />
-                        <span className="text-sm">{activity}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          {/* Analytics Tab */}
-          <TabsContent value="analytics" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="h-5 w-5" />
-                  Analyse des patterns
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {energyEntries.length > 0 ? (
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-3 gap-4">
-                      <div className="text-center p-4 bg-blue-50 rounded-lg">
-                        <div className="text-2xl font-bold text-blue-600">
-                          {(energyEntries.reduce((sum, entry) => sum + entry.level, 0) / energyEntries.length).toFixed(1)}
-                        </div>
-                        <div className="text-sm text-blue-600">Énergie moyenne</div>
-                      </div>
-                      <div className="text-center p-4 bg-green-50 rounded-lg">
-                        <div className="text-2xl font-bold text-green-600">
-                          {Math.max(...energyEntries.map(entry => entry.level))}
-                        </div>
-                        <div className="text-sm text-green-600">Pic d'énergie</div>
-                      </div>
-                      <div className="text-center p-4 bg-orange-50 rounded-lg">
-                        <div className="text-2xl font-bold text-orange-600">
-                          {energyEntries.length}
-                        </div>
-                        <div className="text-sm text-orange-600">Mesures prises</div>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-6">
-                      <h4 className="font-medium mb-3">Cycles ultradianes (90 min)</h4>
-                      <p className="text-sm text-gray-600">
-                        Votre corps suit des cycles de 90 minutes. Planifiez des pauses naturelles 
-                        toutes les 1h30 pour optimiser votre productivité.
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="text-center py-8">
-                    <CloudSun className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-500">
-                      Commencez à tracker votre énergie pour voir vos patterns personnels
+          {/* Conseils personnalisés */}
+          <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Sun className="h-5 w-5 text-orange-500" />
+                Conseils pour aujourd'hui
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {currentEnergy <= 2 && (
+                  <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200">
+                    <p className="text-sm text-red-700 dark:text-red-300">
+                      🚨 Votre énergie est faible. Considérez une sieste de 20 minutes ou une activité relaxante.
                     </p>
                   </div>
                 )}
-              </CardContent>
-            </Card>
-
-            {/* Weather Integration Info */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CloudSun className="h-5 w-5" />
-                  Intégrations futures
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <CloudSun className="h-5 w-5 text-blue-500" />
-                    <div>
-                      <div className="font-medium">Météo & Pression barométrique</div>
-                      <div className="text-sm text-gray-600">Impact sur votre énergie</div>
-                    </div>
+                {currentEnergy === 3 && (
+                  <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200">
+                    <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                      ⚖️ Votre énergie est neutre. Une activité physique légère pourrait vous aider à la booster.
+                    </p>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <Sun className="h-5 w-5 text-yellow-500" />
-                    <div>
-                      <div className="font-medium">Lever/Coucher du soleil</div>
-                      <div className="text-sm text-gray-600">Optimisation luminothérapie</div>
-                    </div>
+                )}
+                {currentEnergy >= 4 && (
+                  <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200">
+                    <p className="text-sm text-green-700 dark:text-green-300">
+                      ✨ Excellent niveau d'énergie ! C'est le moment idéal pour les tâches importantes.
+                    </p>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <Activity className="h-5 w-5 text-green-500" />
-                    <div>
-                      <div className="font-medium">Corrélation activités</div>
-                      <div className="text-sm text-gray-600">Avec autres apps santé</div>
-                    </div>
-                  </div>
+                )}
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Moon className="h-4 w-4" />
+                  <span>Pensez à maintenir un cycle de sommeil régulier pour optimiser votre énergie</span>
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </div>
-    </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </PageLayout>
+    </GlobalLayout>
   );
-};
-
-export default EnergyBalance;
+}

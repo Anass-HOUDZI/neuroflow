@@ -20,7 +20,7 @@ export default function HeroSection() {
 
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         {/* Badge */}
-        <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-purple-200 dark:border-purple-700 mb-8">
+        <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-purple-200 dark:border-purple-700 mb-4">
           <Sparkles className="w-4 h-4 text-purple-600 mr-2" />
           <span className="text-sm font-medium text-purple-600 dark:text-purple-400">
             Suite d'outils neuroscientifiques
@@ -62,7 +62,7 @@ export default function HeroSection() {
         {/* CTA Button */}
         <Button 
           size="lg" 
-          className="text-lg px-8 py-6 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
+          className="text-lg px-8 py-6 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200 mb-20"
           onClick={scrollToFeatures}
         >
           Découvrir les outils

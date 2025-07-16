@@ -26,7 +26,8 @@ const routeMap: Record<string, string> = {
   "/mind-flow": "MindFlow",
   "/anxiety-helper": "AnxietyHelper",
   "/emotion-wheel": "EmotionWheel",
-  "/stress-scanner": "StressScanner"
+  "/stress-scanner": "StressScanner",
+  "/energy-balance": "Équilibre Énergétique"
 };
 
 export default function Breadcrumb() {
