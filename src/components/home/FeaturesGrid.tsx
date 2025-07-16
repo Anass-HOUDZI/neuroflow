@@ -29,6 +29,15 @@ export default function FeaturesGrid() {
     }
   };
 
+  // Group features by category
+  const featuresGroupedByCategory = features.reduce((acc, feature) => {
+    if (!acc[feature.category]) {
+      acc[feature.category] = [];
+    }
+    acc[feature.category].push(feature);
+    return acc;
+  }, {} as Record<string, typeof features>);
+
   return (
     <section id="features" className="py-20 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,8 +56,8 @@ export default function FeaturesGrid() {
           </p>
         </motion.div>
 
-        {/* Grille des fonctionnalités par catégorie */}
-        {Object.entries(features).map(([category, categoryFeatures]) => (
+        {/* Grid of features by category */}
+        {Object.entries(featuresGroupedByCategory).map(([category, categoryFeatures]) => (
           <motion.div
             key={category}
             initial="hidden"
@@ -73,10 +82,10 @@ export default function FeaturesGrid() {
                           className="w-12 h-12 rounded-lg flex items-center justify-center text-white text-xl font-bold"
                           style={{ backgroundColor: feature.color }}
                         >
-                          {feature.icon}
+                          {feature.icon && <feature.icon className="h-6 w-6" />}
                         </div>
                         <Badge variant="secondary" className="text-xs">
-                          {feature.status}
+                          {feature.isPro ? 'Pro' : 'Gratuit'}
                         </Badge>
                       </div>
                       <CardTitle className="text-lg">{feature.title}</CardTitle>
@@ -93,16 +102,16 @@ export default function FeaturesGrid() {
                             </Badge>
                           ))}
                         </div>
-                        {feature.benefits && (
-                          <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
-                            {feature.benefits.slice(0, 2).map((benefit, benefitIndex) => (
-                              <li key={benefitIndex} className="flex items-start">
-                                <span className="text-green-500 mr-1">✓</span>
-                                {benefit}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
+                        <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+                          <div className="flex items-center">
+                            <span className="text-green-500 mr-1">⏱</span>
+                            {feature.estimatedTime}
+                          </div>
+                          <div className="flex items-center">
+                            <span className="text-blue-500 mr-1">📊</span>
+                            {feature.difficulty}
+                          </div>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
