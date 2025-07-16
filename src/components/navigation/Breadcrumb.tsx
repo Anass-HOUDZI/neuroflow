@@ -1,112 +1,77 @@
 
-import { Link, useLocation } from "react-router-dom";
 import { ChevronRight, Home } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
-const routeNames: Record<string, string> = {
+const routeMap: Record<string, string> = {
   "/": "Accueil",
-  "/about": "À propos",
-  "/contact": "Contact",
-  "/favorites": "Favoris",
-  "/settings": "Paramètres",
-  
-  // Productivité
-  "/zenpad": "ZenPad",
-  "/habitgrid": "HabitGrid", 
+  "/mood-tracker": "Suivi Humeur",
+  "/meditation": "Méditation", 
+  "/mindful-breath": "Respiration",
+  "/journal": "Journal",
+  "/gratitude-garden": "Gratitude",
+  "/fitness-log": "Fitness",
+  "/sleep-analyzer": "Sommeil",
+  "/hydro-reminder": "Hydratation",
+  "/nutrient-tracker": "Nutrition",
+  "/asting-support": "Jeûne",
+  "/sound-weaver": "SoundWeaver",
+  "/dataviz": "DataViz",
+  "/stats-pro": "StatsPro",
+  "/analytics": "Analytics",
+  "/zen-pad": "ZenPad",
   "/habit-grid": "HabitGrid",
-  "/localboard": "LocalBoard",
   "/local-board": "LocalBoard",
   "/calendar": "Calendrier",
   "/goals": "Objectifs",
-  "/journal": "Journal",
-  
-  // Bien-être
-  "/mood": "Suivi Humeur",
-  "/mood-tracker": "Suivi Humeur",
-  "/meditation": "Méditation",
-  "/mindfulbreath": "Respiration",
-  "/mindful-breath": "Respiration",
-  "/anxietyhelper": "Aide Anxiété",
-  "/anxiety-helper": "Aide Anxiété",
-  "/emotionwheel": "Roue Émotions",
-  "/emotion-wheel": "Roue Émotions",
-  "/gratitudegarden": "Jardin Gratitude",
-  "/gratitude-garden": "Jardin Gratitude",
-  "/stressscanner": "Scanner Stress",
-  "/stress-scanner": "Scanner Stress",
-  "/selfcompassion": "Auto-compassion",
-  "/self-compassion": "Auto-compassion",
-  "/energybalance": "Équilibre Énergie",
-  "/energy-balance": "Équilibre Énergie",
-  
-  // Santé
-  "/fitnesslog": "Journal Fitness",
-  "/fitness-log": "Journal Fitness", 
-  "/sleepanalyzer": "Analyse Sommeil",
-  "/sleep-analyzer": "Analyse Sommeil",
-  "/hydro": "Hydratation",
-  "/hydro-reminder": "Hydratation",
-  "/nutrienttracker": "Suivi Nutritionnel",
-  "/nutrient-tracker": "Suivi Nutritionnel",
-  "/mindfuleating": "Alimentation Consciente",
-  "/mindful-eating": "Alimentation Consciente",
-  "/astingsupport": "Support Jeûne",
-  "/asting-support": "Support Jeûne",
-  
-  // Outils
-  "/soundweaver": "SoundWeaver",
-  "/sound-weaver": "SoundWeaver",
-  "/dataviz": "DataViz",
-  "/data-viz": "DataViz",
-  "/statspro": "StatsPro",
-  "/stats-pro": "StatsPro",
-  "/analytics": "Analytics",
-  
-  // Documentation
-  "/technical-docs": "Documentation Technique",
-  "/performance-tests": "Tests Performance"
+  "/mind-flow": "MindFlow",
+  "/anxiety-helper": "AnxietyHelper",
+  "/emotion-wheel": "EmotionWheel",
+  "/stress-scanner": "StressScanner"
 };
 
 export default function Breadcrumb() {
   const location = useLocation();
-  const pathnames = location.pathname.split('/').filter((x) => x);
-
-  if (location.pathname === '/') {
-    return null; // Pas de breadcrumb sur la page d'accueil
-  }
+  const pathnames = location.pathname.split("/").filter((x) => x);
 
   return (
-    <nav className="flex items-center space-x-1 text-sm text-muted-foreground mb-6" aria-label="Breadcrumb">
-      <Link
-        to="/"
-        className="flex items-center hover:text-primary transition-colors"
-        aria-label="Retour à l'accueil"
+    <nav className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-400 mb-6">
+      <Link 
+        to="/" 
+        className="flex items-center hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
       >
         <Home className="h-4 w-4" />
       </Link>
       
-      {pathnames.map((value, index) => {
-        const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
-        const isLast = index === pathnames.length - 1;
-        const displayName = routeNames[routeTo] || value.charAt(0).toUpperCase() + value.slice(1);
+      {pathnames.length > 0 && (
+        <>
+          <ChevronRight className="h-4 w-4" />
+          {pathnames.map((name, index) => {
+            const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`;
+            const isLast = index === pathnames.length - 1;
+            const displayName = routeMap[routeTo] || name.charAt(0).toUpperCase() + name.slice(1);
 
-        return (
-          <div key={routeTo} className="flex items-center space-x-1">
-            <ChevronRight className="h-4 w-4" />
-            {isLast ? (
-              <span className="text-foreground font-medium" aria-current="page">
-                {displayName}
-              </span>
-            ) : (
-              <Link
-                to={routeTo}
-                className="hover:text-primary transition-colors"
-              >
-                {displayName}
-              </Link>
-            )}
-          </div>
-        );
-      })}
+            return (
+              <div key={name} className="flex items-center space-x-1">
+                {isLast ? (
+                  <span className="font-medium text-gray-900 dark:text-gray-100">
+                    {displayName}
+                  </span>
+                ) : (
+                  <>
+                    <Link 
+                      to={routeTo} 
+                      className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    >
+                      {displayName}
+                    </Link>
+                    <ChevronRight className="h-4 w-4" />
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </>
+      )}
     </nav>
   );
 }
