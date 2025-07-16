@@ -1,4 +1,3 @@
-
 import {
   BarChart3,
   Book,
@@ -72,7 +71,7 @@ export const features: Feature[] = [
     difficulty: 'beginner',
     color: 'from-blue-500 to-purple-600',
     popular: true,
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=300&fit=crop',
   },
   {
     id: 'local-board',
@@ -87,7 +86,7 @@ export const features: Feature[] = [
     estimatedTime: '5 min',
     difficulty: 'intermediate',
     color: 'from-green-500 to-teal-600',
-    image: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=300&fit=crop',
   },
   {
     id: 'mindflow',
@@ -118,7 +117,7 @@ export const features: Feature[] = [
     difficulty: 'beginner',
     color: 'from-pink-500 to-rose-600',
     new: true,
-    image: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1544273677-6e99cce84c19?w=400&h=300&fit=crop',
   },
   {
     id: 'mindful-breath',
@@ -133,7 +132,7 @@ export const features: Feature[] = [
     estimatedTime: '5 min',
     difficulty: 'beginner',
     color: 'from-cyan-500 to-blue-600',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop',
   },
   {
     id: 'meditation',
@@ -148,7 +147,7 @@ export const features: Feature[] = [
     estimatedTime: '15 min',
     difficulty: 'intermediate',
     color: 'from-indigo-500 to-purple-600',
-    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop',
   },
   {
     id: 'pixelcraft',
@@ -238,7 +237,7 @@ export const features: Feature[] = [
     estimatedTime: '20 min',
     difficulty: 'advanced',
     color: 'from-blue-500 to-indigo-600',
-    image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop',
   },
   {
     id: 'habit-grid',

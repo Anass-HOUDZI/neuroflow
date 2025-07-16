@@ -56,15 +56,18 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+      {/* Scroll indicator - avec plus de marge */}
+      <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 mt-8">
         <div 
-          className="cursor-pointer group"
+          className="cursor-pointer group animate-pulse"
           onClick={scrollToTools}
         >
-          <div className="w-6 h-10 border-2 border-gray-300 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-gray-300 rounded-full mt-2 animate-bounce group-hover:bg-blue-500 transition-colors"></div>
+          <div className="w-6 h-10 border-2 border-gray-400 dark:border-gray-500 rounded-full flex justify-center transition-colors duration-300 group-hover:border-blue-500">
+            <div className="w-1 h-3 bg-gray-400 dark:bg-gray-500 rounded-full mt-2 animate-bounce group-hover:bg-blue-500 transition-colors duration-300"></div>
           </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 group-hover:text-blue-500 transition-colors duration-300">
+            Faire défiler
+          </p>
         </div>
       </div>
     </section>
