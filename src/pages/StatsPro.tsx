@@ -3,6 +3,9 @@ import GlobalLayout from "@/components/layout/GlobalLayout";
 import { PageLayout, PageHeader } from "@/components/layout/PageLayout";
 import { TrendingUp } from "lucide-react";
 
+// Export des types pour compatibilité
+export type { StatsData } from "@/types/stats";
+
 export default function StatsPro() {
   return (
     <GlobalLayout>

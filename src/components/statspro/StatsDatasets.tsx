@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { StatsData } from '@/pages/StatsPro';
+import { StatsData } from '@/types/stats';
 
 interface StatsDatasetsProps {
   datasets: StatsData[];

@@ -25,7 +25,7 @@ export default function Index() {
           
           {/* Section des outils avec ID pour le scroll */}
           <div id="tools-section" className="scroll-mt-8">
-            <HomeSearchBar search={search} setSearch={setSearch} />
+            <HomeSearchBar />
             <FeatureGrid features={filteredFeatures} />
           </div>
         </div>

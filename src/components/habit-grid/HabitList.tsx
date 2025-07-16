@@ -1,9 +1,8 @@
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Trash2, Calendar } from "lucide-react";
-import { Habit } from "@/pages/HabitGrid";
+import { Habit } from "@/types/habit";
 
 interface HabitListProps {
   habits: Habit[];

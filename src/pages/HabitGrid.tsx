@@ -3,6 +3,9 @@ import GlobalLayout from "@/components/layout/GlobalLayout";
 import { PageLayout, PageHeader } from "@/components/layout/PageLayout";
 import { CheckSquare } from "lucide-react";
 
+// Export des types pour compatibilité
+export type { Habit, HabitEntry } from "@/types/habit";
+
 export default function HabitGrid() {
   return (
     <GlobalLayout>

@@ -1,10 +1,9 @@
-
 import React, { useRef, useState } from "react";
 import { Upload, Calculator, Database } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { StatsData } from "@/pages/StatsPro";
+import { StatsData } from "@/types/stats";
 
 interface StatsDataImporterProps {
   onDataImport: (datasets: StatsData[]) => void;

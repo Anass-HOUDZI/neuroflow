@@ -1,8 +1,7 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Habit, HabitEntry } from "@/pages/HabitGrid";
+import { Habit, HabitEntry } from "@/types/habit";
 
 interface WeeklyGridProps {
   habits: Habit[];

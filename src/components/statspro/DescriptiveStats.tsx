@@ -1,7 +1,6 @@
-
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { StatsData } from "@/pages/StatsPro";
+import { StatsData } from "@/types/stats";
 
 interface DescriptiveStatsProps {
   datasets: StatsData[];
