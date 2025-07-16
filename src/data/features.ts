@@ -1,3 +1,4 @@
+
 import {
   BarChart3,
   Book,
@@ -117,7 +118,7 @@ export const features: Feature[] = [
     difficulty: 'beginner',
     color: 'from-pink-500 to-rose-600',
     new: true,
-    image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=300&fit=crop',
   },
   {
     id: 'mindful-breath',
@@ -132,7 +133,7 @@ export const features: Feature[] = [
     estimatedTime: '5 min',
     difficulty: 'beginner',
     color: 'from-cyan-500 to-blue-600',
-    image: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop',
   },
   {
     id: 'meditation',
@@ -162,6 +163,7 @@ export const features: Feature[] = [
     estimatedTime: '10 min',
     difficulty: 'intermediate',
     color: 'from-orange-500 to-red-600',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop',
   },
   {
     id: 'colormaster',
@@ -176,6 +178,7 @@ export const features: Feature[] = [
     estimatedTime: '8 min',
     difficulty: 'intermediate',
     color: 'from-yellow-500 to-orange-600',
+    image: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=400&h=300&fit=crop',
   },
   {
     id: 'soundweaver',
@@ -190,6 +193,7 @@ export const features: Feature[] = [
     estimatedTime: '20 min',
     difficulty: 'advanced',
     color: 'from-violet-500 to-purple-600',
+    image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=300&fit=crop',
   },
   {
     id: 'flashmaster',
@@ -204,6 +208,7 @@ export const features: Feature[] = [
     estimatedTime: '15 min',
     difficulty: 'intermediate',
     color: 'from-emerald-500 to-teal-600',
+    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop',
   },
   {
     id: 'password-vault',
@@ -218,6 +223,7 @@ export const features: Feature[] = [
     estimatedTime: '5 min',
     difficulty: 'beginner',
     color: 'from-slate-500 to-gray-600',
+    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=300&fit=crop',
   },
   {
     id: 'data-viz',
@@ -247,6 +253,7 @@ export const features: Feature[] = [
     estimatedTime: '5 min',
     difficulty: 'beginner',
     color: 'from-green-500 to-emerald-600',
+    image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=300&fit=crop',
   },
   {
     id: 'sleep-analyzer',
@@ -261,6 +268,7 @@ export const features: Feature[] = [
     estimatedTime: '10 min',
     difficulty: 'intermediate',
     color: 'from-purple-500 to-indigo-600',
+    image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400&h=300&fit=crop',
   },
   {
     id: 'qr-generator',
@@ -275,6 +283,7 @@ export const features: Feature[] = [
     estimatedTime: '2 min',
     difficulty: 'beginner',
     color: 'from-gray-500 to-slate-600',
+    image: 'https://images.unsplash.com/photo-1606868306217-dbf5046868d2?w=400&h=300&fit=crop',
   },
   {
     id: 'anxiety-helper',
@@ -289,6 +298,7 @@ export const features: Feature[] = [
     estimatedTime: '5 min',
     difficulty: 'beginner',
     color: 'from-red-500 to-pink-600',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop',
   },
   {
     id: 'journal',
@@ -303,6 +313,7 @@ export const features: Feature[] = [
     estimatedTime: '10 min',
     difficulty: 'beginner',
     color: 'from-amber-500 to-orange-600',
+    image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=300&fit=crop',
   },
   {
     id: 'goals',
@@ -317,6 +328,7 @@ export const features: Feature[] = [
     estimatedTime: '15 min',
     difficulty: 'intermediate',
     color: 'from-yellow-500 to-amber-600',
+    image: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=300&fit=crop',
   },
   {
     id: 'calendar',
@@ -331,6 +343,7 @@ export const features: Feature[] = [
     estimatedTime: '10 min',
     difficulty: 'beginner',
     color: 'from-teal-500 to-cyan-600',
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop',
   },
   {
     id: 'settings',
@@ -345,5 +358,6 @@ export const features: Feature[] = [
     estimatedTime: '2 min',
     difficulty: 'beginner',
     color: 'from-gray-500 to-zinc-600',
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop',
   }
 ];

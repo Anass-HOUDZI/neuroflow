@@ -6,9 +6,24 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings as SettingsIcon, Palette, Bell, Shield, Database, Download } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Settings as SettingsIcon, Palette, Bell, Shield, Database, Download, Upload } from "lucide-react";
+import { useSettings } from "@/hooks/useSettings";
+import { useOptimizedTheme } from "@/core/hooks/useOptimizedTheme";
+import { useRef } from "react";
 
 export default function Settings() {
+  const { settings, updateSetting, clearAllData, exportData, importData } = useSettings();
+  const { isDark, toggleTheme } = useOptimizedTheme();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileImport = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      importData(file);
+    }
+  };
+
   return (
     <GlobalLayout>
       <div className="bg-gradient-to-br from-slate-50 to-blue-100 dark:from-gray-900 dark:to-gray-900 min-h-screen">
@@ -32,11 +47,21 @@ export default function Settings() {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="dark-mode">Mode sombre</Label>
-                  <Switch id="dark-mode" />
+                  <Switch 
+                    id="dark-mode" 
+                    checked={isDark}
+                    onCheckedChange={() => {
+                      toggleTheme();
+                      updateSetting('darkMode', !isDark);
+                    }}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label>Thème de couleur</Label>
-                  <Select>
+                  <Select 
+                    value={settings.colorTheme} 
+                    onValueChange={(value) => updateSetting('colorTheme', value as any)}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Sélectionner un thème" />
                     </SelectTrigger>
@@ -62,15 +87,27 @@ export default function Settings() {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="habit-reminders">Rappels d'habitudes</Label>
-                  <Switch id="habit-reminders" />
+                  <Switch 
+                    id="habit-reminders" 
+                    checked={settings.habitReminders}
+                    onCheckedChange={(checked) => updateSetting('habitReminders', checked)}
+                  />
                 </div>
                 <div className="flex items-center justify-between">
                   <Label htmlFor="meditation-reminders">Rappels de méditation</Label>
-                  <Switch id="meditation-reminders" />
+                  <Switch 
+                    id="meditation-reminders" 
+                    checked={settings.meditationReminders}
+                    onCheckedChange={(checked) => updateSetting('meditationReminders', checked)}
+                  />
                 </div>
                 <div className="flex items-center justify-between">
                   <Label htmlFor="journal-reminders">Rappels de journal</Label>
-                  <Switch id="journal-reminders" />
+                  <Switch 
+                    id="journal-reminders" 
+                    checked={settings.journalReminders}
+                    onCheckedChange={(checked) => updateSetting('journalReminders', checked)}
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -87,13 +124,21 @@ export default function Settings() {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="analytics">Analytics anonymes</Label>
-                  <Switch id="analytics" />
+                  <Switch 
+                    id="analytics" 
+                    checked={settings.analytics}
+                    onCheckedChange={(checked) => updateSetting('analytics', checked)}
+                  />
                 </div>
                 <div className="flex items-center justify-between">
                   <Label htmlFor="crash-reports">Rapports de crash</Label>
-                  <Switch id="crash-reports" />
+                  <Switch 
+                    id="crash-reports" 
+                    checked={settings.crashReports}
+                    onCheckedChange={(checked) => updateSetting('crashReports', checked)}
+                  />
                 </div>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" onClick={clearAllData}>
                   Effacer toutes les données locales
                 </Button>
               </CardContent>
@@ -109,11 +154,23 @@ export default function Settings() {
                 <CardDescription>Sauvegardez et restaurez vos données</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <Button className="w-full" variant="default">
+                <Button className="w-full" variant="default" onClick={exportData}>
                   <Download className="h-4 w-4 mr-2" />
                   Exporter mes données
                 </Button>
-                <Button className="w-full" variant="outline">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".json"
+                  onChange={handleFileImport}
+                  className="hidden"
+                />
+                <Button 
+                  className="w-full" 
+                  variant="outline"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <Upload className="h-4 w-4 mr-2" />
                   Importer des données
                 </Button>
                 <div className="text-sm text-muted-foreground">
