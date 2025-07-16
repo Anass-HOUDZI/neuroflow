@@ -86,55 +86,65 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          // Core framework chunks - ultra-optimized
-          'react-vendor': ['react', 'react-dom'],
-          'router': ['react-router-dom'],
+          // Core framework chunks - optimized
+          'react-core': ['react', 'react-dom'],
+          'routing': ['react-router-dom'],
           
-          // UI chunks - optimized by functionality
-          'ui-core': [
-            '@radix-ui/react-slot', 
-            '@radix-ui/react-toast',
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-progress'
-          ],
+          // UI chunks - ultra-optimized
+          'ui-core': ['@radix-ui/react-slot', '@radix-ui/react-toast'],
+          'ui-forms': ['@radix-ui/react-progress', '@radix-ui/react-dialog'],
           
-          // Icons - separate chunk for aggressive caching
+          // Icons - separate chunk for better caching
           'icons': ['lucide-react'],
           
-          // Utils and shared logic
-          'shared': ['clsx', 'tailwind-merge', 'class-variance-authority'],
+          // Utils and hooks
+          'utils': ['clsx', 'tailwind-merge', 'class-variance-authority'],
           
-          // Module chunks - domain-specific bundles
-          'wellness-module': [
-            './src/modules/wellness/WellnessRoutes',
-            './src/modules/wellness/pages/OptimizedMoodTracker',
-            './src/modules/wellness/pages/OptimizedMeditation'
+          // Productivity tools - highly optimized
+          'productivity-main': [
+            './src/pages/Journal',
+            './src/pages/HabitGrid',
+            './src/pages/ZenPad'
+          ],
+          'productivity-secondary': [
+            './src/pages/LocalBoard',
+            './src/pages/Goals',
+            './src/pages/Calendar'
           ],
           
-          'productivity-module': [
-            './src/modules/productivity/ProductivityRoutes',
-            './src/modules/productivity/pages/OptimizedJournal',
-            './src/modules/productivity/pages/OptimizedHabitGrid',
-            './src/modules/productivity/pages/OptimizedZenPad'
+          // Wellness tools - optimized chunking
+          'wellness-main': [
+            './src/pages/MoodTracker',
+            './src/pages/MindfulBreath'
+          ],
+          'wellness-secondary': [
+            './src/pages/AnxietyHelper',
+            './src/pages/StressScanner',
+            './src/pages/SelfCompassion'
           ],
           
-          'health-module': [
-            './src/modules/health/HealthRoutes',
-            './src/modules/health/pages/OptimizedSleepAnalyzer'
+          // Health tools
+          'health-main': [
+            './src/pages/HydroReminder',
+            './src/pages/SleepAnalyzer'
+          ],
+          'health-secondary': [
+            './src/pages/FitnessLog',
+            './src/pages/NutrientTracker',
+            './src/pages/EnergyBalance'
           ],
           
-          'analytics-module': [
-            './src/modules/analytics/AnalyticsRoutes',
-            './src/modules/analytics/pages/OptimizedAnalytics'
-          ],
-          
-          'tools-module': [
-            './src/modules/tools/ToolsRoutes'
+          // Data and tools
+          'tools': [
+            './src/pages/DataViz',
+            './src/pages/StatsPro',
+            './src/pages/SoundWeaver',
+            './src/pages/Analytics'
           ]
         }
       }
     },
-    chunkSizeWarningLimit: 300, // Ultra-strict chunk size
+    chunkSizeWarningLimit: 500, // Reduced for better performance
     sourcemap: false,
     target: 'esnext',
     minify: 'terser',
@@ -142,49 +152,30 @@ export default defineConfig(({ mode }) => ({
       compress: {
         drop_console: true,
         drop_debugger: true,
-        pure_funcs: ['console.log', 'console.warn', 'console.info'],
-        passes: 3, // More aggressive compression
-        unsafe: true,
-        unsafe_comps: true,
-        unsafe_math: true,
-        unsafe_proto: true
+        pure_funcs: ['console.log', 'console.warn'],
+        passes: 2
       },
       mangle: {
-        safari10: true,
-        properties: {
-          regex: /^_/
-        }
+        safari10: true
       }
     },
     // Ultra performance optimizations
     reportCompressedSize: false,
-    assetsInlineLimit: 8192, // Inline more assets
-    cssCodeSplit: true
+    assetsInlineLimit: 4096
   },
   optimizeDeps: {
     include: [
       'react', 
       'react-dom', 
       'react-router-dom',
-      'lucide-react',
-      '@radix-ui/react-slot',
-      '@radix-ui/react-toast'
+      'lucide-react'
     ],
     exclude: ['@vite/client', '@vite/env']
   },
-  // Additional ultra performance optimizations
+  // Additional performance optimizations
   esbuild: {
     target: 'esnext',
     platform: 'browser',
-    treeShaking: true,
-    minifyIdentifiers: true,
-    minifySyntax: true,
-    minifyWhitespace: true
-  },
-  // Performance hints
-  performance: {
-    hints: 'warning',
-    maxAssetSize: 250000, // 250kb max per asset
-    maxEntrypointSize: 400000 // 400kb max entrypoint
+    treeShaking: true
   }
 }));
