@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { ChevronRight, Home } from "lucide-react";
 
@@ -17,7 +18,6 @@ const routeNames: Record<string, string> = {
   "/calendar": "Calendrier",
   "/goals": "Objectifs",
   "/journal": "Journal",
-  "/mindflow": "MindFlow",
   
   // Bien-être
   "/mood": "Suivi Humeur",
@@ -52,23 +52,14 @@ const routeNames: Record<string, string> = {
   "/astingsupport": "Support Jeûne",
   "/asting-support": "Support Jeûne",
   
-  // Créativité
-  "/pixelcraft": "PixelCraft",
-  "/colormaster": "ColorMaster",
+  // Outils
   "/soundweaver": "SoundWeaver",
   "/sound-weaver": "SoundWeaver",
-  
-  // Apprentissage
-  "/flashmaster": "FlashMaster",
-  
-  // Outils
   "/dataviz": "DataViz",
   "/data-viz": "DataViz",
   "/statspro": "StatsPro",
   "/stats-pro": "StatsPro",
   "/analytics": "Analytics",
-  "/password-vault": "PasswordVault",
-  "/qr-generator": "Générateur QR",
   
   // Documentation
   "/technical-docs": "Documentation Technique",
