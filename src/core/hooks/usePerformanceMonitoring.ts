@@ -1,5 +1,10 @@
-
 import { useEffect, useCallback } from 'react';
+
+interface MemoryUsage {
+  used: number;
+  total: number;
+  limit: number;
+}
 
 interface PerformanceMetrics {
   loadTime: number;
@@ -8,6 +13,7 @@ interface PerformanceMetrics {
   cumulativeLayoutShift: number;
   firstInputDelay: number;
   timeToInteractive: number;
+  memoryUsage?: MemoryUsage;
 }
 
 interface UsePerformanceMonitoringOptions {
