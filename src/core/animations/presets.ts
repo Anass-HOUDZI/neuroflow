@@ -10,18 +10,21 @@ export const easings = {
 };
 
 // Base animation properties
-interface BaseAnimationProps {
+interface TransitionAnimation {
   initial?: any;
   animate?: any;
   exit?: any;
   transition?: any;
+}
+
+interface InteractionAnimation {
   whileHover?: any;
   whileTap?: any;
   whileFocus?: any;
 }
 
 // Transition animations (for page/component entry/exit)
-export const transitionAnimations = {
+export const transitionAnimations: Record<string, TransitionAnimation> = {
   fadeIn: {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -52,7 +55,7 @@ export const transitionAnimations = {
 };
 
 // Interaction animations (for hover, tap, focus)
-export const interactionAnimations = {
+export const interactionAnimations: Record<string, InteractionAnimation> = {
   buttonHover: {
     whileHover: { 
       scale: 1.02, 
