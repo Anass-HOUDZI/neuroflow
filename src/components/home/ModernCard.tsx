@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { animationPresets } from '@/core/animations/presets';
+import { transitionAnimations, easings } from '@/core/animations/presets';
 
 interface ModernCardProps {
   title: string;
@@ -42,13 +42,13 @@ export default function ModernCard({
 }: ModernCardProps) {
   return (
     <motion.div
-      initial={animationPresets.scaleIn.initial}
-      animate={animationPresets.scaleIn.animate}
-      transition={animationPresets.scaleIn.transition}
+      initial={transitionAnimations.scaleIn.initial}
+      animate={transitionAnimations.scaleIn.animate}
+      transition={transitionAnimations.scaleIn.transition}
       whileHover={{
         scale: 1.03,
         y: -4,
-        transition: { duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }
+        transition: { duration: 0.2, ease: easings.smooth }
       }}
       whileTap={{
         scale: 0.98,

@@ -109,7 +109,7 @@ export const loadingAnimations = {
   }
 };
 
-// Combined preset for easy access
+// Combined preset for easy access - includes ALL animation types
 export const animationPresets = {
   ...transitionAnimations,
   ...interactionAnimations,
