@@ -1,8 +1,14 @@
-import { Suspense, lazy } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+
+import { Suspense, lazy, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { OptimizedErrorBoundary } from '@/core/components/OptimizedErrorBoundary'
 import { OptimizedLoadingSpinner } from '@/core/components/OptimizedLoadingSpinner'
 import { Toaster } from '@/components/ui/sonner'
+import { ThemeProvider } from '@/core/theme/ThemeProvider'
+import { FocusManager } from '@/core/accessibility/FocusManager'
+import { useGlobalActions } from '@/core/stores/globalStore'
+import { useKeyboardShortcuts, globalShortcuts } from '@/shared/hooks/useKeyboardShortcuts'
+import { PageTransition } from '@/core/animations/components'
 
 // Lazy load pages for optimal performance
 const Index = lazy(() => import('@/pages/Index'))
@@ -16,10 +22,10 @@ const OptimizedJournal = lazy(() => import('@/modules/productivity/pages/Optimiz
 const OptimizedHabitGrid = lazy(() => import('@/modules/productivity/pages/OptimizedHabitGrid'))
 const OptimizedZenPad = lazy(() => import('@/modules/productivity/pages/OptimizedZenPad'))
 
-// Health Module - Optimized versions (Phase 4)
+// Health Module - Optimized versions
 const OptimizedSleepAnalyzer = lazy(() => import('@/modules/health/pages/OptimizedSleepAnalyzer'))
 
-// Analytics Module - Optimized versions (Phase 4)
+// Analytics Module - Optimized versions
 const OptimizedAnalytics = lazy(() => import('@/modules/analytics/pages/OptimizedAnalytics'))
 
 // Phase 5 - Finalization components
@@ -64,85 +70,344 @@ const ZenPad = lazy(() => import('@/pages/ZenPad'))
 const Journal = lazy(() => import('@/pages/Journal'))
 const HabitGrid = lazy(() => import('@/pages/HabitGrid'))
 
+// Route tracker component
+function RouteTracker() {
+  const location = useLocation();
+  const { setCurrentRoute } = useGlobalActions();
+  
+  useEffect(() => {
+    setCurrentRoute(location.pathname);
+  }, [location.pathname, setCurrentRoute]);
+  
+  return null;
+}
+
+// Connectivity manager
+function ConnectivityManager() {
+  const { setConnectivity } = useGlobalActions();
+  
+  useEffect(() => {
+    function handleOnline() {
+      setConnectivity('online');
+    }
+    
+    function handleOffline() {
+      setConnectivity('offline');
+    }
+    
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, [setConnectivity]);
+  
+  return null;
+}
+
+function AppRoutes() {
+  useKeyboardShortcuts({ shortcuts: globalShortcuts });
+  
+  return (
+    <Routes>
+      <Route path="/" element={
+        <PageTransition>
+          <Index />
+        </PageTransition>
+      } />
+      
+      {/* Wellness Module - Using correct routes */}
+      <Route path="/mood" element={
+        <PageTransition>
+          <MoodTracker />
+        </PageTransition>
+      } />
+      <Route path="/mood-tracker" element={
+        <PageTransition>
+          <OptimizedMoodTracker />
+        </PageTransition>
+      } />
+      <Route path="/meditation" element={
+        <PageTransition>
+          <OptimizedMeditation />
+        </PageTransition>
+      } />
+      <Route path="/mindfulbreath" element={
+        <PageTransition>
+          <MindfulBreath />
+        </PageTransition>
+      } />
+      <Route path="/mindful-breath" element={
+        <PageTransition>
+          <MindfulBreath />
+        </PageTransition>
+      } />
+      <Route path="/anxietyhelper" element={
+        <PageTransition>
+          <AnxietyHelper />
+        </PageTransition>
+      } />
+      <Route path="/anxiety-helper" element={
+        <PageTransition>
+          <AnxietyHelper />
+        </PageTransition>
+      } />
+      <Route path="/stressscanner" element={
+        <PageTransition>
+          <StressScanner />
+        </PageTransition>
+      } />
+      <Route path="/stress-scanner" element={
+        <PageTransition>
+          <StressScanner />
+        </PageTransition>
+      } />
+      <Route path="/selfcompassion" element={
+        <PageTransition>
+          <SelfCompassion />
+        </PageTransition>
+      } />
+      <Route path="/self-compassion" element={
+        <PageTransition>
+          <SelfCompassion />
+        </PageTransition>
+      } />
+      <Route path="/emotionwheel" element={
+        <PageTransition>
+          <EmotionWheel />
+        </PageTransition>
+      } />
+      <Route path="/emotion-wheel" element={
+        <PageTransition>
+          <EmotionWheel />
+        </PageTransition>
+      } />
+      <Route path="/gratitudegarden" element={
+        <PageTransition>
+          <GratitudeGarden />
+        </PageTransition>
+      } />
+      <Route path="/gratitude-garden" element={
+        <PageTransition>
+          <GratitudeGarden />
+        </PageTransition>
+      } />
+      
+      {/* Productivity Module - Using correct routes */}
+      <Route path="/journal" element={
+        <PageTransition>
+          <Journal />
+        </PageTransition>
+      } />
+      <Route path="/habitgrid" element={
+        <PageTransition>
+          <HabitGrid />
+        </PageTransition>
+      } />
+      <Route path="/habit-grid" element={
+        <PageTransition>
+          <OptimizedHabitGrid />
+        </PageTransition>
+      } />
+      <Route path="/zenpad" element={
+        <PageTransition>
+          <ZenPad />
+        </PageTransition>
+      } />
+      <Route path="/localboard" element={
+        <PageTransition>
+          <LocalBoard />
+        </PageTransition>
+      } />
+      <Route path="/local-board" element={
+        <PageTransition>
+          <LocalBoard />
+        </PageTransition>
+      } />
+      <Route path="/goals" element={
+        <PageTransition>
+          <Goals />
+        </PageTransition>
+      } />
+      <Route path="/calendar" element={
+        <PageTransition>
+          <Calendar />
+        </PageTransition>
+      } />
+      
+      {/* Health Module - Using correct routes */}
+      <Route path="/sleepanalyzer" element={
+        <PageTransition>
+          <SleepAnalyzer />
+        </PageTransition>
+      } />
+      <Route path="/sleep-analyzer" element={
+        <PageTransition>
+          <OptimizedSleepAnalyzer />
+        </PageTransition>
+      } />
+      <Route path="/fitnesslog" element={
+        <PageTransition>
+          <FitnessLog />
+        </PageTransition>
+      } />
+      <Route path="/fitness-log" element={
+        <PageTransition>
+          <FitnessLog />
+        </PageTransition>
+      } />
+      <Route path="/hydro" element={
+        <PageTransition>
+          <HydroReminder />
+        </PageTransition>
+      } />
+      <Route path="/hydro-reminder" element={
+        <PageTransition>
+          <HydroReminder />
+        </PageTransition>
+      } />
+      <Route path="/nutrienttracker" element={
+        <PageTransition>
+          <NutrientTracker />
+        </PageTransition>
+      } />
+      <Route path="/nutrient-tracker" element={
+        <PageTransition>
+          <NutrientTracker />
+        </PageTransition>
+      } />
+      <Route path="/astingsupport" element={
+        <PageTransition>
+          <AstingSupport />
+        </PageTransition>
+      } />
+      <Route path="/asting-support" element={
+        <PageTransition>
+          <AstingSupport />
+        </PageTransition>
+      } />
+      <Route path="/mindfuleating" element={
+        <PageTransition>
+          <MindfulEating />
+        </PageTransition>
+      } />
+      <Route path="/mindful-eating" element={
+        <PageTransition>
+          <MindfulEating />
+        </PageTransition>
+      } />
+      <Route path="/energybalance" element={
+        <PageTransition>
+          <EnergyBalance />
+        </PageTransition>
+      } />
+      <Route path="/energy-balance" element={
+        <PageTransition>
+          <EnergyBalance />
+        </PageTransition>
+      } />
+      
+      {/* Analytics Module - Using correct routes */}
+      <Route path="/analytics" element={
+        <PageTransition>
+          <OptimizedAnalytics />
+        </PageTransition>
+      } />
+      
+      {/* Data Module - Using correct routes */}
+      <Route path="/dataviz" element={
+        <PageTransition>
+          <DataViz />
+        </PageTransition>
+      } />
+      <Route path="/data-viz" element={
+        <PageTransition>
+          <DataViz />
+        </PageTransition>
+      } />
+      <Route path="/statspro" element={
+        <PageTransition>
+          <StatsPro />
+        </PageTransition>
+      } />
+      <Route path="/stats-pro" element={
+        <PageTransition>
+          <StatsPro />
+        </PageTransition>
+      } />
+      <Route path="/soundweaver" element={
+        <PageTransition>
+          <SoundWeaver />
+        </PageTransition>
+      } />
+      <Route path="/sound-weaver" element={
+        <PageTransition>
+          <SoundWeaver />
+        </PageTransition>
+      } />
+      
+      {/* Phase 5 - Finalization Routes */}
+      <Route path="/technical-docs" element={
+        <PageTransition>
+          <TechnicalDocs />
+        </PageTransition>
+      } />
+      <Route path="/performance-tests" element={
+        <PageTransition>
+          <PerformanceTestSuite />
+        </PageTransition>
+      } />
+      
+      {/* Utility Pages */}
+      <Route path="/settings" element={
+        <PageTransition>
+          <Settings />
+        </PageTransition>
+      } />
+      <Route path="/about" element={
+        <PageTransition>
+          <About />
+        </PageTransition>
+      } />
+      <Route path="/contact" element={
+        <PageTransition>
+          <Contact />
+        </PageTransition>
+      } />
+      <Route path="/favorites" element={
+        <PageTransition>
+          <Favorites />
+        </PageTransition>
+      } />
+      <Route path="*" element={
+        <PageTransition>
+          <NotFound />
+        </PageTransition>
+      } />
+    </Routes>
+  );
+}
+
 function App() {
   return (
-    <Router>
-      <OptimizedErrorBoundary>
-        <div className="App">
-          <Suspense fallback={<OptimizedLoadingSpinner />}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              
-              {/* Wellness Module - Using correct routes */}
-              <Route path="/mood" element={<MoodTracker />} />
-              <Route path="/mood-tracker" element={<OptimizedMoodTracker />} />
-              <Route path="/meditation" element={<OptimizedMeditation />} />
-              <Route path="/mindfulbreath" element={<MindfulBreath />} />
-              <Route path="/mindful-breath" element={<MindfulBreath />} />
-              <Route path="/anxietyhelper" element={<AnxietyHelper />} />
-              <Route path="/anxiety-helper" element={<AnxietyHelper />} />
-              <Route path="/stressscanner" element={<StressScanner />} />
-              <Route path="/stress-scanner" element={<StressScanner />} />
-              <Route path="/selfcompassion" element={<SelfCompassion />} />
-              <Route path="/self-compassion" element={<SelfCompassion />} />
-              <Route path="/emotionwheel" element={<EmotionWheel />} />
-              <Route path="/emotion-wheel" element={<EmotionWheel />} />
-              <Route path="/gratitudegarden" element={<GratitudeGarden />} />
-              <Route path="/gratitude-garden" element={<GratitudeGarden />} />
-              
-              {/* Productivity Module - Using correct routes */}
-              <Route path="/journal" element={<Journal />} />
-              <Route path="/habitgrid" element={<HabitGrid />} />
-              <Route path="/habit-grid" element={<OptimizedHabitGrid />} />
-              <Route path="/zenpad" element={<ZenPad />} />
-              <Route path="/localboard" element={<LocalBoard />} />
-              <Route path="/local-board" element={<LocalBoard />} />
-              <Route path="/goals" element={<Goals />} />
-              <Route path="/calendar" element={<Calendar />} />
-              
-              {/* Health Module - Using correct routes */}
-              <Route path="/sleepanalyzer" element={<SleepAnalyzer />} />
-              <Route path="/sleep-analyzer" element={<OptimizedSleepAnalyzer />} />
-              <Route path="/fitnesslog" element={<FitnessLog />} />
-              <Route path="/fitness-log" element={<FitnessLog />} />
-              <Route path="/hydro" element={<HydroReminder />} />
-              <Route path="/hydro-reminder" element={<HydroReminder />} />
-              <Route path="/nutrienttracker" element={<NutrientTracker />} />
-              <Route path="/nutrient-tracker" element={<NutrientTracker />} />
-              <Route path="/astingsupport" element={<AstingSupport />} />
-              <Route path="/asting-support" element={<AstingSupport />} />
-              <Route path="/mindfuleating" element={<MindfulEating />} />
-              <Route path="/mindful-eating" element={<MindfulEating />} />
-              <Route path="/energybalance" element={<EnergyBalance />} />
-              <Route path="/energy-balance" element={<EnergyBalance />} />
-              
-              {/* Analytics Module - Using correct routes */}
-              <Route path="/analytics" element={<Analytics />} />
-              
-              {/* Data Module - Using correct routes */}
-              <Route path="/dataviz" element={<DataViz />} />
-              <Route path="/data-viz" element={<DataViz />} />
-              <Route path="/statspro" element={<StatsPro />} />
-              <Route path="/stats-pro" element={<StatsPro />} />
-              <Route path="/soundweaver" element={<SoundWeaver />} />
-              <Route path="/sound-weaver" element={<SoundWeaver />} />
-              
-              {/* Phase 5 - Finalization Routes */}
-              <Route path="/technical-docs" element={<TechnicalDocs />} />
-              <Route path="/performance-tests" element={<PerformanceTestSuite />} />
-              
-              {/* Utility Pages */}
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/favorites" element={<Favorites />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-          <Toaster />
-        </div>
-      </OptimizedErrorBoundary>
-    </Router>
+    <ThemeProvider>
+      <FocusManager>
+        <Router>
+          <OptimizedErrorBoundary>
+            <RouteTracker />
+            <ConnectivityManager />
+            <div className="App">
+              <Suspense fallback={<OptimizedLoadingSpinner />}>
+                <AppRoutes />
+              </Suspense>
+              <Toaster />
+            </div>
+          </OptimizedErrorBoundary>
+        </Router>
+      </FocusManager>
+    </ThemeProvider>
   )
 }
 

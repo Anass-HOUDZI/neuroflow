@@ -1,0 +1,97 @@
+
+import { motion, AnimatePresence } from 'framer-motion';
+import { ReactNode } from 'react';
+import { animationPresets, staggerContainer } from './presets';
+
+interface AnimatedWrapperProps {
+  children: ReactNode;
+  preset: keyof typeof animationPresets;
+  className?: string;
+  delay?: number;
+}
+
+export function AnimatedWrapper({ children, preset, className, delay = 0 }: AnimatedWrapperProps) {
+  const animation = animationPresets[preset];
+  
+  return (
+    <motion.div
+      className={className}
+      initial={animation.initial}
+      animate={animation.animate}
+      exit={animation.exit}
+      transition={{ ...animation.transition, delay }}
+      {...(animation.whileHover && { whileHover: animation.whileHover })}
+      {...(animation.whileTap && { whileTap: animation.whileTap })}
+      {...(animation.whileFocus && { whileFocus: animation.whileFocus })}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+interface StaggeredListProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export function StaggeredList({ children, className }: StaggeredListProps) {
+  return (
+    <motion.div
+      className={className}
+      variants={staggerContainer}
+      initial="initial"
+      animate="animate"
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+interface PageTransitionProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export function PageTransition({ children, className }: PageTransitionProps) {
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        className={className}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+interface RippleButtonProps {
+  children: ReactNode;
+  onClick?: () => void;
+  className?: string;
+  disabled?: boolean;
+}
+
+export function RippleButton({ children, onClick, className, disabled }: RippleButtonProps) {
+  return (
+    <motion.button
+      className={`relative overflow-hidden ${className}`}
+      onClick={onClick}
+      disabled={disabled}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ duration: 0.15 }}
+    >
+      <motion.div
+        className="absolute inset-0 bg-white opacity-0"
+        whileTap={{ opacity: 0.3, scale: 2 }}
+        transition={{ duration: 0.3 }}
+        style={{ borderRadius: "50%" }}
+      />
+      {children}
+    </motion.button>
+  );
+}
