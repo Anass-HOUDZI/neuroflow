@@ -1,32 +1,42 @@
 
+import { Easing } from "framer-motion";
+
+export const easings = {
+  smooth: [0.25, 0.1, 0.25, 1] as Easing,
+  bounce: [0.68, -0.55, 0.265, 1.55] as Easing,
+  sharp: [0.4, 0, 0.2, 1] as Easing,
+  acceleration: [0.4, 0, 1, 1] as Easing,
+  deceleration: [0, 0, 0.2, 1] as Easing
+};
+
 export const animationPresets = {
   // Transitions de base
   fadeIn: {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -20 },
-    transition: { duration: 0.3, ease: "easeOut" }
+    transition: { duration: 0.3, ease: easings.smooth }
   },
   
   scaleIn: {
     initial: { scale: 0.95, opacity: 0 },
     animate: { scale: 1, opacity: 1 },
     exit: { scale: 0.95, opacity: 0 },
-    transition: { duration: 0.2, ease: "easeOut" }
+    transition: { duration: 0.2, ease: easings.smooth }
   },
   
   slideInLeft: {
     initial: { x: -30, opacity: 0 },
     animate: { x: 0, opacity: 1 },
     exit: { x: -30, opacity: 0 },
-    transition: { duration: 0.3, ease: "easeOut" }
+    transition: { duration: 0.3, ease: easings.smooth }
   },
   
   slideInRight: {
     initial: { x: 30, opacity: 0 },
     animate: { x: 0, opacity: 1 },
     exit: { x: 30, opacity: 0 },
-    transition: { duration: 0.3, ease: "easeOut" }
+    transition: { duration: 0.3, ease: easings.smooth }
   },
   
   // Micro-interactions
@@ -34,7 +44,7 @@ export const animationPresets = {
     whileHover: { 
       scale: 1.02, 
       y: -1,
-      transition: { duration: 0.15, ease: "easeOut" }
+      transition: { duration: 0.15, ease: easings.smooth }
     },
     whileTap: { 
       scale: 0.98,
@@ -47,7 +57,7 @@ export const animationPresets = {
       scale: 1.03, 
       y: -4,
       boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      transition: { duration: 0.2, ease: "easeOut" }
+      transition: { duration: 0.2, ease: easings.smooth }
     }
   },
   
@@ -60,7 +70,7 @@ export const animationPresets = {
     transition: {
       duration: 2,
       repeat: Infinity,
-      ease: "easeInOut"
+      ease: easings.smooth
     }
   },
   
@@ -69,7 +79,7 @@ export const animationPresets = {
     transition: {
       duration: 1,
       repeat: Infinity,
-      ease: "linear"
+      ease: "linear" as Easing
     }
   },
   
@@ -83,18 +93,11 @@ export const animationPresets = {
 };
 
 export const staggerContainer = {
+  initial: {},
   animate: {
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0.2
     }
   }
-};
-
-export const easings = {
-  smooth: [0.25, 0.1, 0.25, 1],
-  bounce: [0.68, -0.55, 0.265, 1.55],
-  sharp: [0.4, 0, 0.2, 1],
-  acceleration: [0.4, 0, 1, 1],
-  deceleration: [0, 0, 0.2, 1]
 };

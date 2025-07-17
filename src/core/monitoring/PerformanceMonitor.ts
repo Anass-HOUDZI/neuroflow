@@ -1,3 +1,4 @@
+
 interface PerformanceData {
   timestamp: number;
   url: string;
@@ -50,7 +51,7 @@ class PerformanceMonitor {
     switch (entry.entryType) {
       case 'navigation':
         const navEntry = entry as PerformanceNavigationTiming;
-        data.loadTime = navEntry.loadEventEnd - navEntry.navigationStart;
+        data.loadTime = navEntry.loadEventEnd - navEntry.fetchStart;
         break;
         
       case 'paint':
@@ -110,7 +111,7 @@ class PerformanceMonitor {
           const initialData: Partial<PerformanceData> = {
             timestamp: Date.now(),
             url: window.location.pathname,
-            loadTime: navEntry.loadEventEnd - navEntry.navigationStart,
+            loadTime: navEntry.loadEventEnd - navEntry.fetchStart,
             renderTime: navEntry.domContentLoadedEventEnd - navEntry.domContentLoadedEventStart,
           };
 

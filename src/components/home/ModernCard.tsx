@@ -48,7 +48,7 @@ export default function ModernCard({
       whileHover={{
         scale: 1.03,
         y: -4,
-        transition: { duration: 0.2, ease: "easeOut" }
+        transition: { duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }
       }}
       whileTap={{
         scale: 0.98,

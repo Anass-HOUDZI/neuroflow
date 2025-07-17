@@ -1,10 +1,10 @@
 
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef, ReactNode, HTMLAttributes } from 'react';
 import { motion } from 'framer-motion';
-import { Card, CardProps } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
-interface EnhancedCardProps extends CardProps {
+interface EnhancedCardProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   hover?: boolean;
   glow?: boolean;
@@ -13,21 +13,13 @@ interface EnhancedCardProps extends CardProps {
 
 export const EnhancedCard = forwardRef<HTMLDivElement, EnhancedCardProps>(
   ({ className, children, hover = true, glow = false, interactive = false, ...props }, ref) => {
-    const Component = motion(Card);
-    
     return (
-      <Component
-        ref={ref}
-        className={cn(
-          "transition-all duration-200",
-          glow && "shadow-sm hover:shadow-lg",
-          interactive && "cursor-pointer",
-          className
-        )}
+      <motion.div
+        className="inline-block w-full"
         whileHover={hover ? { 
           scale: 1.02,
           y: -2,
-          transition: { duration: 0.2, ease: "easeOut" }
+          transition: { duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }
         } : undefined}
         whileTap={interactive ? { 
           scale: 0.98,
@@ -37,10 +29,20 @@ export const EnhancedCard = forwardRef<HTMLDivElement, EnhancedCardProps>(
           boxShadow: "0 0 0 3px hsl(var(--ring))",
           transition: { duration: 0.15 }
         } : undefined}
-        {...props}
       >
-        {children}
-      </Component>
+        <Card
+          ref={ref}
+          className={cn(
+            "transition-all duration-200",
+            glow && "shadow-sm hover:shadow-lg",
+            interactive && "cursor-pointer",
+            className
+          )}
+          {...props}
+        >
+          {children}
+        </Card>
+      </motion.div>
     );
   }
 );

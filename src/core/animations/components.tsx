@@ -20,9 +20,9 @@ export function AnimatedWrapper({ children, preset, className, delay = 0 }: Anim
       animate={animation.animate}
       exit={animation.exit}
       transition={{ ...animation.transition, delay }}
-      {...(animation.whileHover && { whileHover: animation.whileHover })}
-      {...(animation.whileTap && { whileTap: animation.whileTap })}
-      {...(animation.whileFocus && { whileFocus: animation.whileFocus })}
+      whileHover={animation.whileHover}
+      whileTap={animation.whileTap}
+      whileFocus={animation.whileFocus}
     >
       {children}
     </motion.div>
@@ -60,7 +60,7 @@ export function PageTransition({ children, className }: PageTransitionProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
+        transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
       >
         {children}
       </motion.div>
