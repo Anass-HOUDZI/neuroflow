@@ -9,8 +9,19 @@ export const easings = {
   deceleration: [0, 0, 0.2, 1] as Easing
 };
 
-export const animationPresets = {
-  // Transitions de base
+// Base animation properties
+interface BaseAnimationProps {
+  initial?: any;
+  animate?: any;
+  exit?: any;
+  transition?: any;
+  whileHover?: any;
+  whileTap?: any;
+  whileFocus?: any;
+}
+
+// Transition animations (for page/component entry/exit)
+export const transitionAnimations = {
   fadeIn: {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -37,9 +48,11 @@ export const animationPresets = {
     animate: { x: 0, opacity: 1 },
     exit: { x: 30, opacity: 0 },
     transition: { duration: 0.3, ease: easings.smooth }
-  },
-  
-  // Micro-interactions
+  }
+};
+
+// Interaction animations (for hover, tap, focus)
+export const interactionAnimations = {
   buttonHover: {
     whileHover: { 
       scale: 1.02, 
@@ -61,7 +74,16 @@ export const animationPresets = {
     }
   },
   
-  // Loading states
+  focusRing: {
+    whileFocus: {
+      boxShadow: "0 0 0 3px hsl(var(--ring))",
+      transition: { duration: 0.15 }
+    }
+  }
+};
+
+// Loading animations (continuous)
+export const loadingAnimations = {
   pulse: {
     animate: {
       scale: [1, 1.05, 1],
@@ -81,15 +103,14 @@ export const animationPresets = {
       repeat: Infinity,
       ease: "linear" as Easing
     }
-  },
-  
-  // Focus et accessibilité
-  focusRing: {
-    whileFocus: {
-      boxShadow: "0 0 0 3px hsl(var(--ring))",
-      transition: { duration: 0.15 }
-    }
   }
+};
+
+// Combined preset for easy access
+export const animationPresets = {
+  ...transitionAnimations,
+  ...interactionAnimations,
+  ...loadingAnimations
 };
 
 export const staggerContainer = {
@@ -101,3 +122,9 @@ export const staggerContainer = {
     }
   }
 };
+
+// Type exports for better usage
+export type TransitionAnimationKey = keyof typeof transitionAnimations;
+export type InteractionAnimationKey = keyof typeof interactionAnimations;
+export type LoadingAnimationKey = keyof typeof loadingAnimations;
+export type AnimationPresetKey = keyof typeof animationPresets;

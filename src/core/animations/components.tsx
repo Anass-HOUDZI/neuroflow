@@ -1,17 +1,24 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { ReactNode } from 'react';
-import { animationPresets, staggerContainer } from './presets';
+import { 
+  animationPresets, 
+  transitionAnimations, 
+  interactionAnimations,
+  staggerContainer, 
+  type TransitionAnimationKey,
+  type InteractionAnimationKey 
+} from './presets';
 
 interface AnimatedWrapperProps {
   children: ReactNode;
-  preset: keyof typeof animationPresets;
+  preset: TransitionAnimationKey;
   className?: string;
   delay?: number;
 }
 
 export function AnimatedWrapper({ children, preset, className, delay = 0 }: AnimatedWrapperProps) {
-  const animation = animationPresets[preset];
+  const animation = transitionAnimations[preset];
   
   return (
     <motion.div
@@ -20,6 +27,24 @@ export function AnimatedWrapper({ children, preset, className, delay = 0 }: Anim
       animate={animation.animate}
       exit={animation.exit}
       transition={{ ...animation.transition, delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+interface InteractiveWrapperProps {
+  children: ReactNode;
+  preset: InteractionAnimationKey;
+  className?: string;
+}
+
+export function InteractiveWrapper({ children, preset, className }: InteractiveWrapperProps) {
+  const animation = interactionAnimations[preset];
+  
+  return (
+    <motion.div
+      className={className}
       whileHover={animation.whileHover}
       whileTap={animation.whileTap}
       whileFocus={animation.whileFocus}
