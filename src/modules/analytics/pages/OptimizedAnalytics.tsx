@@ -1,14 +1,14 @@
-
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ArrowLeft, BarChart3, PieChart, TrendingUp, Calendar, Brain, Heart, Target } from 'lucide-react'
+import { ArrowLeft, BarChart3, PieChart, TrendingUp, Calendar, Brain, Heart, Target, Activity } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useAnalyticsStore } from '@/core/stores/analyticsStore'
 import { useProductivityStore } from '@/core/stores/productivityStore'
 import { useWellnessStore } from '@/core/stores/wellnessStore'
 import { useHealthStore } from '@/core/stores/healthStore'
+import { PerformanceDashboard } from '../components/PerformanceDashboard'
 
 export const OptimizedAnalytics: React.FC = () => {
   const [timeRange, setTimeRange] = useState<'week' | 'month' | 'quarter'>('month')
@@ -34,10 +34,10 @@ export const OptimizedAnalytics: React.FC = () => {
             </Button>
             <div>
               <h1 className="text-4xl font-bold text-gray-800 dark:text-white">
-                Analytics Optimisé
+                Analytics Avancé
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300">
-                Insights avancés sur votre bien-être
+                Insights et performance en temps réel
               </p>
             </div>
           </div>
@@ -124,8 +124,12 @@ export const OptimizedAnalytics: React.FC = () => {
         
         {/* Main Analytics */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
+            <TabsTrigger value="performance">
+              <Activity className="h-4 w-4 mr-2" />
+              Performance
+            </TabsTrigger>
             <TabsTrigger value="correlations">Corrélations</TabsTrigger>
             <TabsTrigger value="trends">Tendances</TabsTrigger>
             <TabsTrigger value="insights">Insights</TabsTrigger>
@@ -202,6 +206,10 @@ export const OptimizedAnalytics: React.FC = () => {
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+          
+          <TabsContent value="performance" className="space-y-6">
+            <PerformanceDashboard />
           </TabsContent>
           
           <TabsContent value="correlations" className="space-y-6">
