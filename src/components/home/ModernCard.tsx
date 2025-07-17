@@ -42,13 +42,14 @@ export default function ModernCard({
     <Link
       to={href}
       className={`
-        group relative overflow-hidden rounded-2xl 
+        group relative overflow-hidden rounded-xl sm:rounded-2xl 
         glass-card animate-shine
         bg-gradient-to-br ${gradientClasses[gradient]} ${hoverGradients[gradient]}
-        transform-gpu transition-all duration-500
-        hover:scale-105 hover:-translate-y-2
+        transform-gpu transition-all duration-300
+        hover:scale-[1.02] sm:hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2
         border border-white/10 hover:border-white/20
-        min-h-[280px] flex flex-col
+        min-h-[220px] sm:min-h-[260px] lg:min-h-[280px] flex flex-col
+        active:scale-95 active:translate-y-0
       `}
     >
       {/* Background Image */}
@@ -56,16 +57,19 @@ export default function ModernCard({
         <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
           <img 
             src={image} 
-            alt={title}
+            alt=""
             className="w-full h-full object-cover"
             loading="lazy"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+            }}
           />
         </div>
       )}
 
       {/* Badge */}
       {badge && (
-        <div className="absolute top-4 right-4 z-10">
+        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
           <span className="px-2 py-1 text-xs font-medium bg-white/20 backdrop-blur-sm rounded-full border border-white/20">
             {badge}
           </span>
@@ -73,42 +77,42 @@ export default function ModernCard({
       )}
 
       {/* Content */}
-      <div className="relative z-10 p-6 flex flex-col h-full">
+      <div className="relative z-10 p-4 sm:p-5 lg:p-6 flex flex-col h-full">
         {/* Icon */}
-        <div className="mb-4">
+        <div className="mb-3 sm:mb-4">
           <div className={`
-            w-12 h-12 rounded-xl bg-gradient-to-br ${gradientClasses[gradient]}
+            w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${gradientClasses[gradient]}
             backdrop-blur-sm border border-white/20
             flex items-center justify-center
             group-hover:scale-110 group-hover:rotate-3
             transition-transform duration-300
           `}>
-            <Icon className="h-6 w-6 text-white" />
+            <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
           </div>
         </div>
 
         {/* Title */}
-        <h3 className="font-bold text-lg mb-2 text-foreground group-hover:text-primary transition-colors">
+        <h3 className="font-bold text-base sm:text-lg lg:text-xl mb-2 text-foreground group-hover:text-primary transition-colors line-clamp-2">
           {title}
         </h3>
 
         {/* Description */}
-        <p className="text-sm text-muted-foreground leading-relaxed flex-grow">
+        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed flex-grow line-clamp-3 sm:line-clamp-4">
           {description}
         </p>
 
         {/* Custom Children */}
         {children && (
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
             {children}
           </div>
         )}
 
         {/* Hover Arrow */}
-        <div className="mt-4 flex items-center text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <span className="text-sm font-medium">Explorer</span>
+        <div className="mt-3 sm:mt-4 flex items-center text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <span className="text-xs sm:text-sm font-medium">Explorer</span>
           <svg 
-            className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" 
+            className="ml-2 h-3 w-3 sm:h-4 sm:w-4 transform group-hover:translate-x-1 transition-transform" 
             fill="none" 
             viewBox="0 0 24 24" 
             stroke="currentColor"
