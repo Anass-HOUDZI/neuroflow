@@ -113,7 +113,7 @@ export default function FeatureGrid({ features }: FeatureGridProps) {
                   icon={feature.icon}
                   href={feature.href || feature.path}
                   gradient={getGradientForCategory(feature.category) as 'primary' | 'secondary' | 'accent' | 'warm'}
-                  image={categoryImages[feature.category as keyof typeof categoryImages]}
+                  image={feature.image || categoryImages[feature.category as keyof typeof categoryImages]}
                   badge={getBadgeForFeature(feature)}
                 />
               </div>
