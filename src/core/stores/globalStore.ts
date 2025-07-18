@@ -152,17 +152,31 @@ export const useAppState = () => useGlobalStore((state) => state.app);
 export const useNavigation = () => useGlobalStore((state) => state.navigation);
 export const useConnectivity = () => useGlobalStore((state) => state.app.connectivity);
 
-// Hook pour les actions
-export const useGlobalActions = () => useGlobalStore((state) => ({
-  setUser: state.setUser,
-  updateUserPreferences: state.updateUserPreferences,
-  setLoading: state.setLoading,
-  setError: state.setError,
-  setConnectivity: state.setConnectivity,
-  updateLastSync: state.updateLastSync,
-  setCurrentRoute: state.setCurrentRoute,
-  setBreadcrumbs: state.setBreadcrumbs,
-  toggleSidebar: state.toggleSidebar,
-  setSidebarOpen: state.setSidebarOpen,
-  reset: state.reset,
-}));
+// Hook pour les actions optimisé pour éviter les re-renders
+export const useGlobalActions = () => {
+  const setUser = useGlobalStore((state) => state.setUser);
+  const updateUserPreferences = useGlobalStore((state) => state.updateUserPreferences);
+  const setLoading = useGlobalStore((state) => state.setLoading);
+  const setError = useGlobalStore((state) => state.setError);
+  const setConnectivity = useGlobalStore((state) => state.setConnectivity);
+  const updateLastSync = useGlobalStore((state) => state.updateLastSync);
+  const setCurrentRoute = useGlobalStore((state) => state.setCurrentRoute);
+  const setBreadcrumbs = useGlobalStore((state) => state.setBreadcrumbs);
+  const toggleSidebar = useGlobalStore((state) => state.toggleSidebar);
+  const setSidebarOpen = useGlobalStore((state) => state.setSidebarOpen);
+  const reset = useGlobalStore((state) => state.reset);
+
+  return {
+    setUser,
+    updateUserPreferences,
+    setLoading,
+    setError,
+    setConnectivity,
+    updateLastSync,
+    setCurrentRoute,
+    setBreadcrumbs,
+    toggleSidebar,
+    setSidebarOpen,
+    reset,
+  };
+};

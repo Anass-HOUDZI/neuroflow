@@ -6,7 +6,7 @@ import { OptimizedLoadingSpinner } from '@/core/components/OptimizedLoadingSpinn
 import { Toaster } from '@/components/ui/sonner'
 import { ThemeProvider } from '@/core/theme/ThemeProvider'
 import { FocusManager } from '@/core/accessibility/FocusManager'
-import { useGlobalActions } from '@/core/stores/globalStore'
+import { useGlobalStore } from '@/core/stores/globalStore'
 import { useKeyboardShortcuts, globalShortcuts } from '@/shared/hooks/useKeyboardShortcuts'
 import { PageTransition } from '@/core/animations/components'
 
@@ -70,10 +70,10 @@ const ZenPad = lazy(() => import('@/pages/ZenPad'))
 const Journal = lazy(() => import('@/pages/Journal'))
 const HabitGrid = lazy(() => import('@/pages/HabitGrid'))
 
-// Route tracker component
+// Route tracker component optimisé
 function RouteTracker() {
   const location = useLocation();
-  const { setCurrentRoute } = useGlobalActions();
+  const setCurrentRoute = useGlobalStore((state) => state.setCurrentRoute);
   
   useEffect(() => {
     setCurrentRoute(location.pathname);
@@ -82,9 +82,9 @@ function RouteTracker() {
   return null;
 }
 
-// Connectivity manager
+// Connectivity manager optimisé
 function ConnectivityManager() {
-  const { setConnectivity } = useGlobalActions();
+  const setConnectivity = useGlobalStore((state) => state.setConnectivity);
   
   useEffect(() => {
     function handleOnline() {
