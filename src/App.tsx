@@ -1,5 +1,5 @@
 
-import { Suspense, lazy, useEffect } from 'react'
+import React, { Suspense, lazy, useEffect, memo } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { OptimizedErrorBoundary } from '@/core/components/OptimizedErrorBoundary'
 import { OptimizedLoadingSpinner } from '@/core/components/OptimizedLoadingSpinner'
@@ -70,8 +70,8 @@ const ZenPad = lazy(() => import('@/pages/ZenPad'))
 const Journal = lazy(() => import('@/pages/Journal'))
 const HabitGrid = lazy(() => import('@/pages/HabitGrid'))
 
-// Route tracker component optimisé
-function RouteTracker() {
+// Route tracker component optimisé avec memo
+const RouteTracker = memo(() => {
   const location = useLocation();
   const setCurrentRoute = useGlobalStore((state) => state.setCurrentRoute);
   
@@ -80,23 +80,21 @@ function RouteTracker() {
   }, [location.pathname, setCurrentRoute]);
   
   return null;
-}
+});
 
-// Connectivity manager optimisé
-function ConnectivityManager() {
+// Connectivity manager optimisé avec memo
+const ConnectivityManager = memo(() => {
   const setConnectivity = useGlobalStore((state) => state.setConnectivity);
   
   useEffect(() => {
-    function handleOnline() {
-      setConnectivity('online');
-    }
-    
-    function handleOffline() {
-      setConnectivity('offline');
-    }
+    const handleOnline = () => setConnectivity('online');
+    const handleOffline = () => setConnectivity('offline');
     
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
+    
+    // État initial
+    setConnectivity(navigator.onLine ? 'online' : 'offline');
     
     return () => {
       window.removeEventListener('online', handleOnline);
@@ -105,9 +103,9 @@ function ConnectivityManager() {
   }, [setConnectivity]);
   
   return null;
-}
+});
 
-function AppRoutes() {
+const AppRoutes = memo(() => {
   useKeyboardShortcuts({ shortcuts: globalShortcuts });
   
   return (
@@ -388,9 +386,9 @@ function AppRoutes() {
       } />
     </Routes>
   );
-}
+});
 
-function App() {
+const App = memo(() => {
   return (
     <ThemeProvider>
       <FocusManager>
@@ -398,17 +396,17 @@ function App() {
           <OptimizedErrorBoundary>
             <RouteTracker />
             <ConnectivityManager />
-            <div className="App">
+            <div className="min-h-screen bg-background text-foreground">
               <Suspense fallback={<OptimizedLoadingSpinner />}>
                 <AppRoutes />
               </Suspense>
-              <Toaster />
+              <Toaster position="bottom-right" />
             </div>
           </OptimizedErrorBoundary>
         </Router>
       </FocusManager>
     </ThemeProvider>
-  )
-}
+  );
+});
 
 export default App

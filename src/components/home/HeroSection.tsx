@@ -11,7 +11,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-blue-900/20 overflow-hidden">
+    <section className="relative flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-blue-900/20 overflow-hidden py-12 md:py-16 lg:py-20">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
       <div className="absolute top-20 left-10 w-32 h-32 sm:w-48 sm:h-48 md:w-72 md:h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
@@ -20,7 +20,7 @@ export default function HeroSection() {
 
       <div className="relative z-10 text-center px-2 sm:px-4 lg:px-8 max-w-5xl mx-auto">
         {/* Badge */}
-        <div className="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-purple-200 dark:border-purple-700 mb-2 sm:mb-3">
+        <div className="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-purple-200 dark:border-purple-700 mb-4 sm:mb-6">
           <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600 mr-1.5 sm:mr-2" />
           <span className="text-xs sm:text-sm font-medium text-purple-600 dark:text-purple-400">
             Suite d'outils neuroscientifiques
@@ -62,20 +62,12 @@ export default function HeroSection() {
         {/* CTA Button */}
         <Button 
           size="lg" 
-          className="text-sm sm:text-base lg:text-lg px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-6 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200 mb-8 sm:mb-12 lg:mb-16"
+          className="text-sm sm:text-base lg:text-lg px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-6 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
           onClick={scrollToFeatures}
         >
           Découvrir les outils
           <ArrowDown className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
         </Button>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 sm:bottom-10 lg:bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
-          <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-gray-400 dark:border-gray-500 rounded-full flex justify-center">
-            <div className="w-1 h-2 sm:h-3 bg-gray-400 dark:bg-gray-500 rounded-full mt-2 animate-bounce"></div>
-          </div>
-          <span className="text-xs text-gray-500 dark:text-gray-400 mt-2">Scroll</span>
-        </div>
       </div>
     </section>
   );

@@ -31,39 +31,40 @@ const Footer = () => {
     {
       title: "Productivité",
       links: [
-        { name: "ZenPad", href: "/zen-pad", icon: BookOpen },
-        { name: "HabitGrid", href: "/habit-grid", icon: CheckSquare },
-        { name: "LocalBoard", href: "/local-board", icon: Clipboard },
+        { name: "ZenPad", href: "/zenpad", icon: BookOpen },
+        { name: "HabitGrid", href: "/habitgrid", icon: CheckSquare },
+        { name: "LocalBoard", href: "/localboard", icon: Clipboard },
         { name: "Calendrier", href: "/calendar", icon: Calendar },
-        { name: "Objectifs", href: "/goals", icon: Target }
+        { name: "Objectifs", href: "/goals", icon: Target },
+        { name: "Journal", href: "/journal", icon: BookOpen }
       ]
     },
     {
       title: "Bien-être",
       links: [
-        { name: "Suivi Humeur", href: "/mood-tracker", icon: Smile },
+        { name: "Suivi Humeur", href: "/mood", icon: Smile },
         { name: "Méditation", href: "/meditation", icon: Brain },
-        { name: "Respiration", href: "/mindful-breath", icon: Wind },
-        { name: "Journal", href: "/journal", icon: BookOpen },
-        { name: "Gratitude", href: "/gratitude-garden", icon: Heart }
+        { name: "Respiration", href: "/mindfulbreath", icon: Wind },
+        { name: "Anxiété", href: "/anxietyhelper", icon: Activity },
+        { name: "Gratitude", href: "/gratitudegarden", icon: Heart }
       ]
     },
     {
       title: "Santé",
       links: [
-        { name: "Fitness", href: "/fitness-log", icon: Dumbbell },
-        { name: "Sommeil", href: "/sleep-analyzer", icon: Moon },
-        { name: "Hydratation", href: "/hydro-reminder", icon: Droplets },
-        { name: "Nutrition", href: "/nutrient-tracker", icon: Apple },
-        { name: "Énergie", href: "/energy-balance", icon: Activity }
+        { name: "Fitness", href: "/fitnesslog", icon: Dumbbell },
+        { name: "Sommeil", href: "/sleepanalyzer", icon: Moon },
+        { name: "Hydratation", href: "/hydro", icon: Droplets },
+        { name: "Nutrition", href: "/nutrienttracker", icon: Apple },
+        { name: "Énergie", href: "/energybalance", icon: Activity }
       ]
     },
     {
       title: "Outils",
       links: [
-        { name: "SoundWeaver", href: "/sound-weaver", icon: Music },
+        { name: "SoundWeaver", href: "/soundweaver", icon: Music },
         { name: "DataViz", href: "/dataviz", icon: PieChart },
-        { name: "StatsPro", href: "/stats-pro", icon: TrendingUp },
+        { name: "StatsPro", href: "/statspro", icon: TrendingUp },
         { name: "Analytics", href: "/analytics", icon: BarChart3 }
       ]
     }
