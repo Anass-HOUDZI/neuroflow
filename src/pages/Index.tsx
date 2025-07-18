@@ -9,9 +9,11 @@ import { useFeatureSearch } from "@/hooks/useFeatureSearch";
 import GlobalLayout from "@/components/layout/GlobalLayout";
 
 export default function Index() {
+  console.log('Index: Loading hooks...');
   const { isDark, toggleTheme } = useOptimizedTheme();
   const { search, setSearch, filteredFeatures } = useFeatureSearch(features);
 
+  console.log('Index: Rendering components...');
   return (
     <GlobalLayout showBreadcrumb={false}>
       <div className="

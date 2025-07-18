@@ -40,6 +40,7 @@ export default function ModernCard({
   badge, 
   children 
 }: ModernCardProps) {
+  console.log('ModernCard: Rendering', title);
   return (
     <motion.div
       initial={transitionAnimations.scaleIn.initial}

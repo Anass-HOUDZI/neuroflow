@@ -52,6 +52,7 @@ const categoryLabels = {
 };
 
 export default function FeatureGrid({ features }: FeatureGridProps) {
+  console.log('FeatureGrid: Rendering with features:', features.length);
   if (features.length === 0) {
     return (
       <div className="text-center py-12 sm:py-16">
