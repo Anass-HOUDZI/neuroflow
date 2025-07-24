@@ -29,7 +29,11 @@ export default function HeroSection() {
 
         {/* Main Heading */}
         <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-3 sm:mb-4 lg:mb-6 bg-gradient-to-r from-gray-900 via-purple-600 to-blue-600 dark:from-white dark:via-purple-400 dark:to-blue-400 bg-clip-text text-transparent leading-tight">
-          NeuroFlow
+          <img 
+            src="/lovable-uploads/a0fbbb2d-6964-4c6c-9eed-fb534407abd8.png" 
+            alt="NeuroFlow" 
+            className="h-16 w-auto mx-auto mb-4"
+          />
         </h1>
 
         {/* Subtitle */}

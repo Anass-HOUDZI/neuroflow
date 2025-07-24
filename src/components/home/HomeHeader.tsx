@@ -14,12 +14,11 @@ export default memo<HomeHeaderProps>(function HomeHeader({ isDark, toggleTheme }
   return (
     <header className="flex items-center justify-between mb-8 sm:mb-12 px-4 sm:px-0">
       <div className="flex items-center gap-3">
-        <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-          <Brain className="text-white h-6 w-6 sm:h-8 sm:w-8" />
-        </div>
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold gradient-text">NeuroFlow</h1>
-        </div>
+        <img 
+          src="/lovable-uploads/a0fbbb2d-6964-4c6c-9eed-fb534407abd8.png" 
+          alt="NeuroFlow Logo" 
+          className="h-8 sm:h-10 w-auto hover:scale-105 transition-transform duration-300"
+        />
       </div>
 
       <nav className="flex items-center gap-1 sm:gap-2">

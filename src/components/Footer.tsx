@@ -77,13 +77,12 @@ const Footer = () => {
         <div className="flex flex-col lg:flex-row gap-8 mb-8">
           <div className="lg:w-1/3">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
-                <Brain className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-              </div>
+              <img 
+                src="/lovable-uploads/a0fbbb2d-6964-4c6c-9eed-fb534407abd8.png" 
+                alt="NeuroFlow Logo" 
+                className="h-10 w-auto"
+              />
               <div>
-                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">
-                  NeuroFlow
-                </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   Compagnon bien-être neuroscientifique
                 </p>
