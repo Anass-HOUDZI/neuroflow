@@ -125,6 +125,10 @@
     font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-weight: 600;
     line-height: 1.2;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
 
@@ -161,11 +165,42 @@
     box-shadow: var(--glass-shadow);
   }
 
-  .gradient-text {
+  .gradient-text,
+  .gradient-cta {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* CTA Gradient Buttons */
+  .btn-gradient {
+    background: var(--gradient-primary);
+    border: none;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-gradient::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-secondary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-gradient:hover::before {
+    opacity: 1;
+  }
+
+  .btn-gradient > * {
+    position: relative;
+    z-index: 1;
   }
 
   /* Line clamp utilities */
