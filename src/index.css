@@ -39,10 +39,10 @@
     --radius: 0.75rem;
 
     /* Premium Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(217, 91%, 60%) 0%, hsl(245, 89%, 70%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(280, 89%, 70%) 0%, hsl(217, 91%, 60%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(160, 89%, 60%) 0%, hsl(217, 91%, 60%) 100%);
-    --gradient-warm: linear-gradient(135deg, hsl(35, 89%, 60%) 0%, hsl(15, 89%, 70%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(280, 58%, 45%) 0%, hsl(0, 98%, 55%) 50%, hsl(36, 97%, 64%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(36, 97%, 64%) 0%, hsl(0, 98%, 55%) 50%, hsl(280, 58%, 45%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(0, 98%, 55%) 0%, hsl(36, 97%, 64%) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(36, 97%, 64%) 0%, hsl(0, 98%, 55%) 100%);
 
     /* Glassmorphism */
     --glass-bg: hsla(0, 0%, 100%, 0.05);
@@ -90,10 +90,10 @@
     --ring: 217 91% 60%;
 
     /* Dark Mode Premium Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(217, 91%, 60%) 0%, hsl(245, 89%, 70%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(280, 89%, 60%) 0%, hsl(217, 91%, 60%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(160, 89%, 50%) 0%, hsl(217, 91%, 60%) 100%);
-    --gradient-warm: linear-gradient(135deg, hsl(35, 89%, 50%) 0%, hsl(15, 89%, 60%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(280, 58%, 45%) 0%, hsl(0, 98%, 55%) 50%, hsl(36, 97%, 64%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(36, 97%, 64%) 0%, hsl(0, 98%, 55%) 50%, hsl(280, 58%, 45%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(0, 98%, 55%) 0%, hsl(36, 97%, 64%) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(36, 97%, 64%) 0%, hsl(0, 98%, 55%) 100%);
 
     /* Dark Glassmorphism */
     --glass-bg: hsla(0, 0%, 0%, 0.05);
@@ -204,8 +204,8 @@
 }
 
 @keyframes glow {
-  from { box-shadow: 0 0 20px hsl(217, 91%, 60%, 0.5); }
-  to { box-shadow: 0 0 30px hsl(217, 91%, 60%, 0.8), 0 0 40px hsl(217, 91%, 60%, 0.4); }
+  from { box-shadow: 0 0 20px hsl(280, 58%, 45%, 0.5); }
+  to { box-shadow: 0 0 30px hsl(280, 58%, 45%, 0.8), 0 0 40px hsl(0, 98%, 55%, 0.4); }
 }
 
 @keyframes shine {
@@ -216,7 +216,7 @@
 /* Pattern Background */
 .pattern-bg {
   background-image: 
-    radial-gradient(circle at 25px 25px, hsla(217, 91%, 60%, 0.05) 2px, transparent 2px),
-    radial-gradient(circle at 75px 75px, hsla(245, 89%, 70%, 0.05) 2px, transparent 2px);
+    radial-gradient(circle at 25px 25px, hsla(280, 58%, 45%, 0.05) 2px, transparent 2px),
+    radial-gradient(circle at 75px 75px, hsla(0, 98%, 55%, 0.05) 2px, transparent 2px);
   background-size: 100px 100px;
 }
