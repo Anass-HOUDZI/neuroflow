@@ -1,6 +1,6 @@
 # NeuroFlow
 
-Une collection unique d'applications web progressives (PWA) conçues pour répondre aux besoins des utilisateurs modernes en matière de productivité, de créativité et de bien-être mental. Développée avec une approche scientifique et éthique, cette suite offre des solutions gratuites, respectueuses de la vie privée et entièrement fonctionnelles hors ligne.
+Une collection d'applications web progressives (PWA) conçues pour répondre aux besoins des utilisateurs modernes en matière de productivité, de créativité et de bien-être mental. Développée avec une approche scientifique et éthique, cette suite offre des solutions gratuites, respectueuses de la vie privée et entièrement fonctionnelles hors ligne.
 
 **Lien du Projet** : [NeuroFlow](https://neuroflow-pwa-suite.lovable.app/)
 
@@ -108,23 +108,29 @@ Une collection unique d'applications web progressives (PWA) conçues pour répon
   - Export PNG/SVG haute résolution.
   - Templates dashboards par industrie.
 
-## Technologies Utilisées
+## Architecture Technique Globale
 
-### Frontend
-- **React.js** : Bibliothèque JavaScript pour construire l'interface utilisateur.
-- **Redux** : Gestion de l'état de l'application.
-- **Material-UI** : Bibliothèque de composants UI pour un design moderne et responsive.
-- **Chart.js** : Bibliothèque pour la création de graphiques et de visualisations de données.
+### Stack Technologique Principal
+- **Frontend Core** : React 18 avec hooks pour la gestion d'état, Vite pour le build tool et le hot reload, TypeScript strict pour la sécurité des types.
+- **UI/UX Framework** : Tailwind CSS 3 pour le styling responsive, Headless UI pour les composants accessibles, Framer Motion pour les animations fluides, Chart.js/D3.js pour les visualisations de données.
+- **Data Management** : Supabase pour le backend-as-a-service, LocalStorage/IndexedDB pour les données offline, Zustand pour la gestion d'état global, React Query pour le cache d'état serveur.
+- **Intégrations Spécialisées** : PDF-lib pour l'export de documents, jsPDF pour la génération de rapports, WorkBox pour les service workers avancés, Web Share API pour le partage natif.
 
-### Backend
-- **Node.js** : Environnement d'exécution JavaScript pour le serveur backend.
-- **Express.js** : Framework pour construire des API RESTful.
-- **Supabase** : Base de données et gestion de l'authentification.
+### Architecture Modulaire
+- **Structure du Projet** :
+  - `src/` : Composants réutilisables, calculateurs spécialisés, composants de suivi, générateurs de programmes, composants UI de base.
+  - `hooks/` : Hooks personnalisés.
+  - `utils/` : Utilitaires de calcul.
+  - `data/` : Données de référence.
+  - `types/` : Types TypeScript.
+  - `stores/` : Gestion d'état.
 
-### Autres Outils
-- **GitHub Actions** : Pour l'intégration continue et le déploiement continu (CI/CD).
-- **Docker** : Pour la conteneurisation de l'application.
-- **Jest et Cypress** : Pour les tests unitaires et d'intégration.
+- **Patterns d'Architecture** :
+  - Composants composés pour la flexibilité.
+  - Hooks personnalisés pour la logique réutilisable.
+  - Pattern Factory pour les générateurs.
+  - Pattern Observer pour le suivi.
+  - Pattern Strategy pour les algorithmes de calcul.
 
 ## Installation
 
