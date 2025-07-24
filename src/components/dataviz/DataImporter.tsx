@@ -4,6 +4,7 @@ import { Upload, FileText, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { SecurityUtils, DataValidationSchemas, FILE_SIZE_LIMITS, ROW_LIMITS } from "@/lib/security";
 
 type DataRow = Record<string, any>;
 
@@ -18,8 +19,9 @@ export default function DataImporter({ onDataImport }: DataImporterProps) {
   const parseCSV = (text: string): { data: DataRow[], columns: string[] } => {
     const lines = text.split('\n').filter(line => line.trim());
     if (lines.length < 2) throw new Error("Le fichier doit contenir au moins une ligne d'en-têtes et une ligne de données");
+    if (lines.length > ROW_LIMITS.CSV) throw new Error(`Trop de lignes. Maximum autorisé: ${ROW_LIMITS.CSV}`);
     
-    const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+    const headers = lines[0].split(',').map(h => SecurityUtils.sanitizeString(h.trim().replace(/"/g, '')));
     const data = lines.slice(1).map(line => {
       const values = line.split(',').map(v => v.trim().replace(/"/g, ''));
       const row: DataRow = {};
@@ -27,9 +29,13 @@ export default function DataImporter({ onDataImport }: DataImporterProps) {
         const value = values[index] || '';
         // Tentative de conversion en nombre
         const numValue = parseFloat(value);
-        row[header] = !isNaN(numValue) && value !== '' ? numValue : value;
+        const sanitizedValue = typeof value === 'string' ? SecurityUtils.sanitizeString(value) : value;
+        row[header] = !isNaN(numValue) && value !== '' ? numValue : sanitizedValue;
       });
-      return row;
+      
+      // Validate and sanitize the row
+      const sanitizedRow = SecurityUtils.sanitizeObjectKeys(row);
+      return DataValidationSchemas.csvRow.parse(sanitizedRow);
     });
     
     return { data, columns: headers };
@@ -40,8 +46,14 @@ export default function DataImporter({ onDataImport }: DataImporterProps) {
     if (!Array.isArray(json)) throw new Error("Le JSON doit être un tableau d'objets");
     if (json.length === 0) throw new Error("Le tableau JSON ne peut pas être vide");
     
-    const columns = Object.keys(json[0]);
-    return { data: json, columns };
+    // Validate with schema
+    const validatedData = DataValidationSchemas.jsonData.parse(json);
+    
+    // Sanitize all objects
+    const sanitizedData = validatedData.map(item => SecurityUtils.sanitizeObjectKeys(item));
+    
+    const columns = Object.keys(sanitizedData[0] || {});
+    return { data: sanitizedData, columns };
   };
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,9 +62,18 @@ export default function DataImporter({ onDataImport }: DataImporterProps) {
 
     setIsLoading(true);
     try {
-      const text = await file.text();
       const fileExt = file.name.split('.').pop()?.toLowerCase();
       
+      // Validate file before processing
+      if (fileExt === 'csv') {
+        SecurityUtils.validateFile(file, ['csv'], FILE_SIZE_LIMITS.CSV);
+      } else if (fileExt === 'json') {
+        SecurityUtils.validateFile(file, ['json'], FILE_SIZE_LIMITS.JSON);
+      } else {
+        throw new Error("Format non supporté. Utilisez .csv ou .json");
+      }
+
+      const text = await file.text();
       let result: { data: DataRow[], columns: string[] };
       
       if (fileExt === 'csv') {
@@ -63,9 +84,10 @@ export default function DataImporter({ onDataImport }: DataImporterProps) {
         throw new Error("Format non supporté. Utilisez .csv ou .json");
       }
 
-      onDataImport(result.data, result.columns, file.name);
+      onDataImport(result.data, result.columns, SecurityUtils.sanitizeString(file.name));
       toast.success(`${result.data.length} lignes importées avec succès !`);
     } catch (error) {
+      console.warn('Data import error:', error);
       toast.error(`Erreur d'import : ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
     } finally {
       setIsLoading(false);

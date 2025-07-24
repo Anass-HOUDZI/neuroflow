@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { StatsData } from "@/types/stats";
+import { SecurityUtils, DataValidationSchemas, FILE_SIZE_LIMITS, ROW_LIMITS } from "@/lib/security";
 
 interface StatsDataImporterProps {
   onDataImport: (datasets: StatsData[]) => void;
@@ -28,29 +29,36 @@ export default function StatsDataImporter({ onDataImport }: StatsDataImporterPro
   const parseCSV = (text: string): StatsData[] => {
     const lines = text.split('\n').filter(line => line.trim());
     if (lines.length < 2) throw new Error("Le fichier doit contenir au moins une ligne d'en-têtes et une ligne de données");
+    if (lines.length > ROW_LIMITS.CSV) throw new Error(`Trop de lignes. Maximum autorisé: ${ROW_LIMITS.CSV}`);
     
-    const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+    const headers = lines[0].split(',').map(h => SecurityUtils.sanitizeString(h.trim().replace(/"/g, '')));
     const rows = lines.slice(1).map(line => line.split(',').map(v => v.trim().replace(/"/g, '')));
     
     const datasets: StatsData[] = [];
     
     headers.forEach((header, colIndex) => {
+      if (!header || header.length === 0) return;
+      
       const values: number[] = [];
       
       rows.forEach(row => {
         const value = row[colIndex];
         const numValue = parseFloat(value);
-        if (!isNaN(numValue)) {
+        if (!isNaN(numValue) && isFinite(numValue)) {
           values.push(numValue);
         }
       });
       
-      if (values.length > 0) {
-        datasets.push({
+      if (values.length > 0 && values.length <= 1000) {
+        const statsData: StatsData = {
           name: header,
           values,
           type: detectDataType(values)
-        });
+        };
+        
+        // Validate with schema
+        DataValidationSchemas.statsData.parse(statsData);
+        datasets.push(statsData);
       }
     });
     
@@ -63,6 +71,9 @@ export default function StatsDataImporter({ onDataImport }: StatsDataImporterPro
 
     setIsLoading(true);
     try {
+      // Validate file before processing
+      SecurityUtils.validateFile(file, ['csv'], FILE_SIZE_LIMITS.CSV);
+      
       const text = await file.text();
       const fileExt = file.name.split('.').pop()?.toLowerCase();
       
@@ -78,6 +89,7 @@ export default function StatsDataImporter({ onDataImport }: StatsDataImporterPro
       onDataImport(datasets);
       toast.success(`${datasets.length} variable(s) importée(s) avec succès !`);
     } catch (error) {
+      console.warn('Stats data import error:', error);
       toast.error(`Erreur d'import : ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
     } finally {
       setIsLoading(false);
