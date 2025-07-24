@@ -1,17 +1,14 @@
 
 import HomeHeader from "@/components/home/HomeHeader";
 import HeroSection from "@/components/home/HeroSection";
-import HomeSearchBar from "@/components/home/HomeSearchBar";
 import FeatureGrid from "@/components/home/FeatureGrid";
 import { features } from "@/data/features";
 import { useOptimizedTheme } from "@/core/hooks/useOptimizedTheme";
-import { useFeatureSearch } from "@/hooks/useFeatureSearch";
 import GlobalLayout from "@/components/layout/GlobalLayout";
 
 export default function Index() {
   console.log('Index: Loading hooks...');
   const { isDark, toggleTheme } = useOptimizedTheme();
-  const { search, setSearch, filteredFeatures } = useFeatureSearch(features);
 
   console.log('Index: Rendering components...');
   return (
@@ -27,8 +24,7 @@ export default function Index() {
           
           {/* Section des outils avec ID pour le scroll */}
           <div id="tools-section" className="scroll-mt-8">
-            <HomeSearchBar />
-            <FeatureGrid features={filteredFeatures} />
+            <FeatureGrid features={features} />
           </div>
         </div>
       </div>
