@@ -59,7 +59,8 @@ export default function HeroSection() {
         {/* CTA Button */}
         <Button 
           size="lg" 
-          className="text-sm sm:text-base lg:text-lg px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-6 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
+          className="text-sm sm:text-base lg:text-lg px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-6 text-white border-0 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
+          style={{ background: 'linear-gradient(to right, #833ab4, #fd1d1d, #fcb045)' }}
           onClick={scrollToFeatures}
         >
           Découvrir les outils
