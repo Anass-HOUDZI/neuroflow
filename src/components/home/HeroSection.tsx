@@ -22,18 +22,14 @@ export default function HeroSection() {
         {/* Badge */}
         <div className="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-purple-200 dark:border-purple-700 mb-4 sm:mb-6">
           <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600 mr-1.5 sm:mr-2" />
-          <span className="text-xs sm:text-sm font-medium text-purple-600 dark:text-purple-400">
+          <span className="text-xs sm:text-sm font-medium gradient-neuroflow">
             Suite d'outils neuroscientifiques
           </span>
         </div>
 
         {/* Main Heading */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-3 sm:mb-4 lg:mb-6 bg-gradient-to-r from-gray-900 via-purple-600 to-blue-600 dark:from-white dark:via-purple-400 dark:to-blue-400 bg-clip-text text-transparent leading-tight">
-          <img 
-            src="/lovable-uploads/a0fbbb2d-6964-4c6c-9eed-fb534407abd8.png" 
-            alt="NeuroFlow" 
-            className="h-16 w-auto mx-auto mb-4"
-          />
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-3 sm:mb-4 lg:mb-6 gradient-neuroflow leading-tight">
+          NeuroFlow
         </h1>
 
         {/* Subtitle */}

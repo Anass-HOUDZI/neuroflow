@@ -76,17 +76,13 @@ const Footer = () => {
         {/* Logo et description */}
         <div className="flex flex-col lg:flex-row gap-8 mb-8">
           <div className="lg:w-1/3">
-            <div className="flex items-center gap-3 mb-4">
-              <img 
-                src="/lovable-uploads/a0fbbb2d-6964-4c6c-9eed-fb534407abd8.png" 
-                alt="NeuroFlow Logo" 
-                className="h-10 w-auto"
-              />
-              <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Compagnon bien-être neuroscientifique
-                </p>
-              </div>
+            <div className="mb-4">
+              <h3 className="text-2xl font-bold gradient-neuroflow mb-2">
+                NeuroFlow
+              </h3>
+              <p className="text-sm font-bold gradient-neuroflow">
+                Débranchez-vous pour vous rebrancher
+              </p>
             </div>
             <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
               Une suite complète d'outils de bien-être basés sur les neurosciences. 
