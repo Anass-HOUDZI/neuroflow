@@ -23,7 +23,7 @@ export default function Index() {
           <HeroSection />
           
           {/* Section des outils avec ID pour le scroll */}
-          <div id="tools-section" className="scroll-mt-8">
+          <div id="tools-section" className="scroll-mt-8 mt-6 sm:mt-8 lg:mt-10">
             <FeatureGrid features={features} />
           </div>
         </div>
