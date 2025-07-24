@@ -30,7 +30,7 @@ export default function Settings() {
         <div className="container mx-auto px-4 py-8">
           <PageHeader
             title="Paramètres"
-            description="Personnalisez votre expérience NeuroFlow Suite"
+            description="Personnalisez votre expérience NeuroFlow"
             icon={<SettingsIcon className="h-12 w-12 text-blue-600 dark:text-blue-400" />}
           />
 

@@ -20,7 +20,7 @@ export default function Contact() {
             <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle>Développeur Principal</CardTitle>
-                <CardDescription>Anass Houdzi - Créateur de NeuroFlow Suite</CardDescription>
+                <CardDescription>Anass Houdzi - Créateur de NeuroFlow</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex flex-col gap-3">
@@ -74,7 +74,7 @@ export default function Contact() {
                     L'application fonctionne-t-elle hors ligne ?
                   </h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Oui, NeuroFlow Suite est conçu pour fonctionner entièrement hors ligne.
+                    Oui, NeuroFlow est conçu pour fonctionner entièrement hors ligne.
                   </p>
                 </div>
                 

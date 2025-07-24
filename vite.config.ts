@@ -45,7 +45,7 @@ export default defineConfig(({ mode }) => ({
       },
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
       manifest: {
-        name: 'NeuroFlow Suite',
+        name: 'NeuroFlow',
         short_name: 'NeuroFlow',
         description: 'Suite d\'applications pour la productivité, créativité et bien-être mental',
         theme_color: '#3b82f6',

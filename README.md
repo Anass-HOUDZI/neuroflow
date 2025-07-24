@@ -1,8 +1,8 @@
-# NeuroFlow Suite
+# NeuroFlow
 
 Une collection unique d'applications web progressives (PWA) conçues pour répondre aux besoins des utilisateurs modernes en matière de productivité, de créativité et de bien-être mental. Développée avec une approche scientifique et éthique, cette suite offre des solutions gratuites, respectueuses de la vie privée et entièrement fonctionnelles hors ligne.
 
-**Lien du Projet** : [NeuroFlow Suite](https://neuroflow-pwa-suite.lovable.app/)
+**Lien du Projet** : [NeuroFlow](https://neuroflow-pwa-suite.lovable.app/)
 
 ## Fonctionnalités Principales
 

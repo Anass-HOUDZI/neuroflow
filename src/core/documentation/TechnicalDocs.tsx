@@ -109,7 +109,7 @@ const TechnicalDocs: React.FC = () => {
 
   const generateDocumentation = () => {
     const doc = {
-      project: 'NeuroFlow Suite',
+      project: 'NeuroFlow',
       version: '1.0.0',
       generated: new Date().toISOString(),
       modules: moduleInfo,
@@ -141,7 +141,7 @@ const TechnicalDocs: React.FC = () => {
             Documentation Technique
           </h1>
           <p className="text-muted-foreground mt-2">
-            Documentation automatisée de NeuroFlow Suite
+            Documentation automatisée de NeuroFlow
           </p>
         </div>
         <Button onClick={generateDocumentation} className="flex items-center gap-2">

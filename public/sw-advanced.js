@@ -1,5 +1,5 @@
 
-// Advanced Service Worker for NeuroFlow Suite
+// Advanced Service Worker for NeuroFlow
 // Intelligent caching with performance optimization
 
 const CACHE_VERSION = 'v2.1.0';

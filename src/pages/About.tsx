@@ -10,7 +10,7 @@ export default function About() {
       <div className="bg-gradient-to-br from-slate-50 to-blue-100 dark:from-gray-900 dark:to-gray-900 min-h-screen">
         <div className="container mx-auto px-4 py-8">
           <PageHeader
-            title="À propos de NeuroFlow Suite"
+            title="À propos de NeuroFlow"
             description="Découvrez notre mission et les valeurs qui guident le développement de votre compagnon bien-être"
             icon={<Brain className="h-12 w-12 text-blue-600 dark:text-blue-400" />}
           />
@@ -25,7 +25,7 @@ export default function About() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  NeuroFlow Suite a été conçu pour offrir des outils de bien-être basés sur les neurosciences, 
+                  NeuroFlow a été conçu pour offrir des outils de bien-être basés sur les neurosciences, 
                   entièrement locaux et sans distraction. Notre objectif est de vous accompagner dans votre 
                   parcours vers un mieux-être authentique, sans dépendance technologique néfaste.
                 </p>

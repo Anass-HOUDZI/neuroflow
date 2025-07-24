@@ -82,7 +82,7 @@ const Footer = () => {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">
-                  NeuroFlow Suite
+                  NeuroFlow
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   Compagnon bien-être neuroscientifique

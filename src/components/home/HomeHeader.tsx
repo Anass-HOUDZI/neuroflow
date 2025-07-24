@@ -18,7 +18,7 @@ export default memo<HomeHeaderProps>(function HomeHeader({ isDark, toggleTheme }
           <Brain className="text-white h-6 w-6 sm:h-8 sm:w-8" />
         </div>
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold gradient-text">NeuroFlow Suite</h1>
+          <h1 className="text-xl sm:text-2xl font-bold gradient-text">NeuroFlow</h1>
         </div>
       </div>
 
