@@ -82,6 +82,19 @@ const RouteTracker = memo(() => {
   return null;
 });
 
+// Global Scroll-To-Top on route and query changes
+const ScrollToTop = memo(() => {
+  const { pathname, search } = useLocation();
+  useEffect(() => {
+    // Reset scroll position to top on navigation or query change
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    // Fallbacks for different scrolling contexts
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [pathname, search]);
+  return null;
+});
+
 // Connectivity manager optimisé avec memo
 const ConnectivityManager = memo(() => {
   const setConnectivity = useGlobalStore((state) => state.setConnectivity);
@@ -395,6 +408,7 @@ const App = memo(() => {
         <Router>
           <OptimizedErrorBoundary>
             <RouteTracker />
+            <ScrollToTop />
             <ConnectivityManager />
             <div className="min-h-screen bg-background text-foreground">
               <Suspense fallback={<OptimizedLoadingSpinner />}>
