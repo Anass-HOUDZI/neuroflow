@@ -267,27 +267,25 @@ export default function MainNavigation() {
 
   return (
     <div className="flex items-center">
-      {/* Navigation - icônes uniquement */}
-      <nav className="flex items-center space-x-1">
-        {navigationItems
-          .filter((item) => item.category === "main" && item.title !== "Accueil")
-          .map((item) => {
-            const IconComponent = item.icon;
-            return (
-              <Button
-                key={item.href}
-                variant="ghost"
-                size="icon"
-                asChild
-                aria-label={item.title}
-                className={`${isActive(item.href) ? "bg-primary/10 text-primary" : "hover:bg-muted"}`}
-              >
-                <Link to={item.href}>
-                  <IconComponent className="h-4 w-4" />
-                </Link>
-              </Button>
-            );
-          })}
+      {/* Navigation Desktop - cachée sur mobile */}
+      <nav className="hidden md:flex items-center space-x-1">
+        {navigationItems.filter(item => item.category === 'main').map((item) => {
+          const IconComponent = item.icon;
+          return (
+            <Link
+              key={item.href}
+              to={item.href}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                isActive(item.href)
+                  ? "bg-blue-100/80 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
+                  : "hover:bg-white/60 dark:hover:bg-gray-800/60 text-gray-700 dark:text-gray-300"
+              }`}
+            >
+              <IconComponent className="h-4 w-4" />
+              {item.title}
+            </Link>
+          );
+        })}
       </nav>
 
       {/* Menu Mobile */}
