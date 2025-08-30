@@ -1,7 +1,7 @@
 
 import React, { Suspense, lazy, useEffect, memo } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
-import { OptimizedErrorBoundary } from '@/core/components/OptimizedErrorBoundary'
+import { UnifiedErrorBoundary } from '@/core/components/UnifiedErrorBoundary'
 import { OptimizedLoadingSpinner } from '@/core/components/OptimizedLoadingSpinner'
 import { Toaster } from '@/components/ui/sonner'
 import { ThemeProvider } from '@/core/theme/ThemeProvider'
@@ -64,11 +64,7 @@ const Contact = lazy(() => import('@/pages/Contact'))
 const Favorites = lazy(() => import('@/pages/Favorites'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 
-// Original pages imports
-const MoodTracker = lazy(() => import('@/pages/MoodTracker'))
-const ZenPad = lazy(() => import('@/pages/ZenPad'))
-const Journal = lazy(() => import('@/pages/Journal'))
-const HabitGrid = lazy(() => import('@/pages/HabitGrid'))
+// Legacy imports - kept for compatibility but routes point to optimized versions
 
 // Route tracker component optimisé avec memo
 const RouteTracker = memo(() => {
@@ -129,10 +125,10 @@ const AppRoutes = memo(() => {
         </PageTransition>
       } />
       
-      {/* Wellness Module - Using correct routes */}
+      {/* Wellness Module - Optimized routes only */}
       <Route path="/mood" element={
         <PageTransition>
-          <MoodTracker />
+          <OptimizedMoodTracker />
         </PageTransition>
       } />
       <Route path="/mood-tracker" element={
@@ -206,15 +202,15 @@ const AppRoutes = memo(() => {
         </PageTransition>
       } />
       
-      {/* Productivity Module - Using correct routes */}
+      {/* Productivity Module - Optimized routes only */}
       <Route path="/journal" element={
         <PageTransition>
-          <Journal />
+          <OptimizedJournal />
         </PageTransition>
       } />
       <Route path="/habitgrid" element={
         <PageTransition>
-          <HabitGrid />
+          <OptimizedHabitGrid />
         </PageTransition>
       } />
       <Route path="/habit-grid" element={
@@ -224,7 +220,7 @@ const AppRoutes = memo(() => {
       } />
       <Route path="/zenpad" element={
         <PageTransition>
-          <ZenPad />
+          <OptimizedZenPad />
         </PageTransition>
       } />
       <Route path="/localboard" element={
@@ -406,7 +402,7 @@ const App = memo(() => {
     <ThemeProvider>
       <FocusManager>
         <Router>
-          <OptimizedErrorBoundary>
+          <UnifiedErrorBoundary>
             <RouteTracker />
             <ScrollToTop />
             <ConnectivityManager />
@@ -416,7 +412,7 @@ const App = memo(() => {
               </Suspense>
               <Toaster position="bottom-right" />
             </div>
-          </OptimizedErrorBoundary>
+          </UnifiedErrorBoundary>
         </Router>
       </FocusManager>
     </ThemeProvider>
