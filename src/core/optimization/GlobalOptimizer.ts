@@ -28,7 +28,9 @@ export class GlobalOptimizer {
   public async initialize(): Promise<void> {
     if (this.isInitialized) return;
 
-    console.log('🚀 Initializing Global Performance Optimizations...');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🚀 Initializing Global Performance Optimizations...');
+    }
 
     // 1. CSS Optimizations
     await this.optimizeCSS();
@@ -46,7 +48,9 @@ export class GlobalOptimizer {
     this.optimizeBundle();
 
     this.isInitialized = true;
-    console.log('✅ Global optimizations initialized successfully');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('✅ Global optimizations initialized successfully');
+    }
   }
 
   /**
@@ -74,10 +78,14 @@ export class GlobalOptimizer {
             totalOriginalSize += stats.originalSize;
             totalOptimizedSize += stats.optimizedSize;
 
-            console.log(`CSS optimized: ${stylesheet.href.split('/').pop()} - ${stats.compressionRatio}% reduction`);
+            if (process.env.NODE_ENV === 'development') {
+              console.log(`CSS optimized: ${stylesheet.href.split('/').pop()} - ${stats.compressionRatio}% reduction`);
+            }
           }
         } catch (error) {
-          console.warn('Could not optimize stylesheet:', stylesheet.href);
+          if (process.env.NODE_ENV === 'development') {
+            console.warn('Could not optimize stylesheet:', stylesheet.href);
+          }
         }
       }
 
@@ -86,9 +94,13 @@ export class GlobalOptimizer {
       this.cssMinifier.inlineCriticalCSS(criticalCSS);
 
       const totalSavings = ((totalOriginalSize - totalOptimizedSize) / totalOriginalSize * 100).toFixed(2);
-      console.log(`📊 Total CSS size reduced by ${totalSavings}%`);
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`📊 Total CSS size reduced by ${totalSavings}%`);
+      }
     } catch (error) {
-      console.error('CSS optimization failed:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('CSS optimization failed:', error);
+      }
     }
   }
 
@@ -134,12 +146,16 @@ export class GlobalOptimizer {
       const memoryUsage = performanceMonitor.getMemoryUsage();
       
       if (memoryUsage > 100) { // If > 100MB
-        console.warn(`⚠️ High memory usage: ${memoryUsage}MB`);
+        if (process.env.NODE_ENV === 'development') {
+          console.warn(`⚠️ High memory usage: ${memoryUsage}MB`);
+        }
         this.performMemoryCleanup();
       }
     }, 60000); // Check every minute
 
-    console.log('🧹 Memory optimization enabled');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🧹 Memory optimization enabled');
+    }
   }
 
   /**
@@ -159,7 +175,9 @@ export class GlobalOptimizer {
       performance.clearResourceTimings();
     }
 
-    console.log('🧹 Memory cleanup performed');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🧹 Memory cleanup performed');
+    }
   }
 
   /**
@@ -184,14 +202,18 @@ export class GlobalOptimizer {
     const observer = new PerformanceObserver((list) => {
       list.getEntries().forEach((entry) => {
         if (entry.duration > 1000) { // > 1 second
-          console.warn(`⚠️ Slow resource: ${entry.name} - ${entry.duration}ms`);
+          if (process.env.NODE_ENV === 'development') {
+            console.warn(`⚠️ Slow resource: ${entry.name} - ${entry.duration}ms`);
+          }
         }
       });
     });
 
     observer.observe({ entryTypes: ['resource'] });
 
-    console.log('🌐 Network optimization enabled');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🌐 Network optimization enabled');
+    }
   }
 
   /**
@@ -220,7 +242,9 @@ export class GlobalOptimizer {
       }, 16); // ~60fps
     };
 
-    console.log('⚡ Runtime optimization enabled');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('⚡ Runtime optimization enabled');
+    }
   }
 
   /**
@@ -241,7 +265,9 @@ export class GlobalOptimizer {
       document.head.appendChild(link);
     });
 
-    console.log('📦 Bundle optimization enabled');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('📦 Bundle optimization enabled');
+    }
   }
 
   /**
